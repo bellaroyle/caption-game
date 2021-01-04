@@ -2,6 +2,8 @@ import { NavigationHelpersContext } from "@react-navigation/native";
 import React from "react";
 import { View, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import NewButton from "../../components/NewButton";
+import styles from "./WelcomeStyles";
 
 export default function Welcome(props) {
   console.log(props);
@@ -9,13 +11,16 @@ export default function Welcome(props) {
     navigation: { navigate },
   } = props;
   return (
-    <View>
-      <Text>Welcome Page</Text>
-      <TouchableOpacity onPress={navigate.bind(this, "Host")}>
-        <View>
-          <Text>Host Game</Text>
-        </View>
-      </TouchableOpacity>
+    <View style={styles.welcomeScreen}>
+      <Text>Welcome to the Caption Game!</Text>
+      <View>
+        <NewButton onPress={navigate.bind(this, "Host")}>
+          <Text>Host</Text>
+        </NewButton>
+        <NewButton onPress={navigate.bind(this, "Join")}>
+          <Text>Join</Text>
+        </NewButton>
+      </View>
     </View>
   );
 }
