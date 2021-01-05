@@ -30,18 +30,34 @@ const getUsersInRoom = (roomCode) => {
     });
 };
 
+const doesRoomExist = (roomCode) => {
+  return rooms
+    .doc(roomCode)
+    .get()
+    .then((doc) => {
+      return doc.exists;
+    });
+};
+
 const joinRoom = (roomCode, username) => {
-  return getUsersInRoom(roomCode).then((users) => {
-    return users.includes(username)
-      ? Alert.alert('Username in use', 'Please change your name!', {
-          text: 'OK',
-          onPress: () => console.log('OK Pressed')
+  return doesRoomExist(roomCode).then((roomExists) => {
+    return roomExists
+      ? getUsersInRoom(roomCode).then((users) => {
+          return users.includes(username)
+            ? Promise.reject({
+                title: 'Username in use',
+                message: 'Please choose another username'
+              })
+            : rooms
+                .doc(roomCode)
+                .collection('users')
+                .doc()
+                .set({ host: false, name: username, points: 0 });
         })
-      : rooms
-          .doc(roomCode)
-          .collection('users')
-          .doc()
-          .set({ host: false, name: username, points: 0 });
+      : Promise.reject({
+          title: 'Room does not exist',
+          message: 'Please enter a valid room code'
+        });
   });
 };
 
