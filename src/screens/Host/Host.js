@@ -7,7 +7,7 @@ import styles from './HostStyles';
 export default function Host(props) {
   const [hostName, setHostName] = useState('');
   const {
-    navigation: { navigate }
+    navigation: { navigate },
   } = props;
 
   const createGame = () => {

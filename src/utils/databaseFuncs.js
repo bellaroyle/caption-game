@@ -40,6 +40,7 @@ const doesRoomExist = (roomCode) => {
 };
 
 const joinRoom = (roomCode, username) => {
+
   return doesRoomExist(roomCode).then((roomExists) => {
     return roomExists
       ? getUsersInRoom(roomCode).then((users) => {
