@@ -12,24 +12,17 @@ export default function WaitingRoom(props) {
   } = props;
 
   const roomCode = props.route.params.roomCode;
+  const roomDoc = firebase.firestore().collection("rooms").doc(roomCode);
+
 
   useEffect(() => {
-    getUsersInRoom(roomCode).then((users) => {
-      setUsers(users);
+    const unsubscribe = roomDoc.collection("users").onSnapshot((snap) => {
+      const data = snap.docs.map((doc) => doc.data());
+      setUsers(data);
     });
-  }, [roomCode]);
+    return () => unsubscribe();
+  }, []);
 
-  // useEffect(() => {
-  //   const user = firebase
-  //     .firestore()
-  //     .collection("rooms")
-  //     .doc(roomCode)
-  //     .onSnapshot((documentSnapshot) => {
-  //       console.log("user data: ", documentSnapshot.data());
-  //     });
-  //   return () => user();
-  // }, [roomCode]);
-  console.log(users.length);
   return (
     <View>
       <Text>You are in room {roomCode}!</Text>
@@ -37,8 +30,8 @@ export default function WaitingRoom(props) {
       {users.length !== 0 ? (
         <FlatList
           data={users}
-          renderItem={({ item }) => <UserCard name={item} />}
-          keyExtractor={(item) => item}
+          renderItem={({ item }) => <UserCard name={item.name} />}
+          keyExtractor={(item) => item.name}
         />
       ) : (
         <Text>Is loading...</Text>
