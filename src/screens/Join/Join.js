@@ -1,10 +1,52 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useState } from 'react';
+import { View, Text, TextInput, Alert } from 'react-native';
+import NewButton from '../../components/NewButton';
+import { joinRoom } from '../../utils/databaseFuncs';
+import styles from './JoinStyles';
 
-export default function Join() {
+export default function Join(props) {
+  const {
+    navigation: { navigate }
+  } = props;
+
+  const [username, setUsername] = useState('');
+  const [roomInput, setRoomInput] = useState('');
+
+  const joinGame = () => {
+    joinRoom(roomInput, username)
+      .then(() => {
+        navigate('WaitingRoom', { roomCode: roomInput });
+      })
+      .catch(({ title, message }) => {
+        Alert.alert(title, message, {
+          text: 'OK',
+          onPress: () => console.log('OK Pressed')
+        });
+      });
+  };
+
   return (
-    <View>
-      <Text>Join Page</Text>
+    <View style={styles.hostScreen}>
+      <Text>Please enter your name and room code to join game</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Your name"
+        placeholderTextColor="#aaaaaa"
+        onChangeText={(text) => setUsername(text)}
+        value={username}
+        autoCapitalize="none"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Room code"
+        placeholderTextColor="#aaaaaa"
+        onChangeText={(text) => setRoomInput(text)}
+        value={roomInput}
+        autoCapitalize="none"
+      />
+      <NewButton onPress={joinGame}>
+        <Text>Join Game</Text>
+      </NewButton>
     </View>
   );
 }

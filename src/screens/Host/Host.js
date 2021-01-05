@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import NewButton from '../../components/NewButton';
 import { createRoom } from '../../utils/databaseFuncs';
 import styles from './HostStyles';
@@ -13,7 +12,7 @@ export default function Host(props) {
 
   const createGame = () => {
     createRoom(hostName).then((roomCode) => {
-      navigate('WaitingRoom', { roomCode: roomCode });
+      navigate('WaitingRoom', { roomCode });
     });
   };
 
