@@ -13,7 +13,10 @@ const createRoom = (username) => {
     .doc(roomCode)
     .collection('users')
     .doc()
-    .set({ host: true, name: username, points: 0 });
+    .set({ host: true, name: username, points: 0 })
+    .then((doc) => {
+      return roomCode;
+    });
 };
 
 const getUsersInRoom = (roomCode) => {
@@ -34,7 +37,7 @@ const joinRoom = (roomCode, username) => {
     return users.includes(username)
       ? Alert.alert('Username in use', 'Please change your name!', {
           text: 'OK',
-          onPress: () => console.log('OK Pressed'),
+          onPress: () => console.log('OK Pressed')
         })
       : rooms
           .doc(roomCode)
