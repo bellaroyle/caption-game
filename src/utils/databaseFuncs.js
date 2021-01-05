@@ -5,7 +5,10 @@ import { Alert } from 'react-native';
 const rooms = firebase.firestore().collection('rooms');
 
 const createRoom = (username) => {
+  console.log('In createRoom');
   const roomCode = randomCodeGen();
+  console.log(roomCode);
+
   return rooms
     .doc(roomCode)
     .collection('users')
