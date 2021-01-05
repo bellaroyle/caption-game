@@ -20,9 +20,14 @@ const joinRoom = (roomCode, username) => {
     .set({ host: false, name: username, points: 0 });
 };
 
-// const getUsersInRoom = ()=>{
-//   return rooms.collection('users').get().then(()=>{
-//     snapshot.docs.map(doc => console.log(doc.data()));
-// }))
+const getUsersInRoom = (roomCode) => {
+  return rooms
+    .doc(roomCode)
+    .collection("users")
+    .get()
+    .then((snapshot) => {
+      snapshot.docs.map((doc) => console.log(doc.data()));
+    });
+};
 
-module.exports = { rooms, createRoom, joinRoom };
+module.exports = { rooms, createRoom, joinRoom, getUsersInRoom };
