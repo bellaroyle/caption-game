@@ -3,12 +3,17 @@ import { View, Text, FlatList, DatePickerIOSBase } from "react-native";
 import { getUsersInRoom } from "../../utils/databaseFuncs";
 import UserCard from "../../components/UserCard";
 import { firebase } from "../../firebase/config";
+import NewButton from "../../components/NewButton";
 
 export default function WaitingRoom(props) {
   const [users, setUsers] = useState([]);
+  const {
+    navigation: { navigate },
+  } = props;
 
   const roomCode = props.route.params.roomCode;
   const roomDoc = firebase.firestore().collection("rooms").doc(roomCode);
+
 
   useEffect(() => {
     const unsubscribe = roomDoc.collection("users").onSnapshot((snap) => {
@@ -30,6 +35,11 @@ export default function WaitingRoom(props) {
         />
       ) : (
         <Text>Is loading...</Text>
+      )}
+      {users.length > 2 && (
+        <NewButton onPress={() => navigate("Round")}>
+          <Text>Begin Round 1</Text>
+        </NewButton>
       )}
     </View>
   );

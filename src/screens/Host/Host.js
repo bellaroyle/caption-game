@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
-import NewButton from '../../components/NewButton';
-import { createRoom } from '../../utils/databaseFuncs';
-import styles from './HostStyles';
+import React, { useState, useContext } from "react";
+import { View, Text, TextInput } from "react-native";
+import NewButton from "../../components/NewButton";
+import { UserContext } from "../../Context/UserContext";
+import { createRoom } from "../../utils/databaseFuncs";
+import styles from "./HostStyles";
 
 export default function Host(props) {
-  const [hostName, setHostName] = useState('');
+  const [hostName, setHostName] = useState("");
   const {
     navigation: { navigate },
   } = props;
 
+  const { user, setUser } = useContext(UserContext);
+
   const createGame = () => {
     createRoom(hostName).then((roomCode) => {
-      navigate('WaitingRoom', { roomCode });
+      setUser(hostName);
+      console.log(user);
+      navigate("WaitingRoom", { roomCode });
     });
   };
 
