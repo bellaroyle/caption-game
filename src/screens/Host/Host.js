@@ -5,12 +5,18 @@ import NewButton from '../../components/NewButton';
 import { createRoom } from '../../utils/databaseFuncs';
 import styles from './HostStyles';
 
-export default function Host() {
+export default function Host(props) {
   const [hostName, setHostName] = useState('');
+  const {
+    navigation: { navigate }
+  } = props;
 
   const createGame = () => {
     console.log('create game func');
-    createRoom(hostName);
+    createRoom(hostName).then((roomCode) => {
+      console.log('Room from create room:', roomCode);
+      navigate('WaitingRoom', { roomCode: roomCode });
+    });
   };
 
   return (
