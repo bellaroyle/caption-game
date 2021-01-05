@@ -12,7 +12,6 @@ export default function WaitingRoom(props) {
   } = props;
 
   const roomCode = props.route.params.roomCode;
-  console.log(roomCode);
 
   useEffect(() => {
     getUsersInRoom(roomCode).then((users) => {
@@ -30,7 +29,7 @@ export default function WaitingRoom(props) {
   //     });
   //   return () => user();
   // }, [roomCode]);
-  console.log(users);
+  console.log(users.length);
   return (
     <View>
       <Text>You are in room {roomCode}!</Text>
@@ -44,9 +43,11 @@ export default function WaitingRoom(props) {
       ) : (
         <Text>Is loading...</Text>
       )}
-      <NewButton onPress={() => navigate("Round")}>
-        <Text>Begin Round 1</Text>
-      </NewButton>
+      {users.length > 2 && (
+        <NewButton onPress={() => navigate("Round")}>
+          <Text>Begin Round 1</Text>
+        </NewButton>
+      )}
     </View>
   );
 }
