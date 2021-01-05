@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function NewButton(props) {
   return (
@@ -13,8 +13,9 @@ export default function NewButton(props) {
 
 const styles = StyleSheet.create({
   newButton: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 5,
     padding: 10,
-  },
+    margin: 10
+  }
 });
