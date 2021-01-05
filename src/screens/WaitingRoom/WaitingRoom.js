@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, DatePickerIOSBase } from 'react-native';
-import { getUsersInRoom } from '../../utils/databaseFuncs';
-import UserCard from '../../components/UserCard';
+import React, { useEffect, useState } from "react";
+import { View, Text, FlatList, DatePickerIOSBase } from "react-native";
+import { getUsersInRoom } from "../../utils/databaseFuncs";
+import UserCard from "../../components/UserCard";
+import { firebase } from "../../firebase/config";
 
 export default function WaitingRoom(props) {
   const [users, setUsers] = useState([]);
@@ -15,6 +16,17 @@ export default function WaitingRoom(props) {
     });
   }, [roomCode]);
 
+  // useEffect(() => {
+  //   const user = firebase
+  //     .firestore()
+  //     .collection("rooms")
+  //     .doc(roomCode)
+  //     .onSnapshot((documentSnapshot) => {
+  //       console.log("user data: ", documentSnapshot.data());
+  //     });
+  //   return () => user();
+  // }, [roomCode]);
+  console.log(users);
   return (
     <View>
       <Text>You are in room {roomCode}!</Text>
@@ -23,7 +35,7 @@ export default function WaitingRoom(props) {
         <FlatList
           data={users}
           renderItem={({ item }) => <UserCard name={item} />}
-          keyExtractor={(item) => item.name}
+          keyExtractor={(item) => item}
         />
       ) : (
         <Text>Is loading...</Text>
