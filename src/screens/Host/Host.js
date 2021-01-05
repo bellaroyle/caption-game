@@ -8,13 +8,11 @@ import styles from './HostStyles';
 export default function Host(props) {
   const [hostName, setHostName] = useState('');
   const {
-    navigation: { navigate }
+    navigation: { navigate },
   } = props;
 
   const createGame = () => {
-    console.log('create game func');
     createRoom(hostName).then((roomCode) => {
-      console.log('Room from create room:', roomCode);
       navigate('WaitingRoom', { roomCode: roomCode });
     });
   };

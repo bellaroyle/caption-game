@@ -5,9 +5,7 @@ import { Alert } from 'react-native';
 const rooms = firebase.firestore().collection('rooms');
 
 const createRoom = (username) => {
-  console.log('In createRoom');
   const roomCode = randomCodeGen();
-  console.log(roomCode);
 
   return rooms
     .doc(roomCode)
@@ -37,7 +35,7 @@ const joinRoom = (roomCode, username) => {
     return users.includes(username)
       ? Alert.alert('Username in use', 'Please change your name!', {
           text: 'OK',
-          onPress: () => console.log('OK Pressed')
+          onPress: () => console.log('OK Pressed'),
         })
       : rooms
           .doc(roomCode)
