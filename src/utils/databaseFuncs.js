@@ -9,7 +9,7 @@ const createRoom = (username) => {
   const picOrder = randomNumberGen();
   return rooms
     .doc(roomCode)
-    .set({ picOrder })
+    .set({ picOrder, startGame: false })
     .then(() => {
       return rooms
         .doc(roomCode)
@@ -71,6 +71,12 @@ const joinRoom = (roomCode, username) => {
   });
 };
 
+
+const startGame = (roomCode) => {
+  console.log('Starting Game:', roomCode);
+  return rooms.doc(roomCode).set({ startGame: true });
+};
+
 const getPic = (array, round) => {
   let num = array[round - 1];
   return firebase.storage().ref().child(`/${num}.jpg`).getDownloadURL();
@@ -92,4 +98,6 @@ module.exports = {
   getUsersInRoom,
   getPic,
   getPicOrder,
+  startGame
 };
+
