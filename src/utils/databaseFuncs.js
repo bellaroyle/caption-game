@@ -55,7 +55,7 @@ const joinRoom = (roomCode, username) => {
           return users.includes(username)
             ? Promise.reject({
                 title: 'Username in use',
-                message: 'Please choose another username'
+                message: 'Please choose another username',
               })
             : rooms
                 .doc(roomCode)
@@ -65,14 +65,21 @@ const joinRoom = (roomCode, username) => {
         })
       : Promise.reject({
           title: 'Room does not exist',
-          message: 'Please enter a valid room code'
+          message: 'Please enter a valid room code',
         });
   });
 };
+
 
 const startGame = (roomCode) => {
   console.log('Starting Game:', roomCode);
   return rooms.doc(roomCode).set({ startGame: true });
 };
 
-module.exports = { rooms, createRoom, joinRoom, getUsersInRoom, startGame };
+const getPic = (array, round) => {
+  let num = array[round - 1];
+  return firebase.storage().ref().child(`/${num}.jpg`).getDownloadURL();
+};
+
+module.exports = { rooms, createRoom, joinRoom, getUsersInRoom, getPic, startGame };
+

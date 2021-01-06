@@ -1,4 +1,4 @@
-const { randomCodeGen } = require('./utils');
+const { randomCodeGen, randomNumberGen, hasDuplicates } = require('./utils');
 
 describe('randomCodeGen', () => {
   test('returns a 6 character string', () => {
@@ -12,5 +12,25 @@ describe('randomCodeGen', () => {
     const result1 = randomCodeGen();
     const result2 = randomCodeGen();
     expect(result1).not.toBe(result2);
+  });
+});
+
+describe('hasDuplicates', () => {
+  test('returns true if array has duplicates', () => {
+    expect(hasDuplicates([1, 1, 2, 3, 4])).toBe(true);
+  });
+  test('returns false if array hasnt got duplicates', () => {
+    expect(hasDuplicates([1, 6, 2, 3, 4])).toBe(false);
+  });
+});
+
+describe('randomNumberGen', () => {
+  test('returns array of length 5', () => {
+    let result = randomNumberGen();
+    expect(result.length).toBe(5);
+  });
+  test('returns array with non repeating numbers', () => {
+    let result = randomNumberGen();
+    expect(hasDuplicates(result)).toBe(false);
   });
 });
