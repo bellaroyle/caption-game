@@ -71,10 +71,9 @@ const joinRoom = (roomCode, username) => {
   });
 };
 
-
 const startGame = (roomCode) => {
   console.log('Starting Game:', roomCode);
-  return rooms.doc(roomCode).set({ startGame: true });
+  return rooms.doc(roomCode).update({ startGame: true });
 };
 
 const getPic = (array, round) => {
@@ -98,6 +97,5 @@ module.exports = {
   getUsersInRoom,
   getPic,
   getPicOrder,
-  startGame
+  startGame,
 };
-

@@ -12,6 +12,7 @@ export default function Round(props) {
 
   useEffect(() => {
     getPicOrder(roomCode).then((picOrder) => {
+      console.log(picOrder);
       getPic(picOrder, round).then((picRef) => {
         setPicRef(picRef);
         setIsLoading(false);
