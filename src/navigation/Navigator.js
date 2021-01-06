@@ -7,6 +7,7 @@ import Host from "../screens/Host/Host";
 import Join from "../screens/Join/Join";
 import WaitingRoom from "../screens/WaitingRoom/WaitingRoom";
 import Round from "../screens/Round/Round";
+import GameWaitingRoom from "../screens/GameWaitingRoom/GameWaitingRoom";
 
 export default function Navigator() {
   return (
@@ -26,6 +27,7 @@ const GameStackNavigator = () => {
       <GameStack.Screen name="Join" component={Join} />
       <GameStack.Screen name="WaitingRoom" component={WaitingRoom} />
       <GameStack.Screen name="Round" component={Round} />
+      <GameStack.Screen name="GameWaitingRoom" component={GameWaitingRoom} />
     </GameStack.Navigator>
   );
 };
