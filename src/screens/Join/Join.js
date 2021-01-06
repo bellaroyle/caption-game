@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, Alert } from 'react-native';
 import NewButton from '../../components/NewButton';
 import { joinRoom } from '../../utils/databaseFuncs';
+import { UserContext } from '../../Context/UserContext';
 import styles from './JoinStyles';
 
 export default function Join(props) {
@@ -9,12 +10,15 @@ export default function Join(props) {
     navigation: { navigate }
   } = props;
 
+  const { user, setUser } = useContext(UserContext);
+
   const [username, setUsername] = useState('');
   const [roomInput, setRoomInput] = useState('');
 
   const joinGame = () => {
     joinRoom(roomInput, username)
       .then(() => {
+        setUser({ username, isHost: false });
         navigate('WaitingRoom', { roomCode: roomInput });
       })
       .catch(({ title, message }) => {
