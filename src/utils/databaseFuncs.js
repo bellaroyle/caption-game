@@ -14,7 +14,7 @@ const createRoom = (username) => {
       return rooms
         .doc(roomCode)
         .collection('users')
-        .doc()
+        .doc(username)
         .set({ host: true, name: username, points: 0 })
         .then(() => {
           return roomCode;
@@ -56,17 +56,17 @@ const joinRoom = (roomCode, username) => {
           return users.includes(username)
             ? Promise.reject({
                 title: 'Username in use',
-                message: 'Please choose another username',
+                message: 'Please choose another username'
               })
             : rooms
                 .doc(roomCode)
                 .collection('users')
-                .doc()
+                .doc(username)
                 .set({ host: false, name: username, points: 0 });
         })
       : Promise.reject({
           title: 'Room does not exist',
-          message: 'Please enter a valid room code',
+          message: 'Please enter a valid room code'
         });
   });
 };
@@ -90,6 +90,14 @@ const getPicOrder = (roomCode) => {
     });
 };
 
+const postAnswerToUser = (username, roomCode, answer) => {
+  return rooms
+    .doc(roomCode)
+    .collection('users')
+    .doc(username)
+    .update({ answers: answer });
+};
+
 module.exports = {
   rooms,
   createRoom,
@@ -98,4 +106,5 @@ module.exports = {
   getPic,
   getPicOrder,
   startGame,
+  postAnswerToUser
 };
