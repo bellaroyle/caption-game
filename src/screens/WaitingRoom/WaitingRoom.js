@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, FlatList, DatePickerIOSBase } from 'react-native';
-import { startGame } from '../../utils/databaseFuncs';
+import { startGame, setAmountOfUsers } from '../../utils/databaseFuncs';
 import UserCard from '../../components/UserCard';
 import { firebase } from '../../firebase/config';
 import NewButton from '../../components/NewButton';
@@ -28,7 +28,7 @@ export default function WaitingRoom(props) {
   useEffect(() => {
     const unsubscribe = roomDoc.onSnapshot((roomSnap) => {
       const { startGame } = roomSnap.data();
-      if (startGame) navigate('Round', {roomCode});
+      if (startGame) navigate('Round', { roomCode });
     });
     return () => unsubscribe();
   }, []);
@@ -36,6 +36,7 @@ export default function WaitingRoom(props) {
   const handleStartButton = () => {
     console.log('Start game in waiting room:', roomCode);
     startGame(roomCode);
+    setAmountOfUsers(roomCode, users.length);
   };
 
   return (

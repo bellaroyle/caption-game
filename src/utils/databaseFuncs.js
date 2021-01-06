@@ -7,15 +7,22 @@ const rooms = firebase.firestore().collection('rooms');
 const createRoom = (username) => {
   const roomCode = randomCodeGen();
   const picOrder = randomNumberGen();
+  const amountOfPlayers = 0;
   return rooms
     .doc(roomCode)
-    .set({ picOrder, startGame: false })
+    .set({ picOrder, startGame: false, amountOfPlayers })
     .then(() => {
       return rooms
         .doc(roomCode)
         .collection('users')
         .doc(username)
-        .set({ host: true, name: username, points: 0 })
+        .set({
+          host: true,
+          name: username,
+          roundScore: 0,
+          overallScore: 0,
+          answers: '',
+        })
         .then(() => {
           return roomCode;
         });
@@ -58,11 +65,13 @@ const joinRoom = (roomCode, username) => {
                 title: 'Username in use',
                 message: 'Please choose another username'
               })
-            : rooms
-                .doc(roomCode)
-                .collection('users')
-                .doc(username)
-                .set({ host: false, name: username, points: 0 });
+            : rooms.doc(roomCode).collection('users').doc(username).set({
+                host: false,
+                name: username,
+                roundScore: 0,
+                overallScore: 0,
+                answers: '',
+              });
         })
       : Promise.reject({
           title: 'Room does not exist',
@@ -90,12 +99,29 @@ const getPicOrder = (roomCode) => {
     });
 };
 
+
 const postAnswerToUser = (username, roomCode, answer) => {
   return rooms
     .doc(roomCode)
     .collection('users')
     .doc(username)
-    .update({ answers: answer });
+    .update({ answers: answer })
+}
+
+const setAmountOfUsers = (roomCode, numberOfUsers) => {
+  return rooms.doc(roomCode).update({ amountOfPlayers: numberOfUsers });
+};
+
+const checkAllAnswered = (roomCode) => {
+  return rooms
+    .doc(roomCode)
+    .get()
+    .then((doc) => {
+      console.log(doc.data().amountOfPlayers, '<<<<<< number of users');
+    });
+  // you would then do an if statement checking if the current users.length in gameWaitingRoom
+  // is strictly equal to the number of users grabbed from the database. If true, button will appear for host to continue
+
 };
 
 module.exports = {
@@ -107,4 +133,6 @@ module.exports = {
   getPicOrder,
   startGame,
   postAnswerToUser
+  setAmountOfUsers,
+  checkAllAnswered,
 };
