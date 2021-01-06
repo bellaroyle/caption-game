@@ -1,14 +1,15 @@
 import { firebase } from '../firebase/config';
-import { randomCodeGen } from './utils';
+import { randomCodeGen, randomNumberGen } from './utils';
 import { Alert } from 'react-native';
 
 const rooms = firebase.firestore().collection('rooms');
 
 const createRoom = (username) => {
   const roomCode = randomCodeGen();
+  const picOrder = randomNumberGen();
   return rooms
     .doc(roomCode)
-    .set({ startGame: false })
+    .set({ picOrder, startGame: false })
     .then(() => {
       return rooms
         .doc(roomCode)
@@ -81,5 +82,22 @@ const getPic = (array, round) => {
   return firebase.storage().ref().child(`/${num}.jpg`).getDownloadURL();
 };
 
-module.exports = { rooms, createRoom, joinRoom, getUsersInRoom, getPic, startGame };
+const getPicOrder = (roomCode) => {
+  return rooms
+    .doc(roomCode)
+    .get()
+    .then((doc) => {
+      return doc.data().picOrder;
+    });
+};
+
+module.exports = {
+  rooms,
+  createRoom,
+  joinRoom,
+  getUsersInRoom,
+  getPic,
+  getPicOrder,
+  startGame
+};
 

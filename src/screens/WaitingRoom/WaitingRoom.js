@@ -9,7 +9,7 @@ import { UserContext } from '../../Context/UserContext';
 export default function WaitingRoom(props) {
   const [users, setUsers] = useState([]);
   const {
-    navigation: { navigate }
+    navigation: { navigate },
   } = props;
 
   const { user } = useContext(UserContext);
@@ -28,7 +28,7 @@ export default function WaitingRoom(props) {
   useEffect(() => {
     const unsubscribe = roomDoc.onSnapshot((roomSnap) => {
       const { startGame } = roomSnap.data();
-      if (startGame) navigate('Round');
+      if (startGame) navigate('Round', {roomCode});
     });
     return () => unsubscribe();
   }, []);

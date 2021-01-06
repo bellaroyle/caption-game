@@ -1,20 +1,21 @@
 import { setStatusBarTranslucent } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { getPic } from '../../utils/databaseFuncs';
-import { randomNumberGen } from '../../utils/utils';
+import { getPic, getPicOrder } from '../../utils/databaseFuncs';
 
-const array = randomNumberGen();
 const round = 1;
 
-export default function Round() {
+export default function Round(props) {
   const [picRef, setPicRef] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const roomCode = props.route.params.roomCode;
 
   useEffect(() => {
-    getPic(array, round).then((picRef) => {
-      setPicRef(picRef);
-      setIsLoading(false);
+    getPicOrder(roomCode).then((picOrder) => {
+      getPic(picOrder, round).then((picRef) => {
+        setPicRef(picRef);
+        setIsLoading(false);
+      });
     }, []);
   });
 
