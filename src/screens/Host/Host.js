@@ -8,7 +8,7 @@ import styles from './HostStyles';
 export default function Host(props) {
   const [username, setUsername] = useState('');
   const {
-    navigation: { navigate }
+    navigation: { navigate },
   } = props;
 
   const { user, setUser } = useContext(UserContext);

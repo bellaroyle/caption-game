@@ -9,7 +9,7 @@ import { UserContext } from '../../Context/UserContext';
 export default function WaitingRoom(props) {
   const [users, setUsers] = useState([]);
   const {
-    navigation: { navigate }
+    navigation: { navigate },
   } = props;
 
   const { user } = useContext(UserContext);
@@ -39,7 +39,7 @@ export default function WaitingRoom(props) {
         <Text>Is loading...</Text>
       )}
       {users.length > 2 && user.isHost && (
-        <NewButton onPress={() => navigate('Round')}>
+        <NewButton onPress={() => navigate('Round', { roomCode })}>
           <Text>Begin Round 1</Text>
         </NewButton>
       )}
