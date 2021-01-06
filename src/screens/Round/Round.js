@@ -1,13 +1,23 @@
 import { setStatusBarTranslucent } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { getPic, getPicOrder } from '../../utils/databaseFuncs';
+import React, { useEffect, useState, useContext } from 'react';
+import { View, Text, TextInput, Image } from 'react-native';
+import {
+  getPic,
+  getPicOrder,
+  postAnswerToUser
+} from '../../utils/databaseFuncs';
+import { UserContext } from '../../Context/UserContext';
+import NewButton from '../../components/NewButton';
+import styles from './RoundStyles';
 
 const round = 1;
 
 export default function Round(props) {
   const [picRef, setPicRef] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [answer, setAnswer] = useState('');
+  const { user } = useContext(UserContext);
+
   const roomCode = props.route.params.roomCode;
 
   useEffect(() => {
@@ -20,6 +30,10 @@ export default function Round(props) {
     }, []);
   });
 
+  const submitAnswer = () => {
+    postAnswerToUser(user.username, roomCode, answer);
+  };
+
   if (isLoading) {
     return (
       <View>
@@ -29,17 +43,19 @@ export default function Round(props) {
     );
   } else {
     return (
-      <View>
+      <View style={styles.screen}>
         <Text>Round 1: Fight!</Text>
         <Image source={{ uri: picRef }} style={styles.pic} />
+        <TextInput
+          multiline={true}
+          onChangeText={(text) => setAnswer(text)}
+          value={answer}
+          style={styles.input}
+        />
+        <NewButton onPress={submitAnswer}>
+          <Text>Submit answer</Text>
+        </NewButton>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  pic: {
-    width: 200,
-    height: 200,
-  },
-});

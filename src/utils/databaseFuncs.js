@@ -15,7 +15,7 @@ const createRoom = (username) => {
       return rooms
         .doc(roomCode)
         .collection('users')
-        .doc()
+        .doc(username)
         .set({
           host: true,
           name: username,
@@ -63,9 +63,9 @@ const joinRoom = (roomCode, username) => {
           return users.includes(username)
             ? Promise.reject({
                 title: 'Username in use',
-                message: 'Please choose another username',
+                message: 'Please choose another username'
               })
-            : rooms.doc(roomCode).collection('users').doc().set({
+            : rooms.doc(roomCode).collection('users').doc(username).set({
                 host: false,
                 name: username,
                 roundScore: 0,
@@ -75,7 +75,7 @@ const joinRoom = (roomCode, username) => {
         })
       : Promise.reject({
           title: 'Room does not exist',
-          message: 'Please enter a valid room code',
+          message: 'Please enter a valid room code'
         });
   });
 };
@@ -99,6 +99,15 @@ const getPicOrder = (roomCode) => {
     });
 };
 
+
+const postAnswerToUser = (username, roomCode, answer) => {
+  return rooms
+    .doc(roomCode)
+    .collection('users')
+    .doc(username)
+    .update({ answers: answer })
+}
+
 const setAmountOfUsers = (roomCode, numberOfUsers) => {
   return rooms.doc(roomCode).update({ amountOfPlayers: numberOfUsers });
 };
@@ -112,6 +121,7 @@ const checkAllAnswered = (roomCode) => {
     });
   // you would then do an if statement checking if the current users.length in gameWaitingRoom
   // is strictly equal to the number of users grabbed from the database. If true, button will appear for host to continue
+
 };
 
 module.exports = {
@@ -122,6 +132,7 @@ module.exports = {
   getPic,
   getPicOrder,
   startGame,
+  postAnswerToUser
   setAmountOfUsers,
   checkAllAnswered,
 };
