@@ -1,7 +1,7 @@
 const randomCodeGen = () => {
   const randomChars =
-    'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890';
-  let result = '';
+    "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
+  let result = "";
   for (let i = 0; i < 6; i++) {
     result += randomChars.charAt(
       Math.floor(Math.random() * randomChars.length)
@@ -35,4 +35,15 @@ const hasDuplicates = (array) => {
   return false;
 };
 
-module.exports = { randomCodeGen, randomNumberGen, hasDuplicates };
+const shuffle = (array) => {
+  const shuffled = [];
+  const length = array.length;
+  for (let i = 0; i < length; i++) {
+    const number = Math.floor(Math.random() * array.length);
+    shuffled.push(array[number]);
+    array.splice(number, 1);
+  }
+  return shuffled;
+};
+
+module.exports = { randomCodeGen, randomNumberGen, hasDuplicates, shuffle };

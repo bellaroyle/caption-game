@@ -1,38 +1,37 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, TextInput, Image } from 'react-native';
+import React, { useEffect, useState, useContext } from "react";
+import { View, Text, TextInput, Image } from "react-native";
 import {
   getPic,
   getPicOrder,
   postAnswerToUser,
-} from '../../utils/databaseFuncs';
-import { UserContext } from '../../Context/UserContext';
-import NewButton from '../../components/NewButton';
-import styles from './RoundStyles';
+} from "../../utils/databaseFuncs";
+import { UserContext } from "../../Context/UserContext";
+import NewButton from "../../components/NewButton";
+import styles from "./RoundStyles";
 
 const round = 1;
 
 export default function Round(props) {
-  const [picRef, setPicRef] = useState('');
+  const [picRef, setPicRef] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [answer, setAnswer] = useState('');
+  const [answer, setAnswer] = useState("");
   const { user, roomCode } = useContext(UserContext);
   const {
-    navigation: { navigate }
+    navigation: { navigate },
   } = props;
 
   useEffect(() => {
     getPicOrder(roomCode).then((picOrder) => {
-      console.log(picOrder);
       getPic(picOrder, round).then((picRef) => {
         setPicRef(picRef);
         setIsLoading(false);
       });
-    }, []);
-  });
+    });
+  }, []);
 
   const submitAnswer = () => {
     postAnswerToUser(user.username, roomCode, answer).then(() => {
-      navigate('GameWaitingRoom');
+      navigate("GameWaitingRoom");
     });
   };
 
