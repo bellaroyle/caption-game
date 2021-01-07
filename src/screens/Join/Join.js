@@ -7,10 +7,10 @@ import styles from './JoinStyles';
 
 export default function Join(props) {
   const {
-    navigation: { navigate }
+    navigation: { navigate },
   } = props;
 
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, setRoomCode } = useContext(UserContext);
 
   const [username, setUsername] = useState('');
   const [roomInput, setRoomInput] = useState('');
@@ -19,12 +19,13 @@ export default function Join(props) {
     joinRoom(roomInput, username)
       .then(() => {
         setUser({ username, isHost: false });
+        setRoomCode(roomInput);
         navigate('WaitingRoom');
       })
       .catch(({ title, message }) => {
         Alert.alert(title, message, {
           text: 'OK',
-          onPress: () => console.log('OK Pressed')
+          onPress: () => console.log('OK Pressed'),
         });
       });
   };
