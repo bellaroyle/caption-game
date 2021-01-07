@@ -89,7 +89,12 @@ const startGame = (roomCode) => {
 
 const startAnswers = (roomCode) => {
   console.log('Starting answers in room:', roomCode);
-  return rooms.doc(roomCode).update({ startAnswers: true });
+  return rooms
+    .doc(roomCode)
+    .update({ startGame: false })
+    .then(() => {
+      return rooms.doc(roomCode).update({ startAnswers: true });
+    });
 };
 
 const getPic = (array, round) => {
