@@ -4,13 +4,15 @@ import { getPic, getPicOrder, getAnswers } from "../../utils/databaseFuncs";
 import { UserContext } from "../../Context/UserContext";
 import NewButton from "../../components/NewButton";
 import styles from "./AnswersStyles";
+import { shuffle } from "../../utils/utils";
 
 const round = 1;
 
 export default function Answers(props) {
   const [picRef, setPicRef] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const { answers, setAnswers } = useState([]);
+  const [answers, setAnswers] = useState([]);
+  const [answerIndex, setAnswerIndex] = useState(0);
   const { user, roomCode } = useContext(UserContext);
 
   // const {
@@ -26,18 +28,24 @@ export default function Answers(props) {
         });
       })
       .then(() => {
-        getAnswers(roomCode).then((answers) => {
-          console.log(answers);
-          setAnswers(answers);
+        getAnswers(roomCode).then((result) => {
+          console.log(result);
+          setAnswers(shuffle(result));
         });
       });
   }, []);
 
-  // const submitAnswer = () => {
-  //   postAnswerToUser(user.username, roomCode, answer).then(() => {
-  //     navigate("GameWaitingRoom", { roomCode });
-  //   });
-  // };
+  useEffect(() => {
+    let interval;
+    if (answerIndex < answers.length - 1) {
+      interval = setTimeout(() => {
+        setAnswerIndex(answerIndex + 1);
+      }, 2000);
+    }
+    return () => {
+      clearTimeout(interval);
+    };
+  }, [answerIndex, answers]);
 
   if (isLoading) {
     return (
@@ -51,15 +59,7 @@ export default function Answers(props) {
       <View style={styles.screen}>
         <Text>Round 1: Answers</Text>
         <Image source={{ uri: picRef }} style={styles.pic} />
-        {/* <TextInput
-          multiline={true}
-          onChangeText={(text) => setAnswer(text)}
-          value={answer}
-          style={styles.input}
-        />
-        <NewButton onPress={submitAnswer}>
-          <Text>Submit answer</Text>
-        </NewButton> */}
+        <Text>{answers[answerIndex].answer}</Text>
       </View>
     );
   }
