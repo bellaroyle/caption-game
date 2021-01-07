@@ -14,12 +14,11 @@ export default function GameWaitingRoom(props) {
   const [users, setUsers] = useState([]);
   const [usersInGame, setUsersInGame] = useState([]);
   const {
-    navigation: { navigate },
+    navigation: { navigate }
   } = props;
 
-  const { user } = useContext(UserContext);
+  const { user, roomCode } = useContext(UserContext);
 
-  const roomCode = props.route.params.roomCode;
   const roomDoc = firebase.firestore().collection('rooms').doc(roomCode);
 
   useEffect(() => {
@@ -42,7 +41,9 @@ export default function GameWaitingRoom(props) {
         keyExtractor={(item) => item.name}
       />
       {users.length === usersInGame && user.isHost && (
+        <NewButton onPress={() => navigate('Answers')}>
         <Text>Move to Voting </Text>
+      </NewButton>
       )}
     </View>
   );

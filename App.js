@@ -6,8 +6,10 @@ import { UserContext } from './src/Context/UserContext';
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [roomCode, setRoomCode] = useState('');
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, roomCode, setRoomCode }}>
       <Navigator />
     </UserContext.Provider>
   );

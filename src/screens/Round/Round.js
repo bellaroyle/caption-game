@@ -15,11 +15,9 @@ export default function Round(props) {
   const [picRef, setPicRef] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [answer, setAnswer] = useState('');
-  const { user } = useContext(UserContext);
-
-  const roomCode = props.route.params.roomCode;
+  const { user, roomCode } = useContext(UserContext);
   const {
-    navigation: { navigate },
+    navigation: { navigate }
   } = props;
 
   useEffect(() => {
@@ -34,7 +32,7 @@ export default function Round(props) {
 
   const submitAnswer = () => {
     postAnswerToUser(user.username, roomCode, answer).then(() => {
-      navigate('GameWaitingRoom', { roomCode });
+      navigate('GameWaitingRoom');
     });
   };
 

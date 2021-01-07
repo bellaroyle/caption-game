@@ -19,7 +19,7 @@ export default function Join(props) {
     joinRoom(roomInput, username)
       .then(() => {
         setUser({ username, isHost: false });
-        navigate('WaitingRoom', { roomCode: roomInput });
+        navigate('WaitingRoom');
       })
       .catch(({ title, message }) => {
         Alert.alert(title, message, {
