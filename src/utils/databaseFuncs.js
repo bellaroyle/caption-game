@@ -10,7 +10,13 @@ const createRoom = (username) => {
   const amountOfPlayers = 0;
   return rooms
     .doc(roomCode)
-    .set({ picOrder, startGame: false, amountOfPlayers, round: 1 })
+    .set({
+      picOrder,
+      startGame: false,
+      amountOfPlayers,
+      round: 1,
+      startAnswers: false,
+    })
     .then(() => {
       return rooms
         .doc(roomCode)
@@ -81,6 +87,11 @@ const startGame = (roomCode) => {
   return rooms.doc(roomCode).update({ startGame: true });
 };
 
+const startAnswers = (roomCode) => {
+  console.log('Starting answers in room:', roomCode);
+  return rooms.doc(roomCode).update({ startAnswers: true });
+};
+
 const getPic = (array, round) => {
   let num = array[round - 1];
   return firebase.storage().ref().child(`/${num}.jpg`).getDownloadURL();
@@ -138,4 +149,5 @@ module.exports = {
   postAnswerToUser,
   setAmountOfUsers,
   getAmountOfUsers,
+  startAnswers,
 };
