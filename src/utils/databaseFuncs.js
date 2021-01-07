@@ -16,6 +16,7 @@ const createRoom = (username) => {
       amountOfPlayers,
       round: 1,
       startAnswers: false,
+      roundAnswers: [],
     })
     .then(() => {
       return rooms
@@ -87,13 +88,12 @@ const startGame = (roomCode) => {
   return rooms.doc(roomCode).update({ startGame: true });
 };
 
-const startAnswers = (roomCode) => {
-  console.log('Starting answers in room:', roomCode);
+const startAnswers = (roomCode, roundAnswers) => {
   return rooms
     .doc(roomCode)
     .update({ startGame: false })
     .then(() => {
-      return rooms.doc(roomCode).update({ startAnswers: true });
+      return rooms.doc(roomCode).update({ startAnswers: true, roundAnswers });
     });
 };
 
@@ -135,10 +135,6 @@ const getAmountOfUsers = (roomCode) => {
     .doc(roomCode)
     .get()
     .then((doc) => {
-      console.log(
-        doc.data().amountOfPlayers,
-        "<<<<amount of players at start of game"
-      );
       return doc.data().amountOfPlayers;
     });
 };
@@ -156,6 +152,15 @@ const getAnswers = (roomCode) => {
     });
 };
 
+const getRoundAnswers = (roomCode) => {
+  return rooms
+    .doc(roomCode)
+    .get()
+    .then((doc) => {
+      return doc.data().roundAnswers;
+    });
+};
+
 module.exports = {
   rooms,
   createRoom,
@@ -169,4 +174,5 @@ module.exports = {
   getAmountOfUsers,
   getAnswers,
   startAnswers,
+  getRoundAnswers,
 };
