@@ -6,9 +6,8 @@ import NewButton from '../../components/NewButton';
 import styles from './WelcomeStyles';
 
 export default function Welcome(props) {
-  console.log(props);
   const {
-    navigation: { navigate }
+    navigation: { navigate },
   } = props;
 
   return (
