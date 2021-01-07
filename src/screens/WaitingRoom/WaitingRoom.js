@@ -12,7 +12,7 @@ export default function WaitingRoom(props) {
     navigation: { navigate },
   } = props;
 
-  const { user } = useContext(UserContext);
+  const { user, setUsersInGame } = useContext(UserContext);
 
   const roomCode = props.route.params.roomCode;
   const roomDoc = firebase.firestore().collection('rooms').doc(roomCode);
