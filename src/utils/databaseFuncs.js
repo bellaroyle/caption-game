@@ -10,7 +10,13 @@ const createRoom = (username) => {
   const amountOfPlayers = 0;
   return rooms
     .doc(roomCode)
-    .set({ picOrder, startGame: false, amountOfPlayers, round: 1 })
+    .set({
+      picOrder,
+      startGame: false,
+      amountOfPlayers,
+      round: 1,
+      startAnswers: false,
+    })
     .then(() => {
       return rooms
         .doc(roomCode)
@@ -79,6 +85,11 @@ const joinRoom = (roomCode, username) => {
 const startGame = (roomCode) => {
   console.log("Starting Game:", roomCode);
   return rooms.doc(roomCode).update({ startGame: true });
+};
+
+const startAnswers = (roomCode) => {
+  console.log('Starting answers in room:', roomCode);
+  return rooms.doc(roomCode).update({ startAnswers: true });
 };
 
 const getPic = (array, round) => {
@@ -152,4 +163,5 @@ module.exports = {
   setAmountOfUsers,
   getAmountOfUsers,
   getAnswers,
+  startAnswers,
 };

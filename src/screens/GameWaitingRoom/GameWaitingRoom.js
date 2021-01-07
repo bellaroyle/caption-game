@@ -4,6 +4,7 @@ import {
   startGame,
   setAmountOfUsers,
   getAmountOfUsers,
+  startAnswers,
 } from '../../utils/databaseFuncs';
 import UserCard from '../../components/UserCard';
 import { firebase } from '../../firebase/config';
@@ -14,7 +15,7 @@ export default function GameWaitingRoom(props) {
   const [users, setUsers] = useState([]);
   const [usersInGame, setUsersInGame] = useState([]);
   const {
-    navigation: { navigate }
+    navigation: { navigate },
   } = props;
 
   const { user, roomCode } = useContext(UserContext);
@@ -32,6 +33,18 @@ export default function GameWaitingRoom(props) {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = roomDoc.onSnapshot((roomSnap) => {
+      const { startAnswers } = roomSnap.data();
+      if (startAnswers) navigate('Answers');
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleStartButton = () => {
+    startAnswers(roomCode);
+  };
+
   return (
     <View>
       <Text>Game Waiting room</Text>
@@ -41,9 +54,9 @@ export default function GameWaitingRoom(props) {
         keyExtractor={(item) => item.name}
       />
       {users.length === usersInGame && user.isHost && (
-        <NewButton onPress={() => navigate('Answers')}>
-        <Text>Move to Voting </Text>
-      </NewButton>
+        <NewButton onPress={handleStartButton}>
+          <Text>Move to Voting </Text>
+        </NewButton>
       )}
     </View>
   );
