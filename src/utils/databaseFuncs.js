@@ -1,8 +1,8 @@
-import { firebase } from "../firebase/config";
-import { randomCodeGen, randomNumberGen } from "./utils";
-import { Alert } from "react-native";
+import { firebase } from '../firebase/config';
+import { randomCodeGen, randomNumberGen } from './utils';
+import { Alert } from 'react-native';
 
-const rooms = firebase.firestore().collection("rooms");
+const rooms = firebase.firestore().collection('rooms');
 
 const createRoom = (username) => {
   const roomCode = randomCodeGen();
@@ -10,18 +10,18 @@ const createRoom = (username) => {
   const amountOfPlayers = 0;
   return rooms
     .doc(roomCode)
-    .set({ picOrder, startGame: false, amountOfPlayers })
+    .set({ picOrder, startGame: false, amountOfPlayers, round: 1 })
     .then(() => {
       return rooms
         .doc(roomCode)
-        .collection("users")
+        .collection('users')
         .doc(username)
         .set({
           host: true,
           name: username,
           roundScore: 0,
           overallScore: 0,
-          answers: "",
+          answers: '',
         })
         .then(() => {
           return roomCode;
@@ -32,7 +32,7 @@ const createRoom = (username) => {
 const getUsersInRoom = (roomCode) => {
   return rooms
     .doc(roomCode)
-    .collection("users")
+    .collection('users')
     .get()
     .then((snapshot) => {
       return snapshot.docs.map((doc) => {
@@ -42,7 +42,7 @@ const getUsersInRoom = (roomCode) => {
 };
 
 const doesRoomExist = (roomCode) => {
-  console.log(roomCode, "room code ");
+  console.log(roomCode, 'room code ');
   return rooms
     .doc(roomCode)
     .get()
@@ -52,32 +52,32 @@ const doesRoomExist = (roomCode) => {
 };
 
 const joinRoom = (roomCode, username) => {
-  console.log(roomCode, "room code in join room");
+  console.log(roomCode, 'room code in join room');
   return doesRoomExist(roomCode).then((roomExists) => {
     return roomExists
       ? getUsersInRoom(roomCode).then((users) => {
           return users.includes(username)
             ? Promise.reject({
-                title: "Username in use",
-                message: "Please choose another username",
+                title: 'Username in use',
+                message: 'Please choose another username',
               })
-            : rooms.doc(roomCode).collection("users").doc(username).set({
+            : rooms.doc(roomCode).collection('users').doc(username).set({
                 host: false,
                 name: username,
                 roundScore: 0,
                 overallScore: 0,
-                answers: "",
+                answers: '',
               });
         })
       : Promise.reject({
-          title: "Room does not exist",
-          message: "Please enter a valid room code",
+          title: 'Room does not exist',
+          message: 'Please enter a valid room code',
         });
   });
 };
 
 const startGame = (roomCode) => {
-  console.log("Starting Game:", roomCode);
+  console.log('Starting Game:', roomCode);
   return rooms.doc(roomCode).update({ startGame: true });
 };
 
@@ -98,13 +98,13 @@ const getPicOrder = (roomCode) => {
 const postAnswerToUser = (username, roomCode, answer) => {
   return rooms
     .doc(roomCode)
-    .collection("users")
+    .collection('users')
     .doc(username)
     .update({ answers: answer })
     .then(() => {
       return rooms
         .doc(roomCode)
-        .collection("waiting")
+        .collection('waiting')
         .doc(username)
         .set({ name: username });
     });
@@ -114,15 +114,17 @@ const setAmountOfUsers = (roomCode, numberOfUsers) => {
   return rooms.doc(roomCode).update({ amountOfPlayers: numberOfUsers });
 };
 
-const checkAllAnswered = (roomCode) => {
+const getAmountOfUsers = (roomCode) => {
   return rooms
     .doc(roomCode)
     .get()
     .then((doc) => {
-      console.log(doc.data().amountOfPlayers, "<<<<<< number of users");
+      console.log(
+        doc.data().amountOfPlayers,
+        '<<<<amount of players at start of game'
+      );
+      return doc.data().amountOfPlayers;
     });
-  // you would then do an if statement checking if the current users.length in gameWaitingRoom
-  // is strictly equal to the number of users grabbed from the database. If true, button will appear for host to continue
 };
 
 module.exports = {
@@ -135,5 +137,5 @@ module.exports = {
   startGame,
   postAnswerToUser,
   setAmountOfUsers,
-  checkAllAnswered,
+  getAmountOfUsers,
 };

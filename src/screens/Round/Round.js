@@ -3,7 +3,7 @@ import { View, Text, TextInput, Image } from 'react-native';
 import {
   getPic,
   getPicOrder,
-  postAnswerToUser
+  postAnswerToUser,
 } from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
 import NewButton from '../../components/NewButton';
@@ -16,7 +16,6 @@ export default function Round(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [answer, setAnswer] = useState('');
   const { user, roomCode } = useContext(UserContext);
-
   const {
     navigation: { navigate }
   } = props;
