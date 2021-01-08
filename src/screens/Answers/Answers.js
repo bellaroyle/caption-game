@@ -1,20 +1,20 @@
-import React, { useEffect, useState, useContext } from "react";
-import { View, Text, TextInput, Image } from "react-native";
+import React, { useEffect, useState, useContext } from 'react';
+import { View, Text, TextInput, Image } from 'react-native';
 import {
   getPic,
   getPicOrder,
   getRoundAnswers,
   getAmountOfUsers,
-} from "../../utils/databaseFuncs";
-import { UserContext } from "../../Context/UserContext";
-import NewButton from "../../components/NewButton";
-import styles from "./AnswersStyles";
-import { shuffle } from "../../utils/utils";
+} from '../../utils/databaseFuncs';
+import { UserContext } from '../../Context/UserContext';
+import NewButton from '../../components/NewButton';
+import styles from './AnswersStyles';
+import { shuffle } from '../../utils/utils';
 
 const round = 1;
 
 export default function Answers(props) {
-  const [picRef, setPicRef] = useState("");
+  const [picRef, setPicRef] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [answersLoaded, setAnswersLoaded] = useState(false);
   const [answers, setAnswers] = useState([]);
@@ -45,15 +45,17 @@ export default function Answers(props) {
   useEffect(() => {
     let interval;
     if (answersLoaded) {
-      console.log(answerIndex, "<---------- answerIndexx");
-      console.log(answers.length, "<---------- answers.length");
+      console.log(answerIndex, '<---------- answerIndexx');
+      console.log(answers.length, '<---------- answers.length');
 
       if (answerIndex < answers.length - 1) {
         interval = setTimeout(() => {
           setAnswerIndex(answerIndex + 1);
         }, 10000);
       } else {
-        navigate("Voting");
+        interval = setTimeout(() => {
+          navigate('Voting');
+        }, 10000);
       }
     }
 
