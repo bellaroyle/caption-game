@@ -1,12 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function AnswerCard({ answerData: { name, answers, score } }) {
+export default function LeaderboardCard({ scoreData: { name, score } }) {
   //   console.log(props);
   return (
     <View style={styles.container}>
       <Text>{name}</Text>
-      <Text>{answers}</Text>
       <Text>{score}</Text>
     </View>
   );

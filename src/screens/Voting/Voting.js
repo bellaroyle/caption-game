@@ -29,7 +29,7 @@ export default function Voting(props) {
       });
     } else {
       addVotes(roomCode, username);
-      navigate('Leaderboard');
+      navigate('Leaderboard', { isRound: true, isOverall: false });
     }
   };
 
@@ -37,7 +37,6 @@ export default function Voting(props) {
     <View>
       <Text>Click on one of the answers below to give it your vote!</Text>
       <Text>Remember, you can't vote for your own!</Text>
-
       <FlatList
         data={answers}
         keyExtractor={(item) => item.name}
