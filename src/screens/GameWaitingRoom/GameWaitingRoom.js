@@ -1,17 +1,17 @@
-import React, { useEffect, useState, useContext } from "react";
-import { View, Text, FlatList, DatePickerIOSBase } from "react-native";
+import React, { useEffect, useState, useContext } from 'react';
+import { View, Text, FlatList, DatePickerIOSBase } from 'react-native';
 import {
   startGame,
   setAmountOfUsers,
   getAmountOfUsers,
   startAnswers,
-  getAnswers,
-} from "../../utils/databaseFuncs";
-import UserCard from "../../components/UserCard";
-import { firebase } from "../../firebase/config";
-import NewButton from "../../components/NewButton";
-import { UserContext } from "../../Context/UserContext";
-import { shuffle } from "../../utils/utils";
+  getUsers,
+} from '../../utils/databaseFuncs';
+import UserCard from '../../components/UserCard';
+import { firebase } from '../../firebase/config';
+import NewButton from '../../components/NewButton';
+import { UserContext } from '../../Context/UserContext';
+import { shuffle } from '../../utils/utils';
 
 export default function GameWaitingRoom(props) {
   const [users, setUsers] = useState([]);
@@ -22,10 +22,10 @@ export default function GameWaitingRoom(props) {
 
   const { user, roomCode } = useContext(UserContext);
 
-  const roomDoc = firebase.firestore().collection("rooms").doc(roomCode);
+  const roomDoc = firebase.firestore().collection('rooms').doc(roomCode);
 
   useEffect(() => {
-    const unsubscribe = roomDoc.collection("waiting").onSnapshot((snap) => {
+    const unsubscribe = roomDoc.collection('waiting').onSnapshot((snap) => {
       const data = snap.docs.map((doc) => doc.data());
       setUsers(data);
       getAmountOfUsers(roomCode).then((res) => {
@@ -38,13 +38,16 @@ export default function GameWaitingRoom(props) {
   useEffect(() => {
     const unsubscribe = roomDoc.onSnapshot((roomSnap) => {
       const { startAnswers } = roomSnap.data();
-      if (startAnswers) navigate("Answers", { noOfUsers: users.length });
+      if (startAnswers) navigate('Answers', { noOfUsers: users.length });
     });
     return () => unsubscribe();
   }, []);
 
   const handleStartButton = () => {
-    getAnswers(roomCode).then((answers) => {
+    getUsers(roomCode).then((users) => {
+      const answers = users.map((user) => {
+        return { name: user.name, answer: user.answers };
+      });
       startAnswers(roomCode, shuffle(answers));
     });
   };

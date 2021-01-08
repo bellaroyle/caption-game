@@ -37,6 +37,7 @@ export default function Voting(props) {
     <View>
       <Text>Click on one of the answers below to give it your vote!</Text>
       <Text>Remember, you can't vote for your own!</Text>
+
       <FlatList
         data={answers}
         keyExtractor={(item) => item.name}

@@ -3,6 +3,7 @@ import { randomCodeGen, randomNumberGen } from './utils';
 import { Alert } from 'react-native';
 
 const rooms = firebase.firestore().collection('rooms');
+
 const increment = firebase.firestore.FieldValue.increment(1);
 
 const createRoom = (username) => {
@@ -153,6 +154,18 @@ const getAnswers = (roomCode) => {
     });
 };
 
+const getUsers = (roomCode) => {
+  return rooms
+    .doc(roomCode)
+    .collection('users')
+    .get()
+    .then((snapshot) => {
+      return snapshot.docs.map((doc) => {
+        return doc.data();
+      });
+    });
+};
+
 const getRoundAnswers = (roomCode) => {
   return rooms
     .doc(roomCode)
@@ -184,5 +197,6 @@ module.exports = {
   getAnswers,
   startAnswers,
   getRoundAnswers,
+  getUsers,
   addVotes,
 };
