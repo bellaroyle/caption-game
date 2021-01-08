@@ -4,6 +4,8 @@ import { Alert } from 'react-native';
 
 const rooms = firebase.firestore().collection('rooms');
 
+const increment = firebase.firestore.FieldValue.increment(1);
+
 const createRoom = (username) => {
   const roomCode = randomCodeGen();
   const picOrder = randomNumberGen();
@@ -173,6 +175,14 @@ const getRoundAnswers = (roomCode) => {
     });
 };
 
+const addVotes = (roomCode, user) => {
+  return rooms
+    .doc(roomCode)
+    .collection('users')
+    .doc(user)
+    .update({ overallScore: increment, roundScore: increment });
+};
+
 module.exports = {
   rooms,
   createRoom,
@@ -188,4 +198,5 @@ module.exports = {
   startAnswers,
   getRoundAnswers,
   getUsers,
+  addVotes,
 };
