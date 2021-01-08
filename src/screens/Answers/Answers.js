@@ -1,6 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, TextInput, Image } from 'react-native';
-import { getPic, getPicOrder, getAnswers } from '../../utils/databaseFuncs';
+import {
+  getPic,
+  getPicOrder,
+  getRoundAnswers,
+  getAmountOfUsers,
+} from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
 import NewButton from '../../components/NewButton';
 import styles from './AnswersStyles';
@@ -37,10 +42,19 @@ export default function Answers(props) {
 
   useEffect(() => {
     let interval;
-    if (answerIndex < answers.length - 1) {
-      interval = setTimeout(() => {
-        setAnswerIndex(answerIndex + 1);
-      }, 10000);
+    if (answersLoaded) {
+      console.log(answerIndex, '<---------- answerIndexx');
+      console.log(answers.length, '<---------- answers.length');
+
+      if (answerIndex < answers.length - 1) {
+        interval = setTimeout(() => {
+          setAnswerIndex(answerIndex + 1);
+        }, 10000);
+      } else {
+        interval = setTimeout(() => {
+          navigate('Voting');
+        }, 10000);
+      }
     }
     return () => {
       clearTimeout(interval);
