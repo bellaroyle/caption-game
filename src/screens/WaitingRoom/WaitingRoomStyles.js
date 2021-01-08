@@ -5,13 +5,14 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: 'dodgerblue',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   roomCode: {
     fontSize: 25,
-    marginVertical: 10
+    marginVertical: 10,
+    fontFamily: 'Times New Roman',
   },
   button: {
-    marginBottom: 100
-  }
+    marginBottom: 100,
+  },
 });
