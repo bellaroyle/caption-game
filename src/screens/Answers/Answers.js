@@ -14,7 +14,7 @@ import { shuffle } from "../../utils/utils";
 const round = 1;
 
 export default function Answers(props) {
-  const [picRef, setPicRef] = useState("");
+  const [picRef, setPicRef] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [answersLoaded, setAnswersLoaded] = useState(false);
   const [answers, setAnswers] = useState([]);
@@ -53,7 +53,9 @@ export default function Answers(props) {
           setAnswerIndex(answerIndex + 1);
         }, 10000);
       } else {
-        navigate("Voting");
+      interval = setTimeout(() => {
+           navigate("Voting");
+        }, 10000);
       }
     }
 
@@ -78,6 +80,9 @@ export default function Answers(props) {
         <Text>Round 1: Answers</Text>
         <Image source={{ uri: picRef }} style={styles.pic} />
         <Text>{answers[answerIndex].answer}</Text>
+        <NewButton onPress={() => navigate('Voting')}>
+          <Text>Move on </Text>
+        </NewButton>
       </View>
     );
   }
