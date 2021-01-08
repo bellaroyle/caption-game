@@ -1,23 +1,23 @@
-import React, { useEffect, useState, useContext } from "react";
-import { View, Text, TextInput, Image } from "react-native";
-import { getPic, getPicOrder, getAnswers } from "../../utils/databaseFuncs";
-import { UserContext } from "../../Context/UserContext";
-import NewButton from "../../components/NewButton";
-import styles from "./AnswersStyles";
-import { shuffle } from "../../utils/utils";
+import React, { useEffect, useState, useContext } from 'react';
+import { View, Text, TextInput, Image } from 'react-native';
+import { getPic, getPicOrder, getAnswers } from '../../utils/databaseFuncs';
+import { UserContext } from '../../Context/UserContext';
+import NewButton from '../../components/NewButton';
+import styles from './AnswersStyles';
+import { shuffle } from '../../utils/utils';
 
 const round = 1;
 
 export default function Answers(props) {
-  const [picRef, setPicRef] = useState("");
+  const [picRef, setPicRef] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [answers, setAnswers] = useState([]);
   const [answerIndex, setAnswerIndex] = useState(0);
   const { user, roomCode } = useContext(UserContext);
 
-  // const {
-  //   navigation: { navigate },
-  // } = props;
+  const {
+    navigation: { navigate },
+  } = props;
 
   useEffect(() => {
     getPicOrder(roomCode)
@@ -40,7 +40,7 @@ export default function Answers(props) {
     if (answerIndex < answers.length - 1) {
       interval = setTimeout(() => {
         setAnswerIndex(answerIndex + 1);
-      }, 2000);
+      }, 10000);
     }
     return () => {
       clearTimeout(interval);
@@ -60,6 +60,9 @@ export default function Answers(props) {
         <Text>Round 1: Answers</Text>
         <Image source={{ uri: picRef }} style={styles.pic} />
         <Text>{answers[answerIndex].answer}</Text>
+        <NewButton onPress={() => navigate('Voting')}>
+          <Text>Move on </Text>
+        </NewButton>
       </View>
     );
   }

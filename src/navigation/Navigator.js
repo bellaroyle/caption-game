@@ -9,6 +9,7 @@ import WaitingRoom from '../screens/WaitingRoom/WaitingRoom';
 import Round from '../screens/Round/Round';
 import GameWaitingRoom from '../screens/GameWaitingRoom/GameWaitingRoom';
 import Answers from '../screens/Answers/Answers';
+import Voting from '../screens/Voting/Voting';
 
 export default function Navigator() {
   return (
@@ -30,6 +31,7 @@ const GameStackNavigator = () => {
       <GameStack.Screen name="Round" component={Round} />
       <GameStack.Screen name="GameWaitingRoom" component={GameWaitingRoom} />
       <GameStack.Screen name="Answers" component={Answers} />
+      <GameStack.Screen name="Voting" component={Voting} />
     </GameStack.Navigator>
   );
 };
