@@ -1,16 +1,22 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, TextInput, Image } from 'react-native';
-import { getPic, getPicOrder, getAnswers } from '../../utils/databaseFuncs';
-import { UserContext } from '../../Context/UserContext';
-import NewButton from '../../components/NewButton';
-import styles from './AnswersStyles';
-import { shuffle } from '../../utils/utils';
+import React, { useEffect, useState, useContext } from "react";
+import { View, Text, TextInput, Image } from "react-native";
+import {
+  getPic,
+  getPicOrder,
+  getRoundAnswers,
+  getAmountOfUsers,
+} from "../../utils/databaseFuncs";
+import { UserContext } from "../../Context/UserContext";
+import NewButton from "../../components/NewButton";
+import styles from "./AnswersStyles";
+import { shuffle } from "../../utils/utils";
 
 const round = 1;
 
 export default function Answers(props) {
   const [picRef, setPicRef] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [answersLoaded, setAnswersLoaded] = useState(false);
   const [answers, setAnswers] = useState([]);
   const [answerIndex, setAnswerIndex] = useState(0);
   const { user, roomCode } = useContext(UserContext);
@@ -28,24 +34,38 @@ export default function Answers(props) {
         });
       })
       .then(() => {
-        getAnswers(roomCode).then((result) => {
-          console.log(result);
-          setAnswers(shuffle(result));
+        getRoundAnswers(roomCode).then((result) => {
+          setAnswers(result);
+          setAnswersLoaded(true);
+          console.log(answersLoaded);
         });
       });
   }, []);
 
   useEffect(() => {
     let interval;
-    if (answerIndex < answers.length - 1) {
+    if (answersLoaded) {
+      console.log(answerIndex, "<---------- answerIndexx");
+      console.log(answers.length, "<---------- answers.length");
+
+      if (answerIndex < answers.length - 1) {
+        interval = setTimeout(() => {
+          setAnswerIndex(answerIndex + 1);
+        }, 10000);
+      } else {
       interval = setTimeout(() => {
-        setAnswerIndex(answerIndex + 1);
-      }, 10000);
+           navigate("Voting");
+        }, 10000);
+      }
     }
+
+    // console.log(props.route, "<---------props.route");
+
+    // }
     return () => {
       clearTimeout(interval);
     };
-  }, [answerIndex, answers]);
+  }, [answerIndex, answers, answersLoaded]);
 
   if (isLoading) {
     return (

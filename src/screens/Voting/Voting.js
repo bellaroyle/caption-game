@@ -14,7 +14,7 @@ export default function Voting(props) {
     navigation: { navigate },
   } = props;
 
-  const roomDoc = firebase.firestore().collection('rooms').doc(roomCode);
+  const roomDoc = firebase.firestore().collection("rooms").doc(roomCode);
 
   useEffect(() => {
     getAnswers(roomCode).then((result) => {
