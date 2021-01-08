@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, FlatList } from 'react-native';
-import { getUsers } from '../../utils/databaseFuncs';
+import { getScores } from '../../utils/databaseFuncs';
+import { getVotes } from '../../utils/utils';
 import { UserContext } from '../../Context/UserContext';
+import { firebase } from '../../firebase/config';
+import NewButton from '../../components/NewButton';
 import AnswerCard from '../../components/AnswerCard';
 import LeaderboardCard from '../../components/LeaderboardCard';
 import styles from './LeaderboardStyles';
@@ -9,20 +12,44 @@ import styles from './LeaderboardStyles';
 export default function Leaderboard(props) {
   const [answerData, setAnswerData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isRound, setIsRound] = useState(true);
   const { user, roomCode } = useContext(UserContext);
-  const { isRound } = props.route.params;
+  //   const { isRound } = props.route.params;
+  const {
+    navigation: { navigate },
+  } = props;
 
+  const roomDoc = firebase.firestore().collection('rooms').doc(roomCode);
+
+  //   console.log(isRound);
+  //   if (isRound) {
   useEffect(() => {
-    getUsers(roomCode).then((users) => {
-      const answerData = users.map(({ name, answers, roundScore }) => {
+    const unsubscribe = roomDoc.collection('users').onSnapshot((snap) => {
+      const data = snap.docs.map((doc) => {
+        const { name, answers, roundScore, overallScore } = doc.data();
         return { name, answers, roundScore, overallScore };
       });
+      const answerData = isRound
+        ? data.sort((a, b) => (a.roundScore < b.roundScore ? 1 : -1))
+        : data.sort((a, b) => (a.overallScore < b.overallScore ? 1 : -1));
+
       setAnswerData(answerData);
       setIsLoading(false);
     });
+    return () => unsubscribe();
   }, []);
 
-  //   const handleMoveOn=()
+  useEffect(() => {
+    let interval;
+    if (getVotes(answerData) === answerData.length) {
+      interval = setTimeout(() => {
+        setIsRound(false);
+      }, 1000);
+    }
+    return () => {
+      clearTimeout(interval);
+    };
+  }, [answerData]);
 
   if (isLoading) {
     return (
@@ -57,11 +84,17 @@ export default function Leaderboard(props) {
             )
           }
         />
-        <NewButton onPress={handleMoveOn}>
-          <Text>Move on </Text>
-        </NewButton>
+        {!isRound && user.isHost && (
+          <NewButton
+            style={styles.button}
+            onPress={() => {
+              navigate('Round');
+            }}
+          >
+            <Text>Begin Round 2</Text>
+          </NewButton>
+        )}
       </View>
     );
   }
-
 }

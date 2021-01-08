@@ -141,15 +141,19 @@ const getAmountOfUsers = (roomCode) => {
     });
 };
 
-const getAnswers = (roomCode) => {
+const getScores = (roomCode) => {
   return rooms
     .doc(roomCode)
     .collection('users')
+    .orderBy('overallScore', 'desc')
     .get()
     .then((snapshot) => {
       return snapshot.docs.map((doc) => {
-        const user = doc.data();
-        return { name: user.name, answer: user.answers };
+        const { name, overallScore } = doc.data();
+        return {
+          name,
+          overallScore,
+        };
       });
     });
 };
@@ -194,7 +198,7 @@ module.exports = {
   postAnswerToUser,
   setAmountOfUsers,
   getAmountOfUsers,
-  getAnswers,
+  getScores,
   startAnswers,
   getRoundAnswers,
   getUsers,
