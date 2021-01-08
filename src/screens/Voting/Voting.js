@@ -20,7 +20,11 @@ export default function Voting(props) {
     <View>
       <Text>Click on one of the answers below to give it your vote!</Text>
       <Text>Remember, you can't vote for your own!</Text>
-      <NewButton onPress={() => navigate('Leaderboard')}>
+      <NewButton
+        onPress={() =>
+          navigate('Leaderboard', { isRound: true, isOverall: false })
+        }
+      >
         <Text>Move to leaderboard</Text>
       </NewButton>
     </View>
