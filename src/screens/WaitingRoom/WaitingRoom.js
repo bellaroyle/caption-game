@@ -10,7 +10,7 @@ import styles from './WaitingRoomStyles';
 export default function WaitingRoom(props) {
   const [users, setUsers] = useState([]);
   const {
-    navigation: { navigate }
+    navigation: { navigate },
   } = props;
 
   const { user, roomCode } = useContext(UserContext);
@@ -34,7 +34,6 @@ export default function WaitingRoom(props) {
   }, []);
 
   const handleStartButton = () => {
-    console.log('Start game in waiting room:', roomCode);
     startGame(roomCode);
     setAmountOfUsers(roomCode, users.length);
   };

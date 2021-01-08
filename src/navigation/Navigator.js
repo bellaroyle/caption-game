@@ -1,15 +1,16 @@
-import React from "react";
-import {} from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import Welcome from "../screens/Welcome/Welcome";
-import Host from "../screens/Host/Host";
-import Join from "../screens/Join/Join";
-import WaitingRoom from "../screens/WaitingRoom/WaitingRoom";
-import Round from "../screens/Round/Round";
-import GameWaitingRoom from "../screens/GameWaitingRoom/GameWaitingRoom";
-import Answers from "../screens/Answers/Answers";
-import Voting from "../screens/Voting/Voting";
+import React from 'react';
+import {} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Welcome from '../screens/Welcome/Welcome';
+import Host from '../screens/Host/Host';
+import Join from '../screens/Join/Join';
+import WaitingRoom from '../screens/WaitingRoom/WaitingRoom';
+import Round from '../screens/Round/Round';
+import GameWaitingRoom from '../screens/GameWaitingRoom/GameWaitingRoom';
+import Answers from '../screens/Answers/Answers';
+import Voting from '../screens/Voting/Voting';
+import Leaderboard from '../screens/Leaderboard/Leaderboard';
 
 export default function Navigator() {
   return (
@@ -32,6 +33,7 @@ const GameStackNavigator = () => {
       <GameStack.Screen name="GameWaitingRoom" component={GameWaitingRoom} />
       <GameStack.Screen name="Answers" component={Answers} />
       <GameStack.Screen name="Voting" component={Voting} />
+      <GameStack.Screen name="Leaderboard" component={Leaderboard} />
     </GameStack.Navigator>
   );
 };

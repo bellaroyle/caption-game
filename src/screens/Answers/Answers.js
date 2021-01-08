@@ -37,7 +37,6 @@ export default function Answers(props) {
         getRoundAnswers(roomCode).then((result) => {
           setAnswers(result);
           setAnswersLoaded(true);
-          console.log(answersLoaded);
         });
       });
   }, []);
@@ -45,23 +44,17 @@ export default function Answers(props) {
   useEffect(() => {
     let interval;
     if (answersLoaded) {
-      console.log(answerIndex, '<---------- answerIndexx');
-      console.log(answers.length, '<---------- answers.length');
-
       if (answerIndex < answers.length - 1) {
         interval = setTimeout(() => {
           setAnswerIndex(answerIndex + 1);
-        }, 10000);
+        }, 1000);
       } else {
         interval = setTimeout(() => {
           navigate('Voting');
-        }, 10000);
+        }, 1000);
       }
     }
 
-    // console.log(props.route, "<---------props.route");
-
-    // }
     return () => {
       clearTimeout(interval);
     };
