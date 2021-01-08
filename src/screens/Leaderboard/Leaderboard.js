@@ -63,4 +63,5 @@ export default function Leaderboard(props) {
       </View>
     );
   }
+
 }

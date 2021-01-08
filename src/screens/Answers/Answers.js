@@ -50,7 +50,7 @@ export default function Answers(props) {
         }, 1000);
       } else {
         interval = setTimeout(() => {
-          navigate('Voting');
+          navigate('Voting', { answers });
         }, 1000);
       }
     }
