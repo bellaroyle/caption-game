@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, FlatList } from 'react-native';
-import { getScores } from '../../utils/databaseFuncs';
+import { getScores, addRound } from '../../utils/databaseFuncs';
 import { getVotes } from '../../utils/utils';
 import { UserContext } from '../../Context/UserContext';
 import { firebase } from '../../firebase/config';
@@ -16,7 +16,7 @@ export default function Leaderboard(props) {
   const { user, roomCode } = useContext(UserContext);
   //   const { isRound } = props.route.params;
   const {
-    navigation: { navigate },
+    navigation: { push },
   } = props;
 
   const roomDoc = firebase.firestore().collection('rooms').doc(roomCode);
@@ -50,6 +50,11 @@ export default function Leaderboard(props) {
       clearTimeout(interval);
     };
   }, [answerData]);
+
+  const handleNewRound = () => {
+    addRound(roomCode);
+    push('Round');
+  };
 
   if (isLoading) {
     return (
@@ -85,13 +90,8 @@ export default function Leaderboard(props) {
           }
         />
         {!isRound && user.isHost && (
-          <NewButton
-            style={styles.button}
-            onPress={() => {
-              navigate('Round');
-            }}
-          >
-            <Text>Begin Round 2</Text>
+          <NewButton style={styles.button} onPress={handleNewRound}>
+            <Text>Begin next round</Text>
           </NewButton>
         )}
       </View>

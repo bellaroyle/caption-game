@@ -99,6 +99,15 @@ const startAnswers = (roomCode, roundAnswers) => {
     });
 };
 
+const getRound = (roomCode) => {
+  return rooms
+    .doc(roomCode)
+    .get()
+    .then((doc) => {
+      return doc.data().round;
+    });
+};
+
 const getPic = (array, round) => {
   let num = array[round - 1];
   return firebase.storage().ref().child(`/${num}.jpg`).getDownloadURL();
@@ -187,12 +196,17 @@ const addVotes = (roomCode, user) => {
     .update({ overallScore: increment, roundScore: increment });
 };
 
+const addRound = (roomCode) => {
+  return rooms.doc(roomCode).update({ round: increment });
+};
+
 module.exports = {
   rooms,
   createRoom,
   joinRoom,
   getUsersInRoom,
   getPic,
+  getRound,
   getPicOrder,
   startGame,
   postAnswerToUser,
@@ -203,4 +217,5 @@ module.exports = {
   getRoundAnswers,
   getUsers,
   addVotes,
+  addRound,
 };
