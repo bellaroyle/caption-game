@@ -22,10 +22,6 @@ export default function Answers(props) {
     });
   }, []);
 
-  const animComplete = () => {
-    navigate('Voting', { answers });
-  };
-
   return (
     <View style={styles.screen}>
       <Text>Round 1: Answers</Text>
