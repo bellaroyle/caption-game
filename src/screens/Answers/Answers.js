@@ -8,7 +8,6 @@ import styles from './AnswersStyles';
 export default function Answers(props) {
   const [loadingAnswers, setLoadingAnswers] = useState(true);
   const [answers, setAnswers] = useState([]);
-  const [answerIndex, setAnswerIndex] = useState(0);
   const { roomCode } = useContext(UserContext);
 
   const {
@@ -23,27 +22,20 @@ export default function Answers(props) {
     });
   }, []);
 
-  useEffect(() => {
-    let interval;
-    if (answerIndex < answers.length - 1) {
-      interval = setTimeout(() => {
-        setAnswerIndex(answerIndex + 1);
-      }, 4500);
-    } else {
-      interval = setTimeout(() => {
-        navigate('Voting', { answers });
-      }, 4500);
-    }
-    return () => {
-      clearTimeout(interval);
-    };
-  }, [answerIndex, answers]);
+  const animComplete = () => {
+    navigate('Voting', { answers });
+  };
 
   return (
     <View style={styles.screen}>
       <Text>Round 1: Answers</Text>
       <Image source={{ uri: picRef }} style={styles.pic} />
-      {!loadingAnswers && <AnswerAnim answer={answers[answerIndex].answer} />}
+      {!loadingAnswers && (
+        <AnswerAnim
+          answers={answers}
+          animComplete={() => navigate('Voting', { answers })}
+        />
+      )}
     </View>
   );
 }

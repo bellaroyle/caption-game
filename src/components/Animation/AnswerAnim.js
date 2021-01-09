@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Text, Animated, Easing, View, StyleSheet } from 'react-native';
 
-export default AnswerAnim = ({ answer }) => {
+export default AnswerAnim = ({ answers, animComplete }) => {
   const moveAnim = new Animated.ValueXY({ x: 500, y: 0 });
+
+  const [answerIndex, setAnswerIndex] = useState(0);
 
   useEffect(() => {
     Animated.sequence([
@@ -19,12 +21,15 @@ export default AnswerAnim = ({ answer }) => {
         easing: Easing.elastic(1),
         useNativeDriver: false,
       }),
-    ]).start();
-  }, [moveAnim]);
+    ]).start(() => {
+      if (answerIndex < answers.length - 1) setAnswerIndex(answerIndex + 1);
+      else animComplete();
+    });
+  }, [moveAnim, answerIndex]);
 
   return (
     <Animated.View style={[styles.textBox, moveAnim.getLayout()]}>
-      <Text style={styles.text}>{answer}</Text>
+      <Text style={styles.text}>{answers[answerIndex].answer}</Text>
     </Animated.View>
   );
 };
