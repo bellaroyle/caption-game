@@ -7,19 +7,18 @@ import {
   getAmountOfUsers,
 } from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
-import NewButton from '../../components/NewButton';
+import AnswerAnim from '../../components/Animation/AnswerAnim';
 import styles from './AnswersStyles';
-import { shuffle } from '../../utils/utils';
 
 const round = 1;
 
 export default function Answers(props) {
   const [picRef, setPicRef] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const [answersLoaded, setAnswersLoaded] = useState(false);
+  const [loadingAnswers, setLoadingAnswers] = useState(true);
   const [answers, setAnswers] = useState([]);
   const [answerIndex, setAnswerIndex] = useState(0);
-  const { user, roomCode } = useContext(UserContext);
+  const { roomCode } = useContext(UserContext);
 
   const {
     navigation: { navigate },
@@ -36,29 +35,26 @@ export default function Answers(props) {
       .then(() => {
         getRoundAnswers(roomCode).then((result) => {
           setAnswers(result);
-          setAnswersLoaded(true);
+          setLoadingAnswers(false);
         });
       });
   }, []);
 
   useEffect(() => {
     let interval;
-    if (answersLoaded) {
-      if (answerIndex < answers.length - 1) {
-        interval = setTimeout(() => {
-          setAnswerIndex(answerIndex + 1);
-        }, 1000);
-      } else {
-        interval = setTimeout(() => {
-          navigate('Voting', { answers });
-        }, 1000);
-      }
+    if (answerIndex < answers.length - 1) {
+      interval = setTimeout(() => {
+        setAnswerIndex(answerIndex + 1);
+      }, 4500);
+    } else {
+      interval = setTimeout(() => {
+        navigate('Voting', { answers });
+      }, 4500);
     }
-
     return () => {
       clearTimeout(interval);
     };
-  }, [answerIndex, answers, answersLoaded]);
+  }, [answerIndex, answers]);
 
   if (isLoading) {
     return (
@@ -72,7 +68,7 @@ export default function Answers(props) {
       <View style={styles.screen}>
         <Text>Round 1: Answers</Text>
         <Image source={{ uri: picRef }} style={styles.pic} />
-        <Text>{answers[answerIndex].answer}</Text>
+        {!loadingAnswers && <AnswerAnim answer={answers[answerIndex].answer} />}
       </View>
     );
   }
