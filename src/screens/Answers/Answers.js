@@ -1,20 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, TextInput, Image } from 'react-native';
-import {
-  getPic,
-  getPicOrder,
-  getRoundAnswers,
-  getAmountOfUsers,
-} from '../../utils/databaseFuncs';
+import { View, Text, Image } from 'react-native';
+import { getRoundAnswers } from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
 import AnswerAnim from '../../components/Animation/AnswerAnim';
 import styles from './AnswersStyles';
 
-const round = 1;
-
 export default function Answers(props) {
-  const [picRef, setPicRef] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
   const [loadingAnswers, setLoadingAnswers] = useState(true);
   const [answers, setAnswers] = useState([]);
   const [answerIndex, setAnswerIndex] = useState(0);
@@ -23,21 +14,13 @@ export default function Answers(props) {
   const {
     navigation: { navigate },
   } = props;
+  const { picRef } = props.route.params;
 
   useEffect(() => {
-    getPicOrder(roomCode)
-      .then((picOrder) => {
-        getPic(picOrder, round).then((picRef) => {
-          setPicRef(picRef);
-          setIsLoading(false);
-        });
-      })
-      .then(() => {
-        getRoundAnswers(roomCode).then((result) => {
-          setAnswers(result);
-          setLoadingAnswers(false);
-        });
-      });
+    getRoundAnswers(roomCode).then((result) => {
+      setAnswers(result);
+      setLoadingAnswers(false);
+    });
   }, []);
 
   useEffect(() => {
@@ -56,20 +39,11 @@ export default function Answers(props) {
     };
   }, [answerIndex, answers]);
 
-  if (isLoading) {
-    return (
-      <View>
-        <Text>Round 1: Answers</Text>
-        <Text>Image is Loading</Text>
-      </View>
-    );
-  } else {
-    return (
-      <View style={styles.screen}>
-        <Text>Round 1: Answers</Text>
-        <Image source={{ uri: picRef }} style={styles.pic} />
-        {!loadingAnswers && <AnswerAnim answer={answers[answerIndex].answer} />}
-      </View>
-    );
-  }
+  return (
+    <View style={styles.screen}>
+      <Text>Round 1: Answers</Text>
+      <Image source={{ uri: picRef }} style={styles.pic} />
+      {!loadingAnswers && <AnswerAnim answer={answers[answerIndex].answer} />}
+    </View>
+  );
 }
