@@ -7,7 +7,7 @@ import styles from './JoinStyles';
 
 export default function Join(props) {
   const {
-    navigation: { navigate },
+    navigation: { replace },
   } = props;
 
   const { user, setUser, setRoomCode } = useContext(UserContext);
@@ -20,7 +20,7 @@ export default function Join(props) {
       .then(() => {
         setUser({ username, isHost: false });
         setRoomCode(roomInput);
-        navigate('WaitingRoom');
+        replace('WaitingRoom');
       })
       .catch(({ title, message }) => {
         Alert.alert(title, message, {

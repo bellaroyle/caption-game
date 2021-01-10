@@ -5,32 +5,35 @@ import {
   getPicOrder,
   getRoundAnswers,
   getAmountOfUsers,
+  getRound,
 } from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
 import NewButton from '../../components/NewButton';
 import styles from './AnswersStyles';
 import { shuffle } from '../../utils/utils';
 
-const round = 1;
-
 export default function Answers(props) {
   const [picRef, setPicRef] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [answersLoaded, setAnswersLoaded] = useState(false);
+  const [round, setRound] = useState();
   const [answers, setAnswers] = useState([]);
   const [answerIndex, setAnswerIndex] = useState(0);
   const { user, roomCode } = useContext(UserContext);
 
   const {
-    navigation: { navigate },
+    navigation: { replace },
   } = props;
 
   useEffect(() => {
-    getPicOrder(roomCode)
-      .then((picOrder) => {
-        getPic(picOrder, round).then((picRef) => {
-          setPicRef(picRef);
-          setIsLoading(false);
+    getRound(roomCode)
+      .then((round) => {
+        setRound(round);
+        getPicOrder(roomCode).then((picOrder) => {
+          getPic(picOrder, round).then((picRef) => {
+            setPicRef(picRef);
+            setIsLoading(false);
+          });
         });
       })
       .then(() => {
@@ -50,7 +53,7 @@ export default function Answers(props) {
         }, 1000);
       } else {
         interval = setTimeout(() => {
-          navigate('Voting', { answers });
+          replace('Voting', { answers });
         }, 1000);
       }
     }
@@ -63,14 +66,14 @@ export default function Answers(props) {
   if (isLoading) {
     return (
       <View>
-        <Text>Round 1: Answers</Text>
+        <Text>Round {round}: Answers</Text>
         <Text>Image is Loading</Text>
       </View>
     );
   } else {
     return (
       <View style={styles.screen}>
-        <Text>Round 1: Answers</Text>
+        <Text>Round {round}: Answers</Text>
         <Image source={{ uri: picRef }} style={styles.pic} />
         <Text>{answers[answerIndex].answer}</Text>
       </View>

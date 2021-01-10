@@ -10,7 +10,7 @@ import styles from './WaitingRoomStyles';
 export default function WaitingRoom(props) {
   const [users, setUsers] = useState([]);
   const {
-    navigation: { navigate },
+    navigation: { replace },
   } = props;
 
   const { user, roomCode } = useContext(UserContext);
@@ -28,7 +28,7 @@ export default function WaitingRoom(props) {
   useEffect(() => {
     const unsubscribe = roomDoc.onSnapshot((roomSnap) => {
       const { startGame } = roomSnap.data();
-      if (startGame) navigate('Round');
+      if (startGame) replace('Round');
     });
     return () => unsubscribe();
   }, []);
