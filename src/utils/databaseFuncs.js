@@ -86,8 +86,37 @@ const joinRoom = (roomCode, username) => {
 };
 
 const startGame = (roomCode) => {
-  console.log('Starting Game:', roomCode);
   return rooms.doc(roomCode).update({ startGame: true });
+};
+
+const toggleGame = (roomCode) => {
+  return rooms.doc(roomCode).update({ startGame: false });
+};
+
+const startNewRound = (roomCode) => {
+  return rooms
+    .doc(roomCode)
+    .update({ startGame: true, startAnswers: false, roundAnswers: [] })
+    .then(() => {
+      return rooms
+        .doc(roomCode)
+        .collection('waiting')
+        .get()
+        .then((res) => {
+          res.forEach((element) => {
+            element.ref.delete();
+          });
+        });
+    })
+    .then(() => {
+      return rooms
+        .doc(roomCode)
+        .collection('users')
+        .get()
+        .then((res) => {
+          res.forEach((user) => user.ref.update({ roundScore: 0 }));
+        });
+    });
 };
 
 const startAnswers = (roomCode, roundAnswers) => {
@@ -209,6 +238,8 @@ module.exports = {
   getRound,
   getPicOrder,
   startGame,
+  toggleGame,
+  startNewRound,
   postAnswerToUser,
   setAmountOfUsers,
   getAmountOfUsers,

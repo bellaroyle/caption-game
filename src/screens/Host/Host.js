@@ -8,7 +8,7 @@ import styles from './HostStyles';
 export default function Host(props) {
   const [username, setUsername] = useState('');
   const {
-    navigation: { navigate }
+    navigation: { replace },
   } = props;
 
   const { user, setUser, setRoomCode } = useContext(UserContext);
@@ -17,7 +17,7 @@ export default function Host(props) {
     createRoom(username).then((roomCode) => {
       setUser({ username, isHost: true });
       setRoomCode(roomCode);
-      navigate('WaitingRoom');
+      replace('WaitingRoom');
     });
   };
 

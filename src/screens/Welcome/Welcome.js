@@ -7,17 +7,17 @@ import styles from './WelcomeStyles';
 
 export default function Welcome(props) {
   const {
-    navigation: { navigate },
+    navigation: { replace },
   } = props;
 
   return (
     <View style={styles.welcomeScreen}>
       <Text>Welcome to the Caption Game!</Text>
       <View style={styles.btnContainer}>
-        <NewButton onPress={() => navigate('Host')}>
+        <NewButton onPress={() => replace('Host')}>
           <Text>Host Game</Text>
         </NewButton>
-        <NewButton onPress={() => navigate('Join')}>
+        <NewButton onPress={() => replace('Join')}>
           <Text>Join Game</Text>
         </NewButton>
       </View>

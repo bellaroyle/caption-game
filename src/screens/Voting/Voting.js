@@ -11,7 +11,7 @@ export default function Voting(props) {
   const [answers, setAnswers] = useState([]);
   const { user, roomCode } = useContext(UserContext);
   const {
-    navigation: { navigate },
+    navigation: { replace },
   } = props;
 
   const roomDoc = firebase.firestore().collection('rooms').doc(roomCode);
@@ -29,7 +29,7 @@ export default function Voting(props) {
       });
     } else {
       addVotes(roomCode, username);
-      navigate('Leaderboard', { isRound: true, isOverall: false });
+      replace('Leaderboard', { isRound: true, isOverall: false });
     }
   };
 

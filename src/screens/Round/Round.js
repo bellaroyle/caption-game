@@ -5,6 +5,7 @@ import {
   getRound,
   getPicOrder,
   postAnswerToUser,
+  toggleGame,
 } from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
 import NewButton from '../../components/NewButton';
@@ -20,12 +21,13 @@ export default function Round(props) {
   const { user, roomCode } = useContext(UserContext);
 
   const {
-    navigation: { navigate },
+    navigation: { replace },
   } = props;
 
   useEffect(() => {
     getRound(roomCode).then((round) => {
       setRound(round);
+      toggleGame(roomCode);
       getPicOrder(roomCode).then((picOrder) => {
         getPic(picOrder, round).then((picRef) => {
           setPicRef(picRef);
@@ -37,7 +39,7 @@ export default function Round(props) {
 
   const submitAnswer = () => {
     postAnswerToUser(user.username, roomCode, answer).then(() => {
-      navigate('GameWaitingRoom');
+      replace('GameWaitingRoom');
     });
   };
 
