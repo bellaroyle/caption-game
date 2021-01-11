@@ -1,11 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, FlatList } from 'react-native';
-import {
-  startGame,
-  getScores,
-  addRound,
-  startNewRound,
-} from '../../utils/databaseFuncs';
+import { startGame, addRound, startNewRound } from '../../utils/databaseFuncs';
 import { getVotes } from '../../utils/utils';
 import { UserContext } from '../../Context/UserContext';
 import { firebase } from '../../firebase/config';
@@ -23,6 +18,7 @@ export default function Leaderboard(props) {
   const {
     navigation: { replace },
   } = props;
+  const { round } = props.route.params;
 
   const roomDoc = firebase.firestore().collection('rooms').doc(roomCode);
 
@@ -57,7 +53,10 @@ export default function Leaderboard(props) {
   useEffect(() => {
     const unsubscribe = roomDoc.onSnapshot((roomSnap) => {
       const { startGame } = roomSnap.data();
-      if (startGame) replace('Round');
+      if (startGame && round !== 1) replace('Round');
+      else {
+        if (startGame) replace('Winners');
+      }
     });
     return () => unsubscribe();
   }, []);
@@ -66,6 +65,10 @@ export default function Leaderboard(props) {
     addRound(roomCode).then(() => {
       startNewRound(roomCode);
     });
+  };
+
+  const handleWinners = () => {
+    startGame(roomCode);
   };
 
   if (isLoading) {
@@ -105,10 +108,17 @@ export default function Leaderboard(props) {
             )
           }
         />
-        {!isRound && user.isHost && (
-          <NewButton style={styles.button} onPress={handleNewRound}>
-            <Text>Begin next round</Text>
+        {!isRound && round === 1 && user.isHost ? (
+          <NewButton style={styles.button} onPress={handleWinners}>
+            <Text>Lets see who won!</Text>
           </NewButton>
+        ) : (
+          !isRound &&
+          user.isHost && (
+            <NewButton style={styles.button} onPress={handleNewRound}>
+              <Text>Begin next round</Text>
+            </NewButton>
+          )
         )}
       </View>
     );

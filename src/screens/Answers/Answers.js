@@ -21,10 +21,13 @@ export default function Answers(props) {
   const {
     navigation: { replace },
   } = props;
-  
+
   const { picRef } = props.route.params;
 
   useEffect(() => {
+    getRound(roomCode).then((round) => {
+      setRound(round);
+    });
     getRoundAnswers(roomCode).then((result) => {
       setAnswers(result);
       setLoadingAnswers(false);
@@ -33,12 +36,12 @@ export default function Answers(props) {
 
   return (
     <View style={styles.screen}>
-      <Text>Round 1: Answers</Text>
+      <Text>Round {round}: Answers</Text>
       <Image source={{ uri: picRef }} style={styles.pic} />
       {!loadingAnswers && (
         <AnswerAnim
           answers={answers}
-          animComplete={() => replace('Voting', { answers })}
+          animComplete={() => replace('Voting', { answers, round })}
         />
       )}
     </View>
