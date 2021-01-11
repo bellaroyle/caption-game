@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Text, TextInput, Image, Alert, SafeAreaView } from 'react-native';
+import { Text, TextInput, Image, Alert, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
 import { UserContext } from '../../Context/UserContext';
 
@@ -57,6 +57,11 @@ export default function Round(props) {
     );
   } else {
     return (
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}
+      >
       <SafeAreaView style={styles.screen}>
         <Text>Round {round}</Text>
         <Image source={{ uri: picRef }} style={styles.pic} />
@@ -71,6 +76,7 @@ export default function Round(props) {
           <Text>Submit answer</Text>
         </NewButton>
       </SafeAreaView>
+      </TouchableWithoutFeedback>
     );
   }
 }

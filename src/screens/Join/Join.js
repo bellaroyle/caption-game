@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Text, TextInput, Alert, SafeAreaView } from 'react-native';
+import { Text, TextInput, Alert, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
 import { joinRoom, getRoundLimit } from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
@@ -46,6 +46,11 @@ export default function Join(props) {
   };
 
   return (
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
     <SafeAreaView style={styles.screen}>
       <Text>Please enter your name and room code to join game</Text>
       <TextInput
@@ -72,5 +77,6 @@ export default function Join(props) {
       </NewButton>
       <Rules />
     </SafeAreaView>
+</TouchableWithoutFeedback>
   );
 }

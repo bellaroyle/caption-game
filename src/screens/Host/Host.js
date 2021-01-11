@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Text, TextInput, Alert, SafeAreaView } from 'react-native';
+import { Text, TextInput, Alert, SafeAreaView, TouchableWithoutFeedback, Keyboard, } from 'react-native';
 
 import { UserContext } from '../../Context/UserContext';
 import { createRoom } from '../../utils/databaseFuncs';
@@ -39,6 +39,12 @@ export default function Host(props) {
   };
 
   return (
+
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
     <SafeAreaView style={styles.screen}>
       <Text>Please enter your name to host game</Text>
       <TextInput
@@ -50,8 +56,9 @@ export default function Host(props) {
         autoCapitalize="none"
       />
 
-      <Text>Please enter the number of rounds you'd like to play</Text>
-      <Picker numRounds={numRounds} onPress={handleNumPicker} />
+        <Text>Please enter the number of rounds you'd like to play</Text>
+        <Picker numRounds={numRounds} onPress={handleNumPicker} />
+
 
       <NewButton onPress={createGame}>
         <Text>Create Game</Text>
@@ -61,5 +68,6 @@ export default function Host(props) {
       </NewButton>
       <Rules />
     </SafeAreaView>
+</TouchableWithoutFeedback>
   );
 }
