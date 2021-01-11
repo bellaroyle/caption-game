@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Alert } from 'react-native';
 import NewButton from '../../components/NewButton';
 import Picker from '../../components/Picker';
 import { UserContext } from '../../Context/UserContext';
@@ -17,12 +17,16 @@ export default function Host(props) {
   const { setUser, setRoomCode, setRoundLimit } = useContext(UserContext);
 
   const createGame = () => {
-    createRoom(username, numRounds).then((roomCode) => {
-      setUser({ username, isHost: true });
-      setRoundLimit(numRounds);
-      setRoomCode(roomCode);
-      replace('WaitingRoom');
-    });
+    if (username === '') {
+      Alert.alert('Please enter your name');
+    } else {
+      createRoom(username, numRounds).then((roomCode) => {
+        setUser({ username, isHost: true });
+        setRoundLimit(numRounds);
+        setRoomCode(roomCode);
+        replace('WaitingRoom');
+      });
+    }
   };
 
   const handleNumPicker = (inc) => {

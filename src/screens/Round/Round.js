@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, TextInput, Image } from 'react-native';
+import { View, Text, TextInput, Image, Alert } from 'react-native';
 import {
   getPic,
   getRound,
@@ -36,9 +36,12 @@ export default function Round(props) {
   }, []);
 
   const submitAnswer = () => {
-    postAnswerToUser(user.username, roomCode, answer).then(() => {
-      replace('GameWaitingRoom', { picRef });
-    });
+    if (answer === '') Alert.alert('Please enter an answer');
+    else {
+      postAnswerToUser(user.username, roomCode, answer).then(() => {
+        replace('GameWaitingRoom', { picRef });
+      });
+    }
   };
 
   if (isLoading) {
