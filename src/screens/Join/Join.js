@@ -1,5 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import NewButton from '../../components/NewButton';
 import { joinRoom, getRoundLimit } from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
@@ -43,31 +50,37 @@ export default function Join(props) {
   };
 
   return (
-    <View style={styles.hostScreen}>
-      <Text>Please enter your name and room code to join game</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Your name"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(text) => setUsername(text)}
-        value={username}
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Room code"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(text) => setRoomInput(text)}
-        value={roomInput}
-        autoCapitalize="none"
-      />
-      <NewButton onPress={joinGame}>
-        <Text>Join Game</Text>
-      </NewButton>
-      <NewButton onPress={() => replace('Welcome')}>
-        <Text>Back to home</Text>
-      </NewButton>
-      <Rules />
-    </View>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
+      <View style={styles.hostScreen}>
+        <Text>Please enter your name and room code to join game</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Your name"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setUsername(text)}
+          value={username}
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Room code"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setRoomInput(text)}
+          value={roomInput}
+          autoCapitalize="none"
+        />
+        <NewButton onPress={joinGame}>
+          <Text>Join Game</Text>
+        </NewButton>
+        <NewButton onPress={() => replace('Welcome')}>
+          <Text>Back to home</Text>
+        </NewButton>
+        <Rules />
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
