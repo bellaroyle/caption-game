@@ -13,7 +13,7 @@ export default function Leaderboard(props) {
   const [answerData, setAnswerData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRound, setIsRound] = useState(true);
-  const { user, roomCode } = useContext(UserContext);
+  const { user, roomCode, roundLimit } = useContext(UserContext);
   //   const { isRound } = props.route.params;
   const {
     navigation: { replace },
@@ -53,7 +53,7 @@ export default function Leaderboard(props) {
   useEffect(() => {
     const unsubscribe = roomDoc.onSnapshot((roomSnap) => {
       const { startGame } = roomSnap.data();
-      if (startGame && round !== 1) replace('Round');
+      if (startGame && round !== roundLimit) replace('Round');
       else {
         if (startGame) replace('Winners');
       }
@@ -108,7 +108,7 @@ export default function Leaderboard(props) {
             )
           }
         />
-        {!isRound && round === 1 && user.isHost ? (
+        {!isRound && round === roundLimit && user.isHost ? (
           <NewButton style={styles.button} onPress={handleWinners}>
             <Text>Lets see who won!</Text>
           </NewButton>
