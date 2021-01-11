@@ -1,28 +1,30 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, FlatList, SafeAreaView } from 'react-native';
+import { Text, FlatList, SafeAreaView } from 'react-native';
+
+import { firebase } from '../../firebase/config';
+import { UserContext } from '../../Context/UserContext';
+
 import {
-  startGame,
-  setAmountOfUsers,
   getAmountOfUsers,
   startAnswers,
   getUsers,
 } from '../../utils/databaseFuncs';
-import UserCard from '../../components/UserCard';
-import { firebase } from '../../firebase/config';
-import NewButton from '../../components/NewButton';
-import { UserContext } from '../../Context/UserContext';
 import { shuffle } from '../../utils/utils';
+
 import styles from './GameWaitingRoomStyles';
+import NewButton from '../../components/NewButton';
+import UserCard from '../../components/UserCard';
 
 export default function GameWaitingRoom(props) {
   const [users, setUsers] = useState([]);
   const [usersInGame, setUsersInGame] = useState(0);
+
   const {
     navigation: { replace },
   } = props;
+  const { picRef } = props.route.params;
 
   const { user, roomCode } = useContext(UserContext);
-  const { picRef } = props.route.params;
 
   const roomDoc = firebase.firestore().collection('rooms').doc(roomCode);
 

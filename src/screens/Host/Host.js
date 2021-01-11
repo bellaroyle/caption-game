@@ -1,15 +1,19 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Alert, SafeAreaView } from 'react-native';
-import NewButton from '../../components/NewButton';
-import Picker from '../../components/Picker';
+import { Text, TextInput, Alert, SafeAreaView } from 'react-native';
+
 import { UserContext } from '../../Context/UserContext';
 import { createRoom } from '../../utils/databaseFuncs';
-import styles from './HostStyles';
+
 import Rules from '../../components/Rules';
+import Picker from '../../components/Picker';
+import NewButton from '../../components/NewButton';
+
+import styles from './HostStyles';
 
 export default function Host(props) {
   const [username, setUsername] = useState('');
   const [numRounds, setNumRounds] = useState(1);
+
   const {
     navigation: { replace },
   } = props;

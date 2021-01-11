@@ -1,10 +1,13 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Alert, SafeAreaView } from 'react-native';
-import NewButton from '../../components/NewButton';
+import { Text, TextInput, Alert, SafeAreaView } from 'react-native';
+
 import { joinRoom, getRoundLimit } from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
-import styles from './JoinStyles';
+
+import NewButton from '../../components/NewButton';
 import Rules from '../../components/Rules';
+
+import styles from './JoinStyles';
 
 export default function Join(props) {
   const {

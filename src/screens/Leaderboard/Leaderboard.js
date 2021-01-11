@@ -1,20 +1,25 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, FlatList, SafeAreaView } from 'react-native';
-import { startGame, addRound, startNewRound } from '../../utils/databaseFuncs';
-import { getVotes } from '../../utils/utils';
+
 import { UserContext } from '../../Context/UserContext';
 import { firebase } from '../../firebase/config';
+
+import { startGame, addRound, startNewRound } from '../../utils/databaseFuncs';
+import { getVotes } from '../../utils/utils';
+
 import NewButton from '../../components/NewButton';
 import AnswerCard from '../../components/AnswerCard';
 import LeaderboardCard from '../../components/LeaderboardCard';
+
 import styles from './LeaderboardStyles';
 
 export default function Leaderboard(props) {
   const [answerData, setAnswerData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRound, setIsRound] = useState(true);
+
   const { user, roomCode, roundLimit } = useContext(UserContext);
-  //   const { isRound } = props.route.params;
+
   const {
     navigation: { replace },
   } = props;

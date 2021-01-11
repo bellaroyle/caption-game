@@ -1,15 +1,19 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, FlatList, Alert, SafeAreaView } from 'react-native';
+import { Text, FlatList, Alert, SafeAreaView } from 'react-native';
 
 import { firebase } from '../../firebase/config';
-import { addVotes } from '../../utils/databaseFuncs';
-import NewButton from '../../components/NewButton';
 import { UserContext } from '../../Context/UserContext';
+
+import { addVotes } from '../../utils/databaseFuncs';
+
+import NewButton from '../../components/NewButton';
 import styles from './VotingStyles';
 
 export default function Voting(props) {
   const [answers, setAnswers] = useState([]);
+
   const { user, roomCode } = useContext(UserContext);
+
   const {
     navigation: { replace },
   } = props;
