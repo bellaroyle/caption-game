@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
 import NewButton from '../../components/NewButton';
+import Picker from '../../components/Picker';
 import { UserContext } from '../../Context/UserContext';
 import { createRoom } from '../../utils/databaseFuncs';
 import styles from './HostStyles';
@@ -25,6 +25,11 @@ export default function Host(props) {
     });
   };
 
+  const handleNumPicker = (inc) => {
+    if (numRounds + inc > 0 && numRounds + inc <= 15)
+      setNumRounds(numRounds + inc);
+  };
+
   return (
     <View style={styles.hostScreen}>
       <Text>Please enter your name to host game</Text>
@@ -36,19 +41,10 @@ export default function Host(props) {
         value={username}
         autoCapitalize="none"
       />
-      <Picker
-        selectedValue={numRounds}
-        style={{ height: 50, width: 100 }}
-        onValueChange={(itemValue) => {
-          setNumRounds(itemValue);
-        }}
-      >
-        <Picker.Item label="1" value={1} />
-        <Picker.Item label="3" value={3} />
-        <Picker.Item label="5" value={5} />
-        <Picker.Item label="7" value={7} />
-        <Picker.Item label="10" value={10} />
-      </Picker>
+
+      <Text>Please enter the number of rounds you'd like to play</Text>
+      <Picker numRounds={numRounds} onPress={handleNumPicker} />
+
       <NewButton onPress={createGame}>
         <Text>Create Game</Text>
       </NewButton>
