@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, Alert } from 'react-native';
 import NewButton from '../../components/NewButton';
-import { joinRoom } from '../../utils/databaseFuncs';
+import { joinRoom, getRoundLimit } from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
 import styles from './JoinStyles';
 import Rules from '../../components/Rules';
@@ -11,7 +11,7 @@ export default function Join(props) {
     navigation: { replace },
   } = props;
 
-  const { user, setUser, setRoomCode } = useContext(UserContext);
+  const { setRoundLimit, setUser, setRoomCode } = useContext(UserContext);
 
   const [username, setUsername] = useState('');
   const [roomInput, setRoomInput] = useState('');
@@ -19,9 +19,12 @@ export default function Join(props) {
   const joinGame = () => {
     joinRoom(roomInput, username)
       .then(() => {
-        setUser({ username, isHost: false });
-        setRoomCode(roomInput);
-        replace('WaitingRoom');
+        getRoundLimit(roomInput).then((roundLimit) => {
+          setRoundLimit(roundLimit);
+          setUser({ username, isHost: false });
+          setRoomCode(roomInput);
+          replace('WaitingRoom');
+        });
       })
       .catch(({ title, message }) => {
         Alert.alert(title, message, {

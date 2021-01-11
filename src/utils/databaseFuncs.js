@@ -6,9 +6,9 @@ const rooms = firebase.firestore().collection('rooms');
 
 const increment = firebase.firestore.FieldValue.increment(1);
 
-const createRoom = (username, noOfRounds) => {
+const createRoom = (username, numRounds) => {
   const roomCode = randomCodeGen();
-  const picOrder = randomNumberGen(noOfRounds);
+  const picOrder = randomNumberGen(numRounds);
   const amountOfPlayers = 0;
   return rooms
     .doc(roomCode)
@@ -19,6 +19,8 @@ const createRoom = (username, noOfRounds) => {
       round: 1,
       startAnswers: false,
       roundAnswers: [],
+      joinable: true,
+      roundLimit: numRounds,
     })
     .then(() => {
       return rooms
@@ -64,18 +66,25 @@ const joinRoom = (roomCode, username) => {
   console.log(roomCode, 'room code in join room');
   return doesRoomExist(roomCode).then((roomExists) => {
     return roomExists
-      ? getUsersInRoom(roomCode).then((users) => {
-          return users.includes(username)
-            ? Promise.reject({
-                title: 'Username in use',
-                message: 'Please choose another username',
+      ? getJoinable(roomCode).then((joinable) => {
+          return joinable
+            ? getUsersInRoom(roomCode).then((users) => {
+                return users.includes(username)
+                  ? Promise.reject({
+                      title: 'Username in use',
+                      message: 'Please choose another username',
+                    })
+                  : rooms.doc(roomCode).collection('users').doc(username).set({
+                      host: false,
+                      name: username,
+                      roundScore: 0,
+                      overallScore: 0,
+                      answers: '',
+                    });
               })
-            : rooms.doc(roomCode).collection('users').doc(username).set({
-                host: false,
-                name: username,
-                roundScore: 0,
-                overallScore: 0,
-                answers: '',
+            : Promise.reject({
+                title: 'Game has already started',
+                message: 'You cannot join when this is the case',
               });
         })
       : Promise.reject({
@@ -86,7 +95,7 @@ const joinRoom = (roomCode, username) => {
 };
 
 const startGame = (roomCode) => {
-  return rooms.doc(roomCode).update({ startGame: true });
+  return rooms.doc(roomCode).update({ startGame: true, joinable: false });
 };
 
 const toggleGame = (roomCode) => {
@@ -228,9 +237,31 @@ const addVotes = (roomCode, user) => {
 const addRound = (roomCode) => {
   return rooms.doc(roomCode).update({ round: increment });
 };
+
 const deleteRoom = (roomCode) => {
   return rooms.doc(roomCode).delete();
 };
+
+
+const getJoinable = (roomCode) => {
+  return rooms
+    .doc(roomCode)
+    .get()
+    .then((doc) => {
+      return doc.data().joinable;
+    });
+};
+
+const getRoundLimit = (roomCode) => {
+  return rooms
+    .doc(roomCode)
+    .get()
+    .then((doc) => {
+      return doc.data().roundLimit;
+    });
+};
+
+
 module.exports = {
   rooms,
   createRoom,
@@ -252,4 +283,6 @@ module.exports = {
   addVotes,
   addRound,
   deleteRoom,
+  getJoinable,
+  getRoundLimit,
 };
