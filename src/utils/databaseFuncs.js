@@ -228,7 +228,9 @@ const addVotes = (roomCode, user) => {
 const addRound = (roomCode) => {
   return rooms.doc(roomCode).update({ round: increment });
 };
-
+const deleteRoom = (roomCode) => {
+  return rooms.doc(roomCode).delete();
+};
 module.exports = {
   rooms,
   createRoom,
@@ -249,4 +251,5 @@ module.exports = {
   getUsers,
   addVotes,
   addRound,
+  deleteRoom,
 };
