@@ -1,12 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  Image,
-  Alert,
-  SafeAreaView,
-} from 'react-native';
+import { Text, TextInput, Image, Alert, SafeAreaView } from 'react-native';
+
+import { UserContext } from '../../Context/UserContext';
+
 import {
   getPic,
   getRound,
@@ -14,7 +10,7 @@ import {
   postAnswerToUser,
   toggleGame,
 } from '../../utils/databaseFuncs';
-import { UserContext } from '../../Context/UserContext';
+
 import NewButton from '../../components/NewButton';
 import styles from './RoundStyles';
 
@@ -23,6 +19,7 @@ export default function Round(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [answer, setAnswer] = useState('');
   const [round, setRound] = useState();
+
   const { user, roomCode } = useContext(UserContext);
 
   const {

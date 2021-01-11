@@ -1,10 +1,9 @@
-import { NavigationHelpersContext } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import NewButton from '../../components/NewButton';
-import styles from './WelcomeStyles';
 import Rules from '../../components/Rules';
+import styles from './WelcomeStyles';
 
 export default function Welcome(props) {
   const {
