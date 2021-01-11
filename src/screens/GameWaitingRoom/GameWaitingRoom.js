@@ -21,6 +21,7 @@ export default function GameWaitingRoom(props) {
   } = props;
 
   const { user, roomCode } = useContext(UserContext);
+  const { picRef } = props.route.params;
 
   const roomDoc = firebase.firestore().collection('rooms').doc(roomCode);
 
@@ -38,7 +39,8 @@ export default function GameWaitingRoom(props) {
   useEffect(() => {
     const unsubscribe = roomDoc.onSnapshot((roomSnap) => {
       const { startAnswers } = roomSnap.data();
-      if (startAnswers) replace('Answers', { noOfUsers: users.length });
+
+      if (startAnswers) replace('Answers', { picRef });
     });
     return () => unsubscribe();
   }, []);

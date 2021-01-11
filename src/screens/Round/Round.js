@@ -11,8 +11,6 @@ import { UserContext } from '../../Context/UserContext';
 import NewButton from '../../components/NewButton';
 import styles from './RoundStyles';
 
-// const round = 1;
-
 export default function Round(props) {
   const [picRef, setPicRef] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -39,7 +37,7 @@ export default function Round(props) {
 
   const submitAnswer = () => {
     postAnswerToUser(user.username, roomCode, answer).then(() => {
-      replace('GameWaitingRoom');
+      replace('GameWaitingRoom', { picRef });
     });
   };
 
