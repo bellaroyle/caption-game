@@ -17,17 +17,13 @@ export default function Winners(props) {
   useEffect(() => {
     getScores(roomCode).then((winners) => {
       setWinners(winners);
-      console.log(winners, '<<<< set in state');
     });
   }, []);
 
   const renderListItem = (itemData) => {
-    console.log(itemData, '<<<<item data');
     if (itemData.index === 0) {
-      console.log(itemData.item, '<<<< first place');
       return <WinnersCard data={itemData.item} />;
     } else if (itemData.index === 1 || itemData.index === 2) {
-      console.log(itemData.item, '<<<< second and third place');
       return <RunnersUpCard data={itemData.item} />;
     }
   };
