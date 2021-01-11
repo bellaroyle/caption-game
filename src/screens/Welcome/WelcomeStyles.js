@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  welcomeScreen: {
+  screen: {
     flex: 1,
     backgroundColor: 'dodgerblue',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   btnContainer: {
-    flexDirection: 'row'
-  }
+    flexDirection: 'row',
+  },
 });

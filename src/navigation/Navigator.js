@@ -25,7 +25,7 @@ const GameStack = createStackNavigator();
 
 const GameStackNavigator = () => {
   return (
-    <GameStack.Navigator>
+    <GameStack.Navigator screenOptions={{ headerShown: false }}>
       <GameStack.Screen name="Welcome" component={Welcome} />
       <GameStack.Screen name="Host" component={Host} />
       <GameStack.Screen name="Join" component={Join} />
