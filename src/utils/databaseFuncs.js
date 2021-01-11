@@ -86,8 +86,37 @@ const joinRoom = (roomCode, username) => {
 };
 
 const startGame = (roomCode) => {
-  console.log('Starting Game:', roomCode);
   return rooms.doc(roomCode).update({ startGame: true });
+};
+
+const toggleGame = (roomCode) => {
+  return rooms.doc(roomCode).update({ startGame: false });
+};
+
+const startNewRound = (roomCode) => {
+  return rooms
+    .doc(roomCode)
+    .update({ startGame: true, startAnswers: false, roundAnswers: [] })
+    .then(() => {
+      return rooms
+        .doc(roomCode)
+        .collection('waiting')
+        .get()
+        .then((res) => {
+          res.forEach((element) => {
+            element.ref.delete();
+          });
+        });
+    })
+    .then(() => {
+      return rooms
+        .doc(roomCode)
+        .collection('users')
+        .get()
+        .then((res) => {
+          res.forEach((user) => user.ref.update({ roundScore: 0 }));
+        });
+    });
 };
 
 const startAnswers = (roomCode, roundAnswers) => {
@@ -96,6 +125,15 @@ const startAnswers = (roomCode, roundAnswers) => {
     .update({ startGame: false })
     .then(() => {
       return rooms.doc(roomCode).update({ startAnswers: true, roundAnswers });
+    });
+};
+
+const getRound = (roomCode) => {
+  return rooms
+    .doc(roomCode)
+    .get()
+    .then((doc) => {
+      return doc.data().round;
     });
 };
 
@@ -187,14 +225,21 @@ const addVotes = (roomCode, user) => {
     .update({ overallScore: increment, roundScore: increment });
 };
 
+const addRound = (roomCode) => {
+  return rooms.doc(roomCode).update({ round: increment });
+};
+
 module.exports = {
   rooms,
   createRoom,
   joinRoom,
   getUsersInRoom,
   getPic,
+  getRound,
   getPicOrder,
   startGame,
+  toggleGame,
+  startNewRound,
   postAnswerToUser,
   setAmountOfUsers,
   getAmountOfUsers,
@@ -203,4 +248,5 @@ module.exports = {
   getRoundAnswers,
   getUsers,
   addVotes,
+  addRound,
 };

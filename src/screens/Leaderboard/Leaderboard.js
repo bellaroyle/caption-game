@@ -1,6 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, FlatList } from 'react-native';
-import { getScores } from '../../utils/databaseFuncs';
+import {
+  startGame,
+  getScores,
+  addRound,
+  startNewRound,
+} from '../../utils/databaseFuncs';
 import { getVotes } from '../../utils/utils';
 import { UserContext } from '../../Context/UserContext';
 import { firebase } from '../../firebase/config';
@@ -16,13 +21,11 @@ export default function Leaderboard(props) {
   const { user, roomCode } = useContext(UserContext);
   //   const { isRound } = props.route.params;
   const {
-    navigation: { navigate },
+    navigation: { replace },
   } = props;
 
   const roomDoc = firebase.firestore().collection('rooms').doc(roomCode);
 
-  //   console.log(isRound);
-  //   if (isRound) {
   useEffect(() => {
     const unsubscribe = roomDoc.collection('users').onSnapshot((snap) => {
       const data = snap.docs.map((doc) => {
@@ -37,7 +40,7 @@ export default function Leaderboard(props) {
       setIsLoading(false);
     });
     return () => unsubscribe();
-  }, []);
+  }, [isRound]);
 
   useEffect(() => {
     let interval;
@@ -51,6 +54,20 @@ export default function Leaderboard(props) {
     };
   }, [answerData]);
 
+  useEffect(() => {
+    const unsubscribe = roomDoc.onSnapshot((roomSnap) => {
+      const { startGame } = roomSnap.data();
+      if (startGame) replace('Round');
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleNewRound = () => {
+    addRound(roomCode).then(() => {
+      startNewRound(roomCode);
+    });
+  };
+
   if (isLoading) {
     return (
       <View>
@@ -61,7 +78,11 @@ export default function Leaderboard(props) {
   } else {
     return (
       <View style={styles.screen}>
-        <Text>Welcome to round leaderboard!</Text>
+        {isRound ? (
+          <Text>Welcome to round leaderboard!</Text>
+        ) : (
+          <Text>Welcome to overall leaderboard!</Text>
+        )}
         <FlatList
           data={answerData}
           keyExtractor={(item) => item.name}
@@ -85,13 +106,8 @@ export default function Leaderboard(props) {
           }
         />
         {!isRound && user.isHost && (
-          <NewButton
-            style={styles.button}
-            onPress={() => {
-              navigate('Round');
-            }}
-          >
-            <Text>Begin Round 2</Text>
+          <NewButton style={styles.button} onPress={handleNewRound}>
+            <Text>Begin next round</Text>
           </NewButton>
         )}
       </View>

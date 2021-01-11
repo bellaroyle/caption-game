@@ -17,7 +17,7 @@ export default function GameWaitingRoom(props) {
   const [users, setUsers] = useState([]);
   const [usersInGame, setUsersInGame] = useState(0);
   const {
-    navigation: { navigate },
+    navigation: { replace },
   } = props;
 
   const { user, roomCode } = useContext(UserContext);
@@ -39,7 +39,8 @@ export default function GameWaitingRoom(props) {
   useEffect(() => {
     const unsubscribe = roomDoc.onSnapshot((roomSnap) => {
       const { startAnswers } = roomSnap.data();
-      if (startAnswers) navigate('Answers', { picRef });
+
+      if (startAnswers) replace('Answers', { picRef });
     });
     return () => unsubscribe();
   }, []);
