@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 export default function AnswerCard({ answerData: { name, answers, score } }) {
-  //   console.log(props);
   return (
     <View style={styles.container}>
       <Text>{name}</Text>

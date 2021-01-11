@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, StyleSheet } from 'react-native';
+
 import NewButton from './NewButton';
 
 export default function Rules() {
@@ -50,14 +51,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'dodgerblue',
     justifyContent: 'center',
     alignItems: 'center',
-    // marginTop: 22,
   },
   modalView: {
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    // alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
