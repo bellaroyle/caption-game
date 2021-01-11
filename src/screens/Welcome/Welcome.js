@@ -4,6 +4,7 @@ import { View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import NewButton from '../../components/NewButton';
 import styles from './WelcomeStyles';
+import Rules from '../../components/Rules';
 
 export default function Welcome(props) {
   const {
@@ -20,6 +21,7 @@ export default function Welcome(props) {
         <NewButton onPress={() => replace('Join')}>
           <Text>Join Game</Text>
         </NewButton>
+        <Rules />
       </View>
     </View>
   );
