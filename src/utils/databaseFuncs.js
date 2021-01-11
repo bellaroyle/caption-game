@@ -241,7 +241,16 @@ const addRound = (roomCode) => {
 const deleteRoom = (roomCode) => {
   return rooms.doc(roomCode).delete();
 };
-
+const deleteUserFromRoom = (username, roomCode) => {
+  return rooms
+    .doc(roomCode)
+    .collection('users')
+    .doc(username)
+    .delete()
+    .then(() => {
+      return rooms.doc(roomCode).collection('waiting').doc(username).delete();
+    });
+};
 
 const getJoinable = (roomCode) => {
   return rooms
@@ -260,7 +269,6 @@ const getRoundLimit = (roomCode) => {
       return doc.data().roundLimit;
     });
 };
-
 
 module.exports = {
   rooms,
@@ -283,6 +291,7 @@ module.exports = {
   addVotes,
   addRound,
   deleteRoom,
+  deleteUserFromRoom,
   getJoinable,
   getRoundLimit,
 };

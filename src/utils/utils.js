@@ -13,7 +13,7 @@ const randomCodeGen = () => {
 const randomNumberGen = (noOfRounds) => {
   let sequence = [];
   let availableNumbers = [];
-  for (let i = 1; i < 11; i++) {
+  for (let i = 1; i < 18; i++) {
     availableNumbers.push(i);
   }
   for (let i = 0; i < noOfRounds; i++) {
