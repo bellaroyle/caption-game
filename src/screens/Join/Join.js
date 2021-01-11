@@ -4,6 +4,7 @@ import NewButton from '../../components/NewButton';
 import { joinRoom } from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
 import styles from './JoinStyles';
+import Rules from '../../components/Rules';
 
 export default function Join(props) {
   const {
@@ -52,6 +53,7 @@ export default function Join(props) {
       <NewButton onPress={joinGame}>
         <Text>Join Game</Text>
       </NewButton>
+      <Rules />
     </View>
   );
 }

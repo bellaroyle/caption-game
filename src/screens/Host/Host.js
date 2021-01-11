@@ -4,6 +4,7 @@ import NewButton from '../../components/NewButton';
 import { UserContext } from '../../Context/UserContext';
 import { createRoom } from '../../utils/databaseFuncs';
 import styles from './HostStyles';
+import Rules from '../../components/Rules';
 
 export default function Host(props) {
   const [username, setUsername] = useState('');
@@ -35,6 +36,7 @@ export default function Host(props) {
       <NewButton onPress={createGame}>
         <Text>Create Game</Text>
       </NewButton>
+      <Rules />
     </View>
   );
 }
