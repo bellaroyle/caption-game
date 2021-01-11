@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 export default function LeaderboardCard({ scoreData: { name, score } }) {
-  //   console.log(props);
   return (
     <View style={styles.container}>
       <Text>{name}</Text>
