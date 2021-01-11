@@ -20,6 +20,7 @@ export default function WaitingRoom(props) {
   useEffect(() => {
     const unsubscribe = roomDoc.collection('users').onSnapshot((snap) => {
       const data = snap.docs.map((doc) => doc.data());
+      console.log(data);
       setUsers(data);
     });
     return () => unsubscribe();
@@ -34,8 +35,9 @@ export default function WaitingRoom(props) {
   }, []);
 
   const handleStartButton = () => {
-    startGame(roomCode);
-    setAmountOfUsers(roomCode, users.length);
+    setAmountOfUsers(roomCode, users.length).then(() => {
+      startGame(roomCode);
+    });
   };
 
   return (
