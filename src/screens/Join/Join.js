@@ -17,21 +17,29 @@ export default function Join(props) {
   const [roomInput, setRoomInput] = useState('');
 
   const joinGame = () => {
-    joinRoom(roomInput, username)
-      .then(() => {
-        getRoundLimit(roomInput).then((roundLimit) => {
-          setRoundLimit(roundLimit);
-          setUser({ username, isHost: false });
-          setRoomCode(roomInput);
-          replace('WaitingRoom');
+    if (username === '' && roomInput === '') {
+      Alert.alert('Please enter your name and room code');
+    } else if (roomInput === '') {
+      Alert.alert('Please enter a room code');
+    } else if (username === '') {
+      Alert.alert('Please enter your name');
+    } else {
+      joinRoom(roomInput, username)
+        .then(() => {
+          getRoundLimit(roomInput).then((roundLimit) => {
+            setRoundLimit(roundLimit);
+            setUser({ username, isHost: false });
+            setRoomCode(roomInput);
+            replace('WaitingRoom');
+          });
+        })
+        .catch(({ title, message }) => {
+          Alert.alert(title, message, {
+            text: 'OK',
+            onPress: () => console.log('OK Pressed'),
+          });
         });
-      })
-      .catch(({ title, message }) => {
-        Alert.alert(title, message, {
-          text: 'OK',
-          onPress: () => console.log('OK Pressed'),
-        });
-      });
+    }
   };
 
   return (
