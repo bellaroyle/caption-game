@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, FlatList, DatePickerIOSBase } from 'react-native';
+import { View, Text, FlatList, SafeAreaView } from 'react-native';
 import { startGame, setAmountOfUsers } from '../../utils/databaseFuncs';
 import UserCard from '../../components/UserCard';
 import { firebase } from '../../firebase/config';
@@ -41,7 +41,7 @@ export default function WaitingRoom(props) {
   };
 
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <Text style={styles.roomCode}>You are in room {roomCode}!</Text>
       <Text>Please share this code with your friends</Text>
       {users.length !== 0 ? (
@@ -59,6 +59,6 @@ export default function WaitingRoom(props) {
           <Text>Begin Round 1</Text>
         </NewButton>
       )}
-    </View>
+    </SafeAreaView>
   );
 }

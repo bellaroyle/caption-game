@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, TextInput, Image, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  Alert,
+  SafeAreaView,
+} from 'react-native';
 import {
   getPic,
   getRound,
@@ -46,14 +53,14 @@ export default function Round(props) {
 
   if (isLoading) {
     return (
-      <View>
+      <SafeAreaView style={styles.screen}>
         <Text>Round 1: Fight!</Text>
         <Text>Image is Loading</Text>
-      </View>
+      </SafeAreaView>
     );
   } else {
     return (
-      <View style={styles.screen}>
+      <SafeAreaView style={styles.screen}>
         <Text>Round {round}</Text>
         <Image source={{ uri: picRef }} style={styles.pic} />
         <TextInput
@@ -66,7 +73,7 @@ export default function Round(props) {
         <NewButton onPress={submitAnswer}>
           <Text>Submit answer</Text>
         </NewButton>
-      </View>
+      </SafeAreaView>
     );
   }
 }

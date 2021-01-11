@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Alert } from 'react-native';
+import { View, Text, TextInput, Alert, SafeAreaView } from 'react-native';
 import NewButton from '../../components/NewButton';
 import { joinRoom, getRoundLimit } from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
@@ -43,7 +43,7 @@ export default function Join(props) {
   };
 
   return (
-    <View style={styles.hostScreen}>
+    <SafeAreaView style={styles.screen}>
       <Text>Please enter your name and room code to join game</Text>
       <TextInput
         style={styles.input}
@@ -68,6 +68,6 @@ export default function Join(props) {
         <Text>Back to home</Text>
       </NewButton>
       <Rules />
-    </View>
+    </SafeAreaView>
   );
 }

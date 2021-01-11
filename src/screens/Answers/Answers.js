@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, SafeAreaView } from 'react-native';
 
 import { getRoundAnswers, getRound } from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
@@ -27,7 +27,7 @@ export default function Answers(props) {
   }, []);
 
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <Text>Round {round}: Answers</Text>
       <Image source={{ uri: picRef }} style={styles.pic} />
       {!loadingAnswers && (
@@ -36,6 +36,6 @@ export default function Answers(props) {
           animComplete={() => replace('Voting', { answers, round })}
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 }

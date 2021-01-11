@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Alert } from 'react-native';
+import { View, Text, TextInput, Alert, SafeAreaView } from 'react-native';
 import NewButton from '../../components/NewButton';
 import Picker from '../../components/Picker';
 import { UserContext } from '../../Context/UserContext';
@@ -35,7 +35,7 @@ export default function Host(props) {
   };
 
   return (
-    <View style={styles.hostScreen}>
+    <SafeAreaView style={styles.screen}>
       <Text>Please enter your name to host game</Text>
       <TextInput
         style={styles.input}
@@ -56,6 +56,6 @@ export default function Host(props) {
         <Text>Back to home</Text>
       </NewButton>
       <Rules />
-    </View>
+    </SafeAreaView>
   );
 }

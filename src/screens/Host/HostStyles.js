@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  hostScreen: {
+  screen: {
     flex: 1,
     backgroundColor: 'dodgerblue',
     alignItems: 'center',

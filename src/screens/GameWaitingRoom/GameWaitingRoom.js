@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, FlatList, DatePickerIOSBase } from 'react-native';
+import { View, Text, FlatList, SafeAreaView } from 'react-native';
 import {
   startGame,
   setAmountOfUsers,
@@ -12,6 +12,7 @@ import { firebase } from '../../firebase/config';
 import NewButton from '../../components/NewButton';
 import { UserContext } from '../../Context/UserContext';
 import { shuffle } from '../../utils/utils';
+import styles from './GameWaitingRoomStyles';
 
 export default function GameWaitingRoom(props) {
   const [users, setUsers] = useState([]);
@@ -55,7 +56,7 @@ export default function GameWaitingRoom(props) {
   };
 
   return (
-    <View>
+    <SafeAreaView style={styles.screen}>
       <Text>Game Waiting room</Text>
       <FlatList
         data={users}
@@ -67,6 +68,6 @@ export default function GameWaitingRoom(props) {
           <Text>Move to Voting </Text>
         </NewButton>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
