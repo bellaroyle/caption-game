@@ -19,6 +19,7 @@ const createRoom = (username) => {
       round: 1,
       startAnswers: false,
       roundAnswers: [],
+      joinable: true,
     })
     .then(() => {
       return rooms
@@ -64,18 +65,25 @@ const joinRoom = (roomCode, username) => {
   console.log(roomCode, 'room code in join room');
   return doesRoomExist(roomCode).then((roomExists) => {
     return roomExists
-      ? getUsersInRoom(roomCode).then((users) => {
-          return users.includes(username)
-            ? Promise.reject({
-                title: 'Username in use',
-                message: 'Please choose another username',
+      ? getJoinable(roomCode).then((joinable) => {
+          return joinable
+            ? getUsersInRoom(roomCode).then((users) => {
+                return users.includes(username)
+                  ? Promise.reject({
+                      title: 'Username in use',
+                      message: 'Please choose another username',
+                    })
+                  : rooms.doc(roomCode).collection('users').doc(username).set({
+                      host: false,
+                      name: username,
+                      roundScore: 0,
+                      overallScore: 0,
+                      answers: '',
+                    });
               })
-            : rooms.doc(roomCode).collection('users').doc(username).set({
-                host: false,
-                name: username,
-                roundScore: 0,
-                overallScore: 0,
-                answers: '',
+            : Promise.reject({
+                title: 'Game has already started',
+                message: 'You cannot join when this is the case',
               });
         })
       : Promise.reject({
@@ -86,7 +94,7 @@ const joinRoom = (roomCode, username) => {
 };
 
 const startGame = (roomCode) => {
-  return rooms.doc(roomCode).update({ startGame: true });
+  return rooms.doc(roomCode).update({ startGame: true, joinable: false });
 };
 
 const toggleGame = (roomCode) => {
@@ -229,6 +237,15 @@ const addRound = (roomCode) => {
   return rooms.doc(roomCode).update({ round: increment });
 };
 
+const getJoinable = (roomCode) => {
+  return rooms
+    .doc(roomCode)
+    .get()
+    .then((doc) => {
+      return doc.data().joinable;
+    });
+};
+
 module.exports = {
   rooms,
   createRoom,
@@ -249,4 +266,5 @@ module.exports = {
   getUsers,
   addVotes,
   addRound,
+  getJoinable,
 };
