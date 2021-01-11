@@ -14,4 +14,7 @@ export default StyleSheet.create({
   button: {
     marginBottom: 100,
   },
+  answerList: {
+    width: '80%',
+  },
 });

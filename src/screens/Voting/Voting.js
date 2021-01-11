@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, FlatList, Alert } from 'react-native';
+import { View, Text, FlatList, Alert, SafeAreaView } from 'react-native';
 
 import { firebase } from '../../firebase/config';
 import { addVotes } from '../../utils/databaseFuncs';
@@ -35,7 +35,7 @@ export default function Voting(props) {
   };
 
   return (
-    <View>
+    <SafeAreaView style={styles.screen}>
       <Text>Click on one of the answers below to give it your vote!</Text>
       <Text>Remember, you can't vote for your own!</Text>
       <FlatList
@@ -46,7 +46,8 @@ export default function Voting(props) {
             <Text>{item.answer}</Text>
           </NewButton>
         )}
+        style={styles.answerList}
       />
-    </View>
+    </SafeAreaView>
   );
 }
