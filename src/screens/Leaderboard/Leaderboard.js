@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, SafeAreaView } from 'react-native';
 import { startGame, addRound, startNewRound } from '../../utils/databaseFuncs';
 import { getVotes } from '../../utils/utils';
 import { UserContext } from '../../Context/UserContext';
@@ -80,7 +80,7 @@ export default function Leaderboard(props) {
     );
   } else {
     return (
-      <View style={styles.screen}>
+      <SafeAreaView style={styles.screen}>
         {isRound ? (
           <Text>Welcome to round leaderboard!</Text>
         ) : (
@@ -107,6 +107,7 @@ export default function Leaderboard(props) {
               />
             )
           }
+          style={styles.answerList}
         />
         {!isRound && round === roundLimit && user.isHost ? (
           <NewButton style={styles.button} onPress={handleWinners}>
@@ -120,7 +121,7 @@ export default function Leaderboard(props) {
             </NewButton>
           )
         )}
-      </View>
+      </SafeAreaView>
     );
   }
 }
