@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, Animated, Easing, View, StyleSheet } from 'react-native';
+import { Text, Animated, Easing, StyleSheet } from 'react-native';
 
 export default AnswerAnim = ({ answers, animComplete }) => {
   const moveAnim = new Animated.ValueXY({ x: 500, y: 0 });

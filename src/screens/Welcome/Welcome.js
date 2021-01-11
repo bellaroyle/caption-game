@@ -1,10 +1,9 @@
-import { NavigationHelpersContext } from '@react-navigation/native';
 import React from 'react';
-import { View, Text } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, SafeAreaView } from 'react-native';
+
 import NewButton from '../../components/NewButton';
-import styles from './WelcomeStyles';
 import Rules from '../../components/Rules';
+import styles from './WelcomeStyles';
 
 export default function Welcome(props) {
   const {
@@ -12,7 +11,7 @@ export default function Welcome(props) {
   } = props;
 
   return (
-    <View style={styles.welcomeScreen}>
+    <SafeAreaView style={styles.screen}>
       <Text>Welcome to the Caption Game!</Text>
       <View style={styles.btnContainer}>
         <NewButton onPress={() => replace('Host')}>
@@ -23,6 +22,6 @@ export default function Welcome(props) {
         </NewButton>
         <Rules />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

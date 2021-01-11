@@ -1,8 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Navigator from './src/navigation/Navigator';
+
 import { UserContext } from './src/Context/UserContext';
+import Navigator from './src/navigation/Navigator';
 
 export default function App() {
   const [user, setUser] = useState(null);

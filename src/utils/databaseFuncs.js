@@ -1,9 +1,7 @@
 import { firebase } from '../firebase/config';
 import { randomCodeGen, randomNumberGen } from './utils';
-import { Alert } from 'react-native';
 
 const rooms = firebase.firestore().collection('rooms');
-
 const increment = firebase.firestore.FieldValue.increment(1);
 
 const createRoom = (username, numRounds) => {

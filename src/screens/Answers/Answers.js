@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, Image } from 'react-native';
+import { Text, Image, SafeAreaView } from 'react-native';
+
+import { UserContext } from '../../Context/UserContext';
 
 import { getRoundAnswers, getRound } from '../../utils/databaseFuncs';
-import { UserContext } from '../../Context/UserContext';
+
 import AnswerAnim from '../../components/Animation/AnswerAnim';
 import styles from './AnswersStyles';
 
@@ -10,7 +12,9 @@ export default function Answers(props) {
   const [loadingAnswers, setLoadingAnswers] = useState(true);
   const [round, setRound] = useState();
   const [answers, setAnswers] = useState([]);
+
   const { roomCode } = useContext(UserContext);
+
   const {
     navigation: { replace },
   } = props;
@@ -27,7 +31,7 @@ export default function Answers(props) {
   }, []);
 
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <Text>Round {round}: Answers</Text>
       <Image source={{ uri: picRef }} style={styles.pic} />
       {!loadingAnswers && (
@@ -36,6 +40,6 @@ export default function Answers(props) {
           animComplete={() => replace('Voting', { answers, round })}
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 }

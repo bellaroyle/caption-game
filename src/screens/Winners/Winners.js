@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { Text, FlatList, SafeAreaView } from 'react-native';
+
 import { UserContext } from '../../Context/UserContext';
 import {
   getScores,
@@ -7,12 +8,15 @@ import {
   deleteUserFromRoom,
   deleteRoom,
 } from '../../utils/databaseFuncs';
+
 import WinnersCard from '../../components/WinnersCard';
 import RunnersUpCard from '../../components/RunnersUpCard';
 import NewButton from '../../components/NewButton';
+import styles from './WinnersStyles';
 
 export default function Winners(props) {
   const [winners, setWinners] = useState([]);
+
   const { user, roomCode } = useContext(UserContext);
 
   const {
@@ -46,7 +50,7 @@ export default function Winners(props) {
   };
 
   return (
-    <View>
+    <SafeAreaView style={styles.screen}>
       <FlatList
         data={winners}
         keyExtractor={(item) => item.name}
@@ -55,6 +59,6 @@ export default function Winners(props) {
       <NewButton onPress={handleGoHome}>
         <Text>Go back to home page</Text>
       </NewButton>
-    </View>
+    </SafeAreaView>
   );
 }

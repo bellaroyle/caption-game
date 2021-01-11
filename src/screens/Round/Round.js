@@ -1,13 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  Image,
-  Alert,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from 'react-native';
+import { Text, TextInput, Image, Alert, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+
+import { UserContext } from '../../Context/UserContext';
+
 import {
   getPic,
   getRound,
@@ -15,7 +10,7 @@ import {
   postAnswerToUser,
   toggleGame,
 } from '../../utils/databaseFuncs';
-import { UserContext } from '../../Context/UserContext';
+
 import NewButton from '../../components/NewButton';
 import styles from './RoundStyles';
 
@@ -24,6 +19,7 @@ export default function Round(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [answer, setAnswer] = useState('');
   const [round, setRound] = useState();
+
   const { user, roomCode } = useContext(UserContext);
 
   const {
@@ -54,10 +50,10 @@ export default function Round(props) {
 
   if (isLoading) {
     return (
-      <View>
+      <SafeAreaView style={styles.screen}>
         <Text>Round 1: Fight!</Text>
         <Text>Image is Loading</Text>
-      </View>
+      </SafeAreaView>
     );
   } else {
     return (
@@ -66,20 +62,20 @@ export default function Round(props) {
           Keyboard.dismiss();
         }}
       >
-        <View style={styles.screen}>
-          <Text>Round {round}</Text>
-          <Image source={{ uri: picRef }} style={styles.pic} />
-          <TextInput
-            multiline={true}
-            onChangeText={(text) => setAnswer(text)}
-            value={answer}
-            style={styles.input}
-            maxLength={75}
-          />
-          <NewButton onPress={submitAnswer}>
-            <Text>Submit answer</Text>
-          </NewButton>
-        </View>
+      <SafeAreaView style={styles.screen}>
+        <Text>Round {round}</Text>
+        <Image source={{ uri: picRef }} style={styles.pic} />
+        <TextInput
+          multiline={true}
+          onChangeText={(text) => setAnswer(text)}
+          value={answer}
+          style={styles.input}
+          maxLength={75}
+        />
+        <NewButton onPress={submitAnswer}>
+          <Text>Submit answer</Text>
+        </NewButton>
+      </SafeAreaView>
       </TouchableWithoutFeedback>
     );
   }

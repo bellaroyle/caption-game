@@ -1,14 +1,18 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, FlatList, DatePickerIOSBase } from 'react-native';
-import { startGame, setAmountOfUsers } from '../../utils/databaseFuncs';
-import UserCard from '../../components/UserCard';
-import { firebase } from '../../firebase/config';
-import NewButton from '../../components/NewButton';
+import { Text, FlatList, SafeAreaView } from 'react-native';
+
 import { UserContext } from '../../Context/UserContext';
+import { firebase } from '../../firebase/config';
+
+import { startGame, setAmountOfUsers } from '../../utils/databaseFuncs';
+
+import UserCard from '../../components/UserCard';
+import NewButton from '../../components/NewButton';
 import styles from './WaitingRoomStyles';
 
 export default function WaitingRoom(props) {
   const [users, setUsers] = useState([]);
+
   const {
     navigation: { replace },
   } = props;
@@ -20,7 +24,6 @@ export default function WaitingRoom(props) {
   useEffect(() => {
     const unsubscribe = roomDoc.collection('users').onSnapshot((snap) => {
       const data = snap.docs.map((doc) => doc.data());
-      console.log(data);
       setUsers(data);
     });
     return () => unsubscribe();
@@ -41,7 +44,7 @@ export default function WaitingRoom(props) {
   };
 
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <Text style={styles.roomCode}>You are in room {roomCode}!</Text>
       <Text>Please share this code with your friends</Text>
       {users.length !== 0 ? (
@@ -59,6 +62,6 @@ export default function WaitingRoom(props) {
           <Text>Begin Round 1</Text>
         </NewButton>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
