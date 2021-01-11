@@ -1,7 +1,12 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { UserContext } from '../../Context/UserContext';
-import { getScores, deleteRoom } from '../../utils/databaseFuncs';
+import {
+  getScores,
+  getUsers,
+  deleteUserFromRoom,
+  deleteRoom,
+} from '../../utils/databaseFuncs';
 import WinnersCard from '../../components/WinnersCard';
 import RunnersUpCard from '../../components/RunnersUpCard';
 import NewButton from '../../components/NewButton';
@@ -29,7 +34,14 @@ export default function Winners(props) {
   };
 
   const handleGoHome = () => {
-    deleteRoom(roomCode);
+    deleteUserFromRoom(user.username, roomCode).then(() => {
+      getUsers(roomCode).then((users) => {
+        if (users.length === 0) {
+          deleteRoom(roomCode);
+        }
+      });
+    });
+    // deleteRoom(roomCode);
     replace('Welcome');
   };
 

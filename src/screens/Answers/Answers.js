@@ -1,27 +1,19 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, TextInput, Image } from 'react-native';
-import {
-  getRoundAnswers,
-  getAmountOfUsers,
-  getRound,
-} from '../../utils/databaseFuncs';
+import { View, Text, Image } from 'react-native';
 
+import { getRoundAnswers, getRound } from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
 import AnswerAnim from '../../components/Animation/AnswerAnim';
 import styles from './AnswersStyles';
-import { shuffle } from '../../utils/utils';
 
 export default function Answers(props) {
   const [loadingAnswers, setLoadingAnswers] = useState(true);
-  const [answersLoaded, setAnswersLoaded] = useState(false);
   const [round, setRound] = useState();
   const [answers, setAnswers] = useState([]);
   const { roomCode } = useContext(UserContext);
-
   const {
     navigation: { replace },
   } = props;
-
   const { picRef } = props.route.params;
 
   useEffect(() => {

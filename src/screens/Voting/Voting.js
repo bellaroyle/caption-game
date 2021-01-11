@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, FlatList, Alert } from 'react-native';
+
 import { firebase } from '../../firebase/config';
+import { addVotes } from '../../utils/databaseFuncs';
 import NewButton from '../../components/NewButton';
 import { UserContext } from '../../Context/UserContext';
 import styles from './VotingStyles';
-import UserCard from '../../components/UserCard';
-import { addVotes } from '../../utils/databaseFuncs';
 
 export default function Voting(props) {
   const [answers, setAnswers] = useState([]);
