@@ -8,7 +8,7 @@ const increment = firebase.firestore.FieldValue.increment(1);
 
 const createRoom = (username, numRounds) => {
   const roomCode = randomCodeGen();
-  const picOrder = randomNumberGen();
+  const picOrder = randomNumberGen(numRounds);
   const amountOfPlayers = 0;
   return rooms
     .doc(roomCode)
@@ -238,6 +238,11 @@ const addRound = (roomCode) => {
   return rooms.doc(roomCode).update({ round: increment });
 };
 
+const deleteRoom = (roomCode) => {
+  return rooms.doc(roomCode).delete();
+};
+
+
 const getJoinable = (roomCode) => {
   return rooms
     .doc(roomCode)
@@ -255,6 +260,7 @@ const getRoundLimit = (roomCode) => {
       return doc.data().roundLimit;
     });
 };
+
 
 module.exports = {
   rooms,
@@ -276,6 +282,7 @@ module.exports = {
   getUsers,
   addVotes,
   addRound,
+  deleteRoom,
   getJoinable,
   getRoundLimit,
 };

@@ -52,6 +52,9 @@ export default function Host(props) {
       <NewButton onPress={createGame}>
         <Text>Create Game</Text>
       </NewButton>
+      <NewButton onPress={() => replace('Welcome')}>
+        <Text>Back to home</Text>
+      </NewButton>
       <Rules />
     </View>
   );

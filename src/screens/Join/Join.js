@@ -56,6 +56,9 @@ export default function Join(props) {
       <NewButton onPress={joinGame}>
         <Text>Join Game</Text>
       </NewButton>
+      <NewButton onPress={() => replace('Welcome')}>
+        <Text>Back to home</Text>
+      </NewButton>
       <Rules />
     </View>
   );

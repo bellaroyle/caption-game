@@ -58,6 +58,7 @@ export default function Round(props) {
           onChangeText={(text) => setAnswer(text)}
           value={answer}
           style={styles.input}
+          maxLength={75}
         />
         <NewButton onPress={submitAnswer}>
           <Text>Submit answer</Text>

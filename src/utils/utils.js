@@ -10,13 +10,13 @@ const randomCodeGen = () => {
   return result;
 };
 
-const randomNumberGen = () => {
+const randomNumberGen = (noOfRounds) => {
   let sequence = [];
   let availableNumbers = [];
   for (let i = 1; i < 11; i++) {
     availableNumbers.push(i);
   }
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < noOfRounds; i++) {
     let number = Math.floor(Math.random() * availableNumbers.length);
     sequence.push(availableNumbers[number]);
     availableNumbers.splice(number, 1);
