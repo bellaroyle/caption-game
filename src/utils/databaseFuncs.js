@@ -6,9 +6,9 @@ const rooms = firebase.firestore().collection('rooms');
 
 const increment = firebase.firestore.FieldValue.increment(1);
 
-const createRoom = (username) => {
+const createRoom = (username, noOfRounds) => {
   const roomCode = randomCodeGen();
-  const picOrder = randomNumberGen();
+  const picOrder = randomNumberGen(noOfRounds);
   const amountOfPlayers = 0;
   return rooms
     .doc(roomCode)

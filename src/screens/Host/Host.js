@@ -15,7 +15,7 @@ export default function Host(props) {
   const { user, setUser, setRoomCode } = useContext(UserContext);
 
   const createGame = () => {
-    createRoom(username).then((roomCode) => {
+    createRoom(username, 5).then((roomCode) => {
       setUser({ username, isHost: true });
       setRoomCode(roomCode);
       replace('WaitingRoom');
