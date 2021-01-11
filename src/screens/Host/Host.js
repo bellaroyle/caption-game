@@ -1,5 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import NewButton from '../../components/NewButton';
 import Picker from '../../components/Picker';
 import { UserContext } from '../../Context/UserContext';
@@ -35,27 +42,33 @@ export default function Host(props) {
   };
 
   return (
-    <View style={styles.hostScreen}>
-      <Text>Please enter your name to host game</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Your name"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(text) => setUsername(text)}
-        value={username}
-        autoCapitalize="none"
-      />
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
+      <View style={styles.hostScreen}>
+        <Text>Please enter your name to host game</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Your name"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setUsername(text)}
+          value={username}
+          autoCapitalize="none"
+        />
 
-      <Text>Please enter the number of rounds you'd like to play</Text>
-      <Picker numRounds={numRounds} onPress={handleNumPicker} />
+        <Text>Please enter the number of rounds you'd like to play</Text>
+        <Picker numRounds={numRounds} onPress={handleNumPicker} />
 
-      <NewButton onPress={createGame}>
-        <Text>Create Game</Text>
-      </NewButton>
-      <NewButton onPress={() => replace('Welcome')}>
-        <Text>Back to home</Text>
-      </NewButton>
-      <Rules />
-    </View>
+        <NewButton onPress={createGame}>
+          <Text>Create Game</Text>
+        </NewButton>
+        <NewButton onPress={() => replace('Welcome')}>
+          <Text>Back to home</Text>
+        </NewButton>
+        <Rules />
+      </View>
+    </TouchableWithoutFeedback>
   );
 }

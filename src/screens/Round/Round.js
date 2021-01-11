@@ -1,5 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, TextInput, Image, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import {
   getPic,
   getRound,
@@ -53,20 +61,26 @@ export default function Round(props) {
     );
   } else {
     return (
-      <View style={styles.screen}>
-        <Text>Round {round}</Text>
-        <Image source={{ uri: picRef }} style={styles.pic} />
-        <TextInput
-          multiline={true}
-          onChangeText={(text) => setAnswer(text)}
-          value={answer}
-          style={styles.input}
-          maxLength={75}
-        />
-        <NewButton onPress={submitAnswer}>
-          <Text>Submit answer</Text>
-        </NewButton>
-      </View>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}
+      >
+        <View style={styles.screen}>
+          <Text>Round {round}</Text>
+          <Image source={{ uri: picRef }} style={styles.pic} />
+          <TextInput
+            multiline={true}
+            onChangeText={(text) => setAnswer(text)}
+            value={answer}
+            style={styles.input}
+            maxLength={75}
+          />
+          <NewButton onPress={submitAnswer}>
+            <Text>Submit answer</Text>
+          </NewButton>
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
