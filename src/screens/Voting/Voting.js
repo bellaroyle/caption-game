@@ -13,6 +13,7 @@ export default function Voting(props) {
   const {
     navigation: { replace },
   } = props;
+  const { round } = props.route.params;
 
   const roomDoc = firebase.firestore().collection('rooms').doc(roomCode);
 
@@ -29,7 +30,7 @@ export default function Voting(props) {
       });
     } else {
       addVotes(roomCode, username);
-      replace('Leaderboard', { isRound: true, isOverall: false });
+      replace('Leaderboard', { isRound: true, isOverall: false, round });
     }
   };
 

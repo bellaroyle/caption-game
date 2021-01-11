@@ -11,6 +11,7 @@ import GameWaitingRoom from '../screens/GameWaitingRoom/GameWaitingRoom';
 import Answers from '../screens/Answers/Answers';
 import Voting from '../screens/Voting/Voting';
 import Leaderboard from '../screens/Leaderboard/Leaderboard';
+import Winners from '../screens/Winners/Winners';
 
 export default function Navigator() {
   return (
@@ -34,6 +35,7 @@ const GameStackNavigator = () => {
       <GameStack.Screen name="Answers" component={Answers} />
       <GameStack.Screen name="Voting" component={Voting} />
       <GameStack.Screen name="Leaderboard" component={Leaderboard} />
+      <GameStack.Screen name="Winners" component={Winners} />
     </GameStack.Navigator>
   );
 };
