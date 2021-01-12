@@ -1,11 +1,17 @@
 import React, { useState, useContext } from 'react';
-import { Text, TextInput, Alert, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import {
+  Text,
+  TextInput,
+  Alert,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 
 import { joinRoom, getRoundLimit } from '../../utils/databaseFuncs';
 import { UserContext } from '../../Context/UserContext';
 
 import NewButton from '../../components/NewButton';
-import Rules from '../../components/Rules';
 
 import styles from './JoinStyles';
 
@@ -51,32 +57,31 @@ export default function Join(props) {
         Keyboard.dismiss();
       }}
     >
-    <SafeAreaView style={styles.screen}>
-      <Text>Please enter your name and room code to join game</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Your name"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(text) => setUsername(text)}
-        value={username}
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Room code"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(text) => setRoomInput(text)}
-        value={roomInput}
-        autoCapitalize="none"
-      />
-      <NewButton onPress={joinGame}>
-        <Text>Join Game</Text>
-      </NewButton>
-      <NewButton onPress={() => replace('Welcome')}>
-        <Text>Back to home</Text>
-      </NewButton>
-      <Rules />
-    </SafeAreaView>
-</TouchableWithoutFeedback>
+      <SafeAreaView style={styles.screen}>
+        <Text>Please enter your name and room code to join game</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Your name"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setUsername(text)}
+          value={username}
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Room code"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setRoomInput(text)}
+          value={roomInput}
+          autoCapitalize="none"
+        />
+        <NewButton onPress={joinGame}>
+          <Text>Join Game</Text>
+        </NewButton>
+        <NewButton onPress={() => replace('Welcome')}>
+          <Text>Back to home</Text>
+        </NewButton>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }

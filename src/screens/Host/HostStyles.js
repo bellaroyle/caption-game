@@ -3,9 +3,15 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: 'dodgerblue',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: '100%',
   },
   input: {
     backgroundColor: '#fff',
@@ -13,5 +19,14 @@ export default StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     margin: 10,
+  },
+  pickerContainer: {
+    marginVertical: 40,
+    alignItems: 'center',
+  },
+  btnContainer: {
+    flexDirection: 'column',
+    width: '100%',
+    marginTop: 100,
   },
 });

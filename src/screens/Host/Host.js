@@ -1,10 +1,19 @@
 import React, { useState, useContext } from 'react';
-import { Text, TextInput, Alert, SafeAreaView, TouchableWithoutFeedback, Keyboard, } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Alert,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { UserContext } from '../../Context/UserContext';
 import { createRoom } from '../../utils/databaseFuncs';
 
-import Rules from '../../components/Rules';
+import MainHeader from '../../components/MainHeader';
 import Picker from '../../components/Picker';
 import NewButton from '../../components/NewButton';
 
@@ -39,35 +48,46 @@ export default function Host(props) {
   };
 
   return (
-
     <TouchableWithoutFeedback
       onPress={() => {
         Keyboard.dismiss();
       }}
     >
-    <SafeAreaView style={styles.screen}>
-      <Text>Please enter your name to host game</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Your name"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(text) => setUsername(text)}
-        value={username}
-        autoCapitalize="none"
-      />
+      <View style={styles.screen}>
+        <LinearGradient
+          // Background Linear Gradient
+          colors={['#820263', '#C8005E']}
+          style={styles.background}
+        />
+        <MainHeader text="Host a game" />
+        <SafeAreaView style={styles.screen}>
+          <View style={styles.nameContainer}>
+            <Text>Please enter your name to host game</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Your name"
+              placeholderTextColor="#aaaaaa"
+              onChangeText={(text) => setUsername(text)}
+              value={username}
+              autoCapitalize="none"
+            />
+          </View>
 
-        <Text>Please enter the number of rounds you'd like to play</Text>
-        <Picker numRounds={numRounds} onPress={handleNumPicker} />
+          <View style={styles.pickerContainer}>
+            <Text>Please enter the number of rounds you'd like to play</Text>
+            <Picker numRounds={numRounds} onPress={handleNumPicker} />
+          </View>
 
-
-      <NewButton onPress={createGame}>
-        <Text>Create Game</Text>
-      </NewButton>
-      <NewButton onPress={() => replace('Welcome')}>
-        <Text>Back to home</Text>
-      </NewButton>
-      <Rules />
-    </SafeAreaView>
-</TouchableWithoutFeedback>
+          <View style={styles.btnContainer}>
+            <NewButton onPress={createGame}>
+              <Text>Create Game</Text>
+            </NewButton>
+            <NewButton onPress={() => replace('Welcome')}>
+              <Text>Back to home</Text>
+            </NewButton>
+          </View>
+        </SafeAreaView>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
