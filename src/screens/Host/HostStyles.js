@@ -18,7 +18,18 @@ export default StyleSheet.create({
     width: 200,
     borderRadius: 5,
     padding: 10,
+    fontFamily: 'LilitaOne',
+    fontSize: 20,
+  },
+  subhead: {
+    fontFamily: 'LilitaOne',
+    fontSize: 20,
+    color: 'white',
     margin: 10,
+  },
+  nameContainer: {
+    marginVertical: 40,
+    alignItems: 'center',
   },
   pickerContainer: {
     marginVertical: 40,
