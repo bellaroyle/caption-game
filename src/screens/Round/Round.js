@@ -1,5 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Text, TextInput, Image, Alert, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import {
+  Text,
+  View,
+  TextInput,
+  Image,
+  Alert,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { UserContext } from '../../Context/UserContext';
 
@@ -12,6 +22,7 @@ import {
 } from '../../utils/databaseFuncs';
 
 import NewButton from '../../components/NewButton';
+import MainHeader from '../../components/MainHeader';
 import styles from './RoundStyles';
 
 export default function Round(props) {
@@ -62,20 +73,29 @@ export default function Round(props) {
           Keyboard.dismiss();
         }}
       >
-      <SafeAreaView style={styles.screen}>
-        <Text>Round {round}</Text>
-        <Image source={{ uri: picRef }} style={styles.pic} />
-        <TextInput
-          multiline={true}
-          onChangeText={(text) => setAnswer(text)}
-          value={answer}
-          style={styles.input}
-          maxLength={75}
-        />
-        <NewButton onPress={submitAnswer}>
-          <Text>Submit answer</Text>
-        </NewButton>
-      </SafeAreaView>
+        <View style={styles.screen}>
+          <LinearGradient
+            // Background Linear Gradient
+            colors={['#820263', '#C8005E']}
+            style={styles.background}
+          />
+          <MainHeader text={`Round ${round}`} />
+          <SafeAreaView style={styles.screen}>
+            <View style={styles.picContainer}>
+              <Image source={{ uri: picRef }} style={styles.pic} />
+            </View>
+            <TextInput
+              multiline={true}
+              onChangeText={(text) => setAnswer(text)}
+              value={answer}
+              style={styles.input}
+              maxLength={75}
+            />
+            <NewButton onPress={submitAnswer}>
+              <Text>Submit answer</Text>
+            </NewButton>
+          </SafeAreaView>
+        </View>
       </TouchableWithoutFeedback>
     );
   }
