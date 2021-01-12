@@ -62,7 +62,7 @@ export default function Host(props) {
         <MainHeader text="Host a game" />
         <SafeAreaView style={styles.screen}>
           <View style={styles.nameContainer}>
-            <Text>Please enter your name to host game</Text>
+            <Text style={styles.subhead}>Your name</Text>
             <TextInput
               style={styles.input}
               placeholder="Your name"
@@ -74,8 +74,12 @@ export default function Host(props) {
           </View>
 
           <View style={styles.pickerContainer}>
-            <Text>Please enter the number of rounds you'd like to play</Text>
-            <Picker numRounds={numRounds} onPress={handleNumPicker} />
+            <Text style={styles.subhead}>Rounds</Text>
+            <Picker
+              style={styles.picker}
+              numRounds={numRounds}
+              onPress={handleNumPicker}
+            />
           </View>
 
           <View style={styles.btnContainer}>
