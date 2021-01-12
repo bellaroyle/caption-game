@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Text, FlatList, SafeAreaView } from 'react-native';
+import { Text, FlatList, SafeAreaView, View } from 'react-native';
 
 import { firebase } from '../../firebase/config';
 import { UserContext } from '../../Context/UserContext';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import {
   getAmountOfUsers,
@@ -12,8 +13,10 @@ import {
 import { shuffle } from '../../utils/utils';
 
 import styles from './GameWaitingRoomStyles';
+import MainHeader from '../../components/MainHeader';
 import NewButton from '../../components/NewButton';
 import UserCard from '../../components/UserCard';
+import ReusableCard from '../../components/ReusableCard';
 
 export default function GameWaitingRoom(props) {
   const [users, setUsers] = useState([]);
@@ -58,18 +61,35 @@ export default function GameWaitingRoom(props) {
   };
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <Text>Game Waiting room</Text>
-      <FlatList
-        data={users}
-        renderItem={({ item }) => <UserCard name={item.name} />}
-        keyExtractor={(item) => item.name}
+    <View style={styles.screen}>
+      <LinearGradient
+        colors={['#820263', '#C8005E']}
+        style={styles.background}
       />
-      {users.length === usersInGame && user.isHost && (
-        <NewButton onPress={handleStartButton}>
-          <Text>Move to Voting </Text>
-        </NewButton>
-      )}
-    </SafeAreaView>
+      <MainHeader text="Answers" />
+      <SafeAreaView style={styles.screen}>
+        <View style={styles.box}>
+          <View style={styles.subBox}>
+            <Text style={styles.subhead}>Answers from...</Text>
+          </View>
+          <View style={styles.listContainer}>
+            <FlatList
+              data={users}
+              renderItem={({ item }) => <UserCard name={item.name} />}
+              keyExtractor={(item) => item.name}
+              contentContainerStyle={{
+                alignItems: 'center',
+              }}
+              style={styles.list}
+            />
+          </View>
+        </View>
+        {users.length === usersInGame && user.isHost && (
+          <NewButton onPress={handleStartButton}>
+            <Text>Display answers</Text>
+          </NewButton>
+        )}
+      </SafeAreaView>
+    </View>
   );
 }
