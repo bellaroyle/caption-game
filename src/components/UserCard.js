@@ -11,7 +11,6 @@ export default function UserCard(props) {
 
 const styles = StyleSheet.create({
   UserCard: {
-    backgroundColor: 'azure',
     borderRadius: 5,
     padding: 10,
     margin: 10,

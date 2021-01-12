@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Text, FlatList, SafeAreaView } from 'react-native';
+import { View, Text, FlatList, SafeAreaView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { UserContext } from '../../Context/UserContext';
 import { firebase } from '../../firebase/config';
 
 import { startGame, setAmountOfUsers } from '../../utils/databaseFuncs';
 
-import UserCard from '../../components/UserCard';
 import NewButton from '../../components/NewButton';
+import MainHeader from '../../components/MainHeader';
+import RoomCodeCard from '../../components/RoomCodeCard';
 import styles from './WaitingRoomStyles';
 
 export default function WaitingRoom(props) {
@@ -44,24 +46,41 @@ export default function WaitingRoom(props) {
   };
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <Text style={styles.roomCode}>You are in room {roomCode}!</Text>
-      <Text>Please share this code with your friends</Text>
-      {users.length !== 0 ? (
-        <FlatList
-          data={users}
-          renderItem={({ item }) => <UserCard name={item.name} />}
-          keyExtractor={(item) => item.name}
-          style={styles.list}
-        />
-      ) : (
-        <Text>Is loading...</Text>
-      )}
-      {users.length > 0 && user.isHost && (
-        <NewButton style={styles.button} onPress={handleStartButton}>
-          <Text>Begin Round 1</Text>
-        </NewButton>
-      )}
-    </SafeAreaView>
+    <View style={styles.screen}>
+      <LinearGradient
+        colors={['#820263', '#C8005E']}
+        style={styles.background}
+      />
+      <MainHeader text="Game Lobby" />
+      <SafeAreaView style={styles.screen}>
+        <Text style={styles.subhead}>Room Code</Text>
+        <RoomCodeCard>
+          <Text style={styles.roomCode}>{roomCode}</Text>
+        </RoomCodeCard>
+        <Text style={styles.subhead}>Players Joined</Text>
+        {users.length !== 0 ? (
+          <View style={styles.listContainer}>
+            <FlatList
+              data={users}
+              renderItem={({ item }) => (
+                <View style={styles.usernameContainer}>
+                  <Text style={styles.usernames}>{item.name}</Text>
+                </View>
+              )}
+              keyExtractor={(item) => item.name}
+              style={styles.list}
+              contentContainerStyle={{ alignItems: 'center' }}
+            />
+          </View>
+        ) : (
+          <Text>Is loading...</Text>
+        )}
+        {users.length > 0 && user.isHost && (
+          <NewButton style={styles.button} onPress={handleStartButton}>
+            <Text>Begin Round 1</Text>
+          </NewButton>
+        )}
+      </SafeAreaView>
+    </View>
   );
 }
