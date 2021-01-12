@@ -68,7 +68,7 @@ export default function Join(props) {
         />
         <MainHeader text="Join a game" />
         <SafeAreaView style={styles.screen}>
-          <Text style={styles.subhead}>Enter your name and room code</Text>
+          <Text style={styles.subhead}>Your name</Text>
           <TextInput
             style={styles.input}
             placeholder="Your name"
@@ -77,6 +77,7 @@ export default function Join(props) {
             value={username}
             autoCapitalize="none"
           />
+          <Text style={styles.subhead}>Your room code</Text>
           <TextInput
             style={styles.input}
             placeholder="Room code"

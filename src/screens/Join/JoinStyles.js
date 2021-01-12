@@ -24,7 +24,7 @@ export default StyleSheet.create({
     width: 200,
     borderRadius: 5,
     padding: 10,
-    margin: 10,
+    marginBottom: 10,
     fontFamily: 'LilitaOne',
     fontSize: 20,
   },
