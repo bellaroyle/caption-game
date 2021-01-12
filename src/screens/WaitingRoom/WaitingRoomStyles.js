@@ -36,21 +36,6 @@ export default StyleSheet.create({
     fontFamily: 'LilitaOne',
     color: '#2E294E',
   },
-  usernameContainer: {
-    minWidth: '80%',
-    alignItems: 'center',
-    borderBottomColor: '#2E294E',
-    borderBottomWidth: 1,
-    padding: '2%',
-  },
-  usernames: {
-    fontSize: 22,
-    marginVertical: 10,
-    fontFamily: 'LilitaOne',
-    color: '#2E294E',
-    textAlign: 'center',
-    margin: 60,
-  },
   button: {
     marginBottom: 100,
   },

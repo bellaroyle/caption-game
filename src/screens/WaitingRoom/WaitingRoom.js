@@ -11,6 +11,7 @@ import NewButton from '../../components/NewButton';
 import MainHeader from '../../components/MainHeader';
 import RoomCodeCard from '../../components/RoomCodeCard';
 import styles from './WaitingRoomStyles';
+import UserCard from '../../components/UserCard';
 
 export default function WaitingRoom(props) {
   const [users, setUsers] = useState([]);
@@ -62,11 +63,7 @@ export default function WaitingRoom(props) {
           <View style={styles.listContainer}>
             <FlatList
               data={users}
-              renderItem={({ item }) => (
-                <View style={styles.usernameContainer}>
-                  <Text style={styles.usernames}>{item.name}</Text>
-                </View>
-              )}
+              renderItem={({ item }) => <UserCard name={item.name} />}
               keyExtractor={(item) => item.name}
               style={styles.list}
               contentContainerStyle={{ alignItems: 'center' }}
