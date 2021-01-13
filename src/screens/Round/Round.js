@@ -89,13 +89,18 @@ export default function Round(props) {
               <View style={styles.picContainer}>
                 <Image source={{ uri: picRef }} style={styles.pic} />
               </View>
-              <TextInput
-                multiline={true}
-                onChangeText={(text) => setAnswer(text)}
-                value={answer}
-                style={styles.input}
-                maxLength={75}
-              />
+              <View style={styles.inputContainer}>
+                <TextInput
+                  multiline={true}
+                  onChangeText={(text) => setAnswer(text)}
+                  value={answer}
+                  style={styles.input}
+                  maxLength={75}
+                />
+                <Text style={styles.charsLeft}>
+                  {75 - answer.length} characters left{' '}
+                </Text>
+              </View>
               <NewButton onPress={submitAnswer}>
                 <Text>Submit answer</Text>
               </NewButton>

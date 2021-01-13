@@ -16,13 +16,22 @@ export default StyleSheet.create({
     top: 0,
     height: '100%',
   },
+  inputContainer: {
+    backgroundColor: 'white',
+    width: 300,
+    margin: 20,
+    borderRadius: 5,
+    alignItems: 'flex-end',
+  },
   input: {
     backgroundColor: '#fff',
     width: 300,
     height: 50,
     borderRadius: 5,
     padding: 10,
-    margin: 20,
+  },
+  charsLeft: {
+    fontSize: 11,
   },
   picContainer: {
     width: '90%',
