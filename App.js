@@ -8,6 +8,7 @@ import Navigator from './src/navigation/Navigator';
 const fetchFonts = () => {
   return Font.loadAsync({
     LilitaOne: require('./assets/fonts/LilitaOne-Regular.ttf'),
+    OpenSans: require('./assets/fonts/OpenSans/OpenSans-Regular.ttf'),
   });
 };
 
