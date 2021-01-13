@@ -19,7 +19,25 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
   },
   logoContainer: {
+    position: 'relative',
     marginTop: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logoTextBox: {
+    position: 'absolute',
+    top: '25%',
+    left: '20%',
+  },
+  logoTextMain: {
+    fontFamily: 'LilitaOne',
+    fontSize: 75,
+    color: '#2E294E',
+  },
+  logoTextSub: {
+    fontFamily: 'LilitaOne',
+    fontSize: 20,
+    color: '#D90368',
   },
   btnContainer: {
     flexDirection: 'column',

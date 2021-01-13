@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, SafeAreaView, ViewPagerAndroidBase } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, SafeAreaView, Dimensions, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Svg, Path } from 'react-native-svg';
 
 import NewButton from '../../components/NewButton';
 import Rules from '../../components/Rules';
@@ -20,8 +20,8 @@ export default function Welcome(props) {
         style={styles.background}
       />
       <SafeAreaView style={styles.safeView}>
-        <View style={styles.logoContainer}>
-          <Ionicons name="chatbubble" size={200} color="white" />
+        <View styles={styles.logoContainer}>
+          <Image source={require('../../assets/images/Logo.png')} />
         </View>
 
         <View style={styles.btnContainer}>
