@@ -20,10 +20,10 @@ export default function Welcome(props) {
         style={styles.background}
       />
       <SafeAreaView style={styles.safeView}>
-        <View styles={styles.logoContainer}>
-          <Image source={require('../../assets/images/Logo.png')} />
-        </View>
-
+        <Image
+          source={require('../../assets/images/Logo.png')}
+          style={styles.logoImg}
+        />
         <View style={styles.btnContainer}>
           <NewButton onPress={() => replace('Host')}>
             <Text>Host Game</Text>

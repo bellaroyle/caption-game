@@ -1,10 +1,12 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const width = Dimensions.get('window').width;
 
 export default StyleSheet.create({
   screen: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   background: {
     position: 'absolute',
@@ -16,18 +18,18 @@ export default StyleSheet.create({
   safeView: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around',
   },
   logoContainer: {
-    position: 'relative',
     marginTop: 50,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '90%',
+    height: '40%',
   },
-  logoTextBox: {
-    position: 'absolute',
-    top: '25%',
-    left: '20%',
+  logoImg: {
+    flex: 1.75,
+    width: width * 0.8,
+    resizeMode: 'contain',
   },
   logoTextMain: {
     fontFamily: 'LilitaOne',
@@ -40,8 +42,9 @@ export default StyleSheet.create({
     color: '#D90368',
   },
   btnContainer: {
+    flex: 1,
     flexDirection: 'column',
     width: '100%',
-    marginBottom: 40,
+    marginBottom: 60,
   },
 });
