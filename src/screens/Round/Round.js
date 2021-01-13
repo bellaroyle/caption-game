@@ -60,54 +60,58 @@ export default function Round(props) {
     }
   };
 
-  if (isLoading) {
-    return (
-      <SafeAreaView style={styles.screen}>
-        <Text>Round 1: Fight!</Text>
-        <Text>Image is Loading</Text>
-      </SafeAreaView>
-    );
-  } else {
-    return (
-      <TouchableWithoutFeedback
-        onPress={() => {
-          Keyboard.dismiss();
-        }}
-      >
-        <View style={styles.screen}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={styles.screen}
-          >
-            <LinearGradient
-              // Background Linear Gradient
-              colors={['#820263', '#C8005E']}
-              style={styles.background}
-            />
-            <MainHeader text={`Round ${round}`} />
-            <SafeAreaView style={styles.screen}>
-              <View style={styles.picContainer}>
-                <Image source={{ uri: picRef }} style={styles.pic} />
+  // if (isLoading) {
+  //   return (
+  //     <SafeAreaView style={styles.screen}>
+  //       <Text>Round 1: Fight!</Text>
+  //       <Text>Image is Loading</Text>
+  //     </SafeAreaView>
+  //   );
+  // } else {
+  return (
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
+      <View style={styles.screen}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.screen}
+        >
+          <LinearGradient
+            // Background Linear Gradient
+            colors={['#820263', '#C8005E']}
+            style={styles.background}
+          />
+          <MainHeader text={`Round ${round}`} />
+          <SafeAreaView style={styles.screen}>
+            {!isLoading && (
+              <View style={styles.picShadow}>
+                <View style={styles.picContainer}>
+                  <Image source={{ uri: picRef }} style={styles.pic} />
+                </View>
               </View>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  multiline={true}
-                  onChangeText={(text) => setAnswer(text)}
-                  value={answer}
-                  style={styles.input}
-                  maxLength={75}
-                />
-                <Text style={styles.charsLeft}>
-                  {75 - answer.length} characters left{' '}
-                </Text>
-              </View>
-              <NewButton onPress={submitAnswer}>
-                <Text>Submit answer</Text>
-              </NewButton>
-            </SafeAreaView>
-          </KeyboardAvoidingView>
-        </View>
-      </TouchableWithoutFeedback>
-    );
-  }
+            )}
+            <View style={styles.inputContainer}>
+              <TextInput
+                multiline={true}
+                onChangeText={(text) => setAnswer(text)}
+                value={answer}
+                style={styles.input}
+                maxLength={75}
+              />
+              <Text style={styles.charsLeft}>
+                {75 - answer.length} characters left{' '}
+              </Text>
+            </View>
+            <NewButton onPress={submitAnswer}>
+              <Text>Submit answer</Text>
+            </NewButton>
+          </SafeAreaView>
+        </KeyboardAvoidingView>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+  // }
 }

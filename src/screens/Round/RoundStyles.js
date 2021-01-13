@@ -33,16 +33,21 @@ export default StyleSheet.create({
   charsLeft: {
     fontSize: 11,
   },
-  picContainer: {
+  picShadow: {
     width: '90%',
     height: '50%',
-    borderRadius: 5,
-    overflow: 'hidden',
-    marginVertical: 22,
     shadowColor: 'black',
     shadowOffset: { width: 1, height: 1 },
-    shadowRadius: 1,
-    shadowOpacity: 1,
+    shadowRadius: 5,
+    shadowOpacity: 0.5,
+    marginTop: 10,
+    marginBottom: 22,
+  },
+  picContainer: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 10,
+    overflow: 'hidden',
   },
   pic: {
     resizeMode: 'cover',

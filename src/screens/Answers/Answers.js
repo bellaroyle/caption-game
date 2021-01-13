@@ -41,8 +41,10 @@ export default function Answers(props) {
       />
       <MainHeader text="Answers" />
       <SafeAreaView style={styles.screen}>
-        <View style={styles.picContainer}>
-          <Image source={{ uri: picRef }} style={styles.pic} />
+        <View style={styles.picShadow}>
+          <View style={styles.picContainer}>
+            <Image source={{ uri: picRef }} style={styles.pic} />
+          </View>
         </View>
         {!loadingAnswers && (
           <AnswerAnim
