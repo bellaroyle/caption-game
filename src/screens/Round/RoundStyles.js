@@ -30,13 +30,14 @@ export default StyleSheet.create({
     borderRadius: 5,
     overflow: 'hidden',
     marginVertical: 22,
-    borderColor: 'white',
-    borderWidth: 3,
+    shadowColor: 'black',
+    shadowOffset: { width: 1, height: 1 },
+    shadowRadius: 1,
+    shadowOpacity: 1,
   },
   pic: {
     resizeMode: 'cover',
     height: '100%',
     minWidth: '100%',
-    // height: windowHeight / 2,
   },
 });
