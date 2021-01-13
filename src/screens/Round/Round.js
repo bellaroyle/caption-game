@@ -6,6 +6,7 @@ import {
   Image,
   Alert,
   SafeAreaView,
+  KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
@@ -74,27 +75,37 @@ export default function Round(props) {
         }}
       >
         <View style={styles.screen}>
-          <LinearGradient
-            // Background Linear Gradient
-            colors={['#820263', '#C8005E']}
-            style={styles.background}
-          />
-          <MainHeader text={`Round ${round}`} />
-          <SafeAreaView style={styles.screen}>
-            <View style={styles.picContainer}>
-              <Image source={{ uri: picRef }} style={styles.pic} />
-            </View>
-            <TextInput
-              multiline={true}
-              onChangeText={(text) => setAnswer(text)}
-              value={answer}
-              style={styles.input}
-              maxLength={75}
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.screen}
+          >
+            <LinearGradient
+              // Background Linear Gradient
+              colors={['#820263', '#C8005E']}
+              style={styles.background}
             />
-            <NewButton onPress={submitAnswer}>
-              <Text>Submit answer</Text>
-            </NewButton>
-          </SafeAreaView>
+            <MainHeader text={`Round ${round}`} />
+            <SafeAreaView style={styles.screen}>
+              <View style={styles.picContainer}>
+                <Image source={{ uri: picRef }} style={styles.pic} />
+              </View>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  multiline={true}
+                  onChangeText={(text) => setAnswer(text)}
+                  value={answer}
+                  style={styles.input}
+                  maxLength={75}
+                />
+                <Text style={styles.charsLeft}>
+                  {75 - answer.length} characters left{' '}
+                </Text>
+              </View>
+              <NewButton onPress={submitAnswer}>
+                <Text>Submit answer</Text>
+              </NewButton>
+            </SafeAreaView>
+          </KeyboardAvoidingView>
         </View>
       </TouchableWithoutFeedback>
     );
