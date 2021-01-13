@@ -76,6 +76,8 @@ export default function Join(props) {
             onChangeText={(text) => setUsername(text)}
             value={username}
             autoCapitalize="none"
+            maxLength={8}
+            keyboardType="ascii-capable"
           />
           <Text style={styles.subhead}>Your room code</Text>
           <TextInput
@@ -84,7 +86,8 @@ export default function Join(props) {
             placeholderTextColor="#aaaaaa"
             onChangeText={(text) => setRoomInput(text)}
             value={roomInput}
-            autoCapitalize="none"
+            autoCapitalize="characters"
+            maxLength={6}
           />
           <View style={styles.btnContainer}>
             <NewButton onPress={joinGame}>
