@@ -79,4 +79,8 @@ export default StyleSheet.create({
     marginVertical: 10,
     textTransform: 'uppercase',
   },
+  playerCount: {
+    alignSelf: 'flex-end',
+    fontSize: 11,
+  },
 });

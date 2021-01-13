@@ -82,6 +82,9 @@ export default function GameWaitingRoom(props) {
               }}
               style={styles.list}
             />
+            <Text style={styles.playerCount}>
+              {users.length} / {usersInGame}
+            </Text>
           </View>
         </View>
         {users.length === usersInGame && user.isHost && (
