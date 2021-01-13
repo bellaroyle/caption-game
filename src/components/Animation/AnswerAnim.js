@@ -38,13 +38,16 @@ const styles = StyleSheet.create({
   textBox: {
     backgroundColor: 'white',
     borderRadius: 5,
-    width: 200,
-    paddingVertical: 10,
-    paddingHorizontal: 5,
+    width: 280,
+    padding: 15,
     marginVertical: 20,
+    shadowColor: '#2E294E',
+    shadowOffset: { width: 1, height: 1 },
+    shadowRadius: 1,
+    shadowOpacity: 0.3,
   },
   text: {
-    textAlign: 'center',
-    fontSize: 15,
+    fontSize: 20,
+    color: '#2E294E',
   },
 });
