@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { Text, FlatList, SafeAreaView } from 'react-native';
+import { Text, View, FlatList, SafeAreaView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { UserContext } from '../../Context/UserContext';
 import {
@@ -10,12 +11,13 @@ import {
 } from '../../utils/databaseFuncs';
 
 import WinnersCard from '../../components/WinnersCard';
-import RunnersUpCard from '../../components/RunnersUpCard';
 import NewButton from '../../components/NewButton';
+import MainHeader from '../../components/MainHeader';
+
 import styles from './WinnersStyles';
 
 export default function Winners(props) {
-  const [winners, setWinners] = useState([]);
+  const [winners, setWinners] = useState([{ name: 'user', overallScore: 0 }]);
 
   const { user, roomCode } = useContext(UserContext);
 
@@ -24,17 +26,21 @@ export default function Winners(props) {
   } = props;
 
   useEffect(() => {
-    getScores(roomCode).then((winners) => {
+    getScores(roomCode).then((users) => {
+      const scores = users.map((user) => {
+        return user.overallScore;
+      });
+      const maxScore = Math.max(...scores);
+      const winners = users.filter((user) => {
+        return user.overallScore === maxScore;
+      });
       setWinners(winners);
     });
   }, []);
 
   const renderListItem = (itemData) => {
-    if (itemData.index === 0) {
-      return <WinnersCard data={itemData.item} />;
-    } else if (itemData.index === 1 || itemData.index === 2) {
-      return <RunnersUpCard data={itemData.item} />;
-    }
+    // console.log(itemData.item);
+    return <WinnersCard data={itemData.item} />;
   };
 
   const handleGoHome = () => {
@@ -45,20 +51,34 @@ export default function Winners(props) {
         }
       });
     });
-    // deleteRoom(roomCode);
     replace('Welcome');
   };
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <FlatList
-        data={winners}
-        keyExtractor={(item) => item.name}
-        renderItem={renderListItem}
+    <View style={styles.screen}>
+      <LinearGradient
+        // Background Linear Gradient
+        colors={['#820263', '#C8005E']}
+        style={styles.background}
       />
-      <NewButton onPress={handleGoHome}>
-        <Text>Go back to home page</Text>
-      </NewButton>
-    </SafeAreaView>
+      <MainHeader text="Winners" />
+      <SafeAreaView style={styles.screen}>
+        <View style={styles.answerList}>
+          {/* <FlatList
+            data={winners}
+            keyExtractor={(item) => item.name}
+            renderItem={renderListItem}
+          /> */}
+          {winners.map((winner) => {
+            return <WinnersCard key={winner.name} data={winner} />;
+          })}
+        </View>
+      </SafeAreaView>
+      <View style={styles.button}>
+        <NewButton onPress={handleGoHome}>
+          <Text>Home</Text>
+        </NewButton>
+      </View>
+    </View>
   );
 }
