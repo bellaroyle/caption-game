@@ -50,7 +50,7 @@ export default function Leaderboard(props) {
     if (getVotes(answerData) === answerData.length) {
       interval = setTimeout(() => {
         setIsRound(false);
-      }, 10000);
+      }, 5000);
     }
     return () => {
       clearTimeout(interval);
@@ -93,6 +93,8 @@ export default function Leaderboard(props) {
       <SafeAreaView style={styles.screen}>
         {isRound ? (
           <Text style={styles.round}>Round {round}</Text>
+        ) : round === roundLimit ? (
+          <Text style={styles.round}>Final Results</Text>
         ) : (
           <Text style={styles.round}>After round {round}</Text>
         )}
