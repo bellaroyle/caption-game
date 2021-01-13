@@ -29,15 +29,15 @@ export default function Voting(props) {
 
   const handleButtonPress = (item) => {
     const username = item.name;
-    if (user.username === username) {
-      Alert.alert('You cant pick your own answer', 'Please choose another', {
-        text: 'Ok',
-        onPress: () => console.log('Ok Pressed'),
-      });
-    } else {
-      addVotes(roomCode, username);
-      replace('Leaderboard', { isRound: true, isOverall: false, round });
-    }
+    // if (user.username === username) {
+    //   Alert.alert('You cant pick your own answer', 'Please choose another', {
+    //     text: 'Ok',
+    //     onPress: () => console.log('Ok Pressed'),
+    //   });
+    // } else {
+    addVotes(roomCode, username);
+    replace('Leaderboard', { isRound: true, isOverall: false, round });
+    // }
   };
 
   return (

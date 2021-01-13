@@ -3,9 +3,15 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: 'dodgerblue',
     alignItems: 'center',
     justifyContent: 'flex-start',
+  },
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: '100%',
   },
   roomCode: {
     fontSize: 25,
@@ -16,5 +22,11 @@ export default StyleSheet.create({
   },
   answerList: {
     width: '80%',
+  },
+  round: {
+    fontFamily: 'LilitaOne',
+    color: 'white',
+    fontSize: 25,
+    marginBottom: 15,
   },
 });
