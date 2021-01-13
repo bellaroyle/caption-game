@@ -64,25 +64,36 @@ const joinRoom = (roomCode, username) => {
   console.log(roomCode, 'room code in join room');
   return doesRoomExist(roomCode).then((roomExists) => {
     return roomExists
-      ? getJoinable(roomCode).then((joinable) => {
-          return joinable
-            ? getUsersInRoom(roomCode).then((users) => {
-                return users.includes(username)
-                  ? Promise.reject({
-                      title: 'Username in use',
-                      message: 'Please choose another username',
+      ? getUsersInRoom(roomCode).then((users) => {
+          return users.length < 8
+            ? getJoinable(roomCode).then((joinable) => {
+                return joinable
+                  ? getUsersInRoom(roomCode).then((users) => {
+                      return users.includes(username)
+                        ? Promise.reject({
+                            title: 'Username in use',
+                            message: 'Please choose another username',
+                          })
+                        : rooms
+                            .doc(roomCode)
+                            .collection('users')
+                            .doc(username)
+                            .set({
+                              host: false,
+                              name: username,
+                              roundScore: 0,
+                              overallScore: 0,
+                              answers: '',
+                            });
                     })
-                  : rooms.doc(roomCode).collection('users').doc(username).set({
-                      host: false,
-                      name: username,
-                      roundScore: 0,
-                      overallScore: 0,
-                      answers: '',
+                  : Promise.reject({
+                      title: 'Game has already started',
+                      message: 'You cannot join when this is the case',
                     });
               })
             : Promise.reject({
-                title: 'Game has already started',
-                message: 'You cannot join when this is the case',
+                title: 'Room is full',
+                message: 'Please start a new game',
               });
         })
       : Promise.reject({

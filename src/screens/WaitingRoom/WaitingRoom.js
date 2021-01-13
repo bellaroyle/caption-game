@@ -72,7 +72,7 @@ export default function WaitingRoom(props) {
         ) : (
           <Text>Is loading...</Text>
         )}
-        {users.length > 0 && user.isHost && (
+        {users.length > 0 && user.isHost && users.length >= 3 && (
           <NewButton style={styles.button} onPress={handleStartButton}>
             <Text>Begin Round 1</Text>
           </NewButton>
