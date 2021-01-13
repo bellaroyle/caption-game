@@ -1,36 +1,44 @@
 import React from 'react';
-import { View, Text, SafeAreaView, StyleSheet, Dimensions } from 'react-native';
-import { Svg } from 'expo';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  Dimensions,
+  Image,
+} from 'react-native';
+import { Svg, Path } from 'react-native-svg';
 
-const WIDTH = Dimensions.get('screen').width;
+const width = Dimensions.get('screen').width;
 
 export default function MainHeader({ text }) {
   return (
-    <SafeAreaView style={styles.container}>
-      {/* <Svg height={300} width={WIDTH}>
-        <Svg.Path
-          d="M375 0H3.93717e-05C-0.000138087 42.3566 0.000358314 64.4008 3.80488e-05 143.507C161.596 170.833 317.332 138.528 375 117.654V0Z"
-          fill="blue"
-          stroke="blue"
-        />
-      </Svg> */}
+    <View style={styles.container}>
+      <Image
+        source={require('../assets/images/Header.png')}
+        style={styles.headerBG}
+      />
       <Text style={styles.headerFont}>{text}</Text>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: '#820263',
-    borderBottomColor: 'white',
-    borderBottomWidth: 2,
     alignItems: 'center',
   },
   headerFont: {
+    position: 'absolute',
     fontFamily: 'LilitaOne',
-    fontSize: 35,
+    fontSize: 30,
     color: 'white',
+    paddingTop: 50,
     paddingBottom: 20,
+  },
+  headerBG: {
+    top: -18,
+    width: width,
+    resizeMode: 'stretch',
   },
 });
