@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Text, View, FlatList, SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Animatable from 'react-native-animatable';
 
 import { UserContext } from '../../Context/UserContext';
 import {
@@ -57,20 +58,18 @@ export default function Winners(props) {
   return (
     <View style={styles.screen}>
       <LinearGradient
-        // Background Linear Gradient
         colors={['#820263', '#C8005E']}
         style={styles.background}
       />
       <MainHeader text="Winners" />
       <SafeAreaView style={styles.screen}>
         <View style={styles.answerList}>
-          {/* <FlatList
-            data={winners}
-            keyExtractor={(item) => item.name}
-            renderItem={renderListItem}
-          /> */}
           {winners.map((winner) => {
-            return <WinnersCard key={winner.name} data={winner} />;
+            return (
+              <Animatable.View animation="tada" key={winner.name} delay={500}>
+                <WinnersCard data={winner} />
+              </Animatable.View>
+            );
           })}
         </View>
       </SafeAreaView>

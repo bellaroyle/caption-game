@@ -50,7 +50,7 @@ export default function Leaderboard(props) {
     if (getVotes(answerData) === answerData.length) {
       interval = setTimeout(() => {
         setIsRound(false);
-      }, 1000);
+      }, 10000);
     }
     return () => {
       clearTimeout(interval);
