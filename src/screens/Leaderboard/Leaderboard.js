@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, FlatList, SafeAreaView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { UserContext } from '../../Context/UserContext';
 import { firebase } from '../../firebase/config';
@@ -7,8 +8,9 @@ import { firebase } from '../../firebase/config';
 import { startGame, addRound, startNewRound } from '../../utils/databaseFuncs';
 import { getVotes } from '../../utils/utils';
 
+import MainHeader from '../../components/MainHeader';
 import NewButton from '../../components/NewButton';
-import AnswerCard from '../../components/AnswerCard';
+import ScoreCard from '../../components/ScoreCard';
 import LeaderboardCard from '../../components/LeaderboardCard';
 
 import styles from './LeaderboardStyles';
@@ -76,57 +78,66 @@ export default function Leaderboard(props) {
     startGame(roomCode);
   };
 
-  if (isLoading) {
-    return (
-      <View>
-        <Text>in Leaderboard</Text>
-        <Text> Leaderboard is Loading </Text>
-      </View>
-    );
-  } else {
-    return (
+  return (
+    <View style={styles.screen}>
+      <LinearGradient
+        colors={['#820263', '#C8005E']}
+        style={styles.background}
+      />
+      {isRound ? (
+        <MainHeader text="Scores" />
+      ) : (
+        <MainHeader text="Leaderboard" />
+      )}
+
       <SafeAreaView style={styles.screen}>
         {isRound ? (
-          <Text>Welcome to round leaderboard!</Text>
+          <Text style={styles.round}>Round {round}</Text>
         ) : (
-          <Text>Welcome to overall leaderboard!</Text>
+          <Text style={styles.round}>After round {round}</Text>
         )}
-        <FlatList
-          data={answerData}
-          keyExtractor={(item) => item.name}
-          renderItem={({ item }) =>
-            isRound ? (
-              <AnswerCard
-                answerData={{
-                  name: item.name,
-                  answers: item.answers,
-                  score: item.roundScore,
-                }}
-              />
-            ) : (
-              <LeaderboardCard
-                scoreData={{
-                  name: item.name,
-                  score: item.overallScore,
-                }}
-              />
-            )
-          }
-          style={styles.answerList}
-        />
-        {!isRound && round === roundLimit && user.isHost ? (
-          <NewButton style={styles.button} onPress={handleWinners}>
-            <Text>Lets see who won!</Text>
-          </NewButton>
+        {isLoading ? (
+          <Text> Leaderboard is Loading </Text>
         ) : (
-          !isRound &&
-          user.isHost && (
-            <NewButton style={styles.button} onPress={handleNewRound}>
-              <Text>Begin next round</Text>
-            </NewButton>
-          )
+          <View>
+            <FlatList
+              data={answerData}
+              keyExtractor={(item) => item.name}
+              renderItem={({ item }) =>
+                isRound ? (
+                  <ScoreCard
+                    answerData={{
+                      name: item.name,
+                      answer: item.answers,
+                      score: item.roundScore,
+                    }}
+                  />
+                ) : (
+                  <LeaderboardCard
+                    scoreData={{
+                      name: item.name,
+                      score: item.overallScore,
+                    }}
+                  />
+                )
+              }
+              style={styles.answerList}
+            />
+            {!isRound && round === roundLimit && user.isHost ? (
+              <NewButton style={styles.button} onPress={handleWinners}>
+                <Text>Let's see who won!</Text>
+              </NewButton>
+            ) : (
+              !isRound &&
+              user.isHost && (
+                <NewButton style={styles.button} onPress={handleNewRound}>
+                  <Text>Begin next round</Text>
+                </NewButton>
+              )
+            )}
+          </View>
         )}
       </SafeAreaView>
-    );
-  }
+    </View>
+  );
 }
