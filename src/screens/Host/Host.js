@@ -70,6 +70,8 @@ export default function Host(props) {
               onChangeText={(text) => setUsername(text)}
               value={username}
               autoCapitalize="none"
+              maxLength={8}
+              keyboardType="ascii-capable"
             />
           </View>
 

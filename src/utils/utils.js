@@ -1,6 +1,5 @@
 const randomCodeGen = () => {
-  const randomChars =
-    'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890';
+  const randomChars = 'QWERTYUIOPASDFGHJKLZXCVBNM';
   let result = '';
   for (let i = 0; i < 6; i++) {
     result += randomChars.charAt(
@@ -13,7 +12,7 @@ const randomCodeGen = () => {
 const randomNumberGen = (noOfRounds) => {
   let sequence = [];
   let availableNumbers = [];
-  for (let i = 1; i < 18; i++) {
+  for (let i = 1; i < 17; i++) {
     availableNumbers.push(i);
   }
   for (let i = 0; i < noOfRounds; i++) {
