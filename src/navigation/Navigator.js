@@ -5,11 +5,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Answers from '../screens/Answers/Answers';
 import Host from '../screens/Host/Host';
 import Join from '../screens/Join/Join';
+import GameLobby from '../screens/GameLobby/GameLobby';
 import GameWaitingRoom from '../screens/GameWaitingRoom/GameWaitingRoom';
 import Leaderboard from '../screens/Leaderboard/Leaderboard';
 import Round from '../screens/Round/Round';
 import Voting from '../screens/Voting/Voting';
-import WaitingRoom from '../screens/WaitingRoom/WaitingRoom';
 import Welcome from '../screens/Welcome/Welcome';
 import Winners from '../screens/Winners/Winners';
 
@@ -29,7 +29,7 @@ const GameStackNavigator = () => {
       <GameStack.Screen name="Welcome" component={Welcome} />
       <GameStack.Screen name="Host" component={Host} />
       <GameStack.Screen name="Join" component={Join} />
-      <GameStack.Screen name="WaitingRoom" component={WaitingRoom} />
+      <GameStack.Screen name="GameLobby" component={GameLobby} />
       <GameStack.Screen name="Round" component={Round} />
       <GameStack.Screen name="GameWaitingRoom" component={GameWaitingRoom} />
       <GameStack.Screen name="Answers" component={Answers} />
