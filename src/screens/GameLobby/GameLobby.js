@@ -81,7 +81,7 @@ export default function GameLobby(props) {
             )}
           </View>
         </View>
-        {users.length > 0 && user.isHost && users.length >= 2 && (
+        {users.length > 0 && user.isHost && users.length >= 3 && (
           <NewButton style={styles.button} onPress={handleStartButton}>
             <Text>Begin Round 1</Text>
           </NewButton>

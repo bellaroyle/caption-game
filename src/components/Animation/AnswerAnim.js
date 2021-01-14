@@ -44,10 +44,9 @@ const styles = StyleSheet.create({
     shadowColor: '#2E294E',
     shadowOffset: { width: 1, height: 1 },
     shadowRadius: 1,
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.5,
   },
   text: {
-    fontSize: 20,
-    color: '#2E294E',
+    fontSize: 18,
   },
 });
