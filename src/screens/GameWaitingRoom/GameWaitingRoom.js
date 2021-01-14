@@ -67,7 +67,7 @@ export default function GameWaitingRoom(props) {
         style={styles.background}
       />
       <MainHeader text="Answers" />
-      <SafeAreaView style={styles.screen}>
+      <SafeAreaView style={styles.safeView}>
         <View style={styles.box}>
           <View style={styles.subBox}>
             <Text style={styles.subhead}>Answers from...</Text>
@@ -88,7 +88,7 @@ export default function GameWaitingRoom(props) {
           </View>
         </View>
         {users.length === usersInGame && user.isHost && (
-          <NewButton onPress={handleStartButton}>
+          <NewButton style={styles.button} onPress={handleStartButton}>
             <Text>Display answers</Text>
           </NewButton>
         )}

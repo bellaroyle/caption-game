@@ -4,6 +4,11 @@ export default StyleSheet.create({
   screen: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  safeView: {
+    flex: 1,
+    alignItems: 'center',
     justifyContent: 'space-between',
   },
   box: {
@@ -34,6 +39,7 @@ export default StyleSheet.create({
     width: 300,
     height: '100%',
     marginVertical: 10,
+    paddingTop: 20,
     padding: 10,
     borderRadius: 10,
     borderWidth: 2,
@@ -77,7 +83,7 @@ export default StyleSheet.create({
     margin: 60,
   },
   button: {
-    marginBottom: 100,
+    marginBottom: 40,
   },
   playerCount: {
     alignSelf: 'flex-end',
