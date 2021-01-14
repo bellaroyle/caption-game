@@ -60,14 +60,6 @@ export default function Round(props) {
     }
   };
 
-  // if (isLoading) {
-  //   return (
-  //     <SafeAreaView style={styles.screen}>
-  //       <Text>Round 1: Fight!</Text>
-  //       <Text>Image is Loading</Text>
-  //     </SafeAreaView>
-  //   );
-  // } else {
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -75,16 +67,17 @@ export default function Round(props) {
       }}
     >
       <View style={styles.screen}>
+        <LinearGradient
+          // Background Linear Gradient
+          colors={['#820263', '#C8005E']}
+          style={styles.background}
+        />
+        <MainHeader text={`Round ${round}`} />
         <KeyboardAvoidingView
+          keyboardVerticalOffset={45}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.screen}
         >
-          <LinearGradient
-            // Background Linear Gradient
-            colors={['#820263', '#C8005E']}
-            style={styles.background}
-          />
-          <MainHeader text={`Round ${round}`} />
           <SafeAreaView style={styles.screen}>
             {!isLoading && (
               <View style={styles.picShadow}>
@@ -113,5 +106,4 @@ export default function Round(props) {
       </View>
     </TouchableWithoutFeedback>
   );
-  // }
 }

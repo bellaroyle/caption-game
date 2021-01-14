@@ -59,7 +59,7 @@ export default StyleSheet.create({
     elevation: 1,
   },
   players: {
-    height: height * 0.47,
+    height: height * 0.48,
     alignItems: 'center',
     marginVertical: 15,
   },
