@@ -6,6 +6,11 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
+  safeView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   background: {
     position: 'absolute',
     left: 0,
@@ -19,6 +24,7 @@ export default StyleSheet.create({
   },
   button: {
     marginBottom: 100,
+    alignSelf: 'center',
   },
   answerList: {
     width: '80%',

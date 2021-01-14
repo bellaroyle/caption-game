@@ -90,7 +90,7 @@ export default function Leaderboard(props) {
         <MainHeader text="Leaderboard" />
       )}
 
-      <SafeAreaView style={styles.screen}>
+      <SafeAreaView style={styles.safeView}>
         {isRound ? (
           <Text style={styles.round}>Round {round}</Text>
         ) : round === roundLimit ? (
@@ -127,7 +127,7 @@ export default function Leaderboard(props) {
             />
             {!isRound && round === roundLimit && user.isHost ? (
               <NewButton style={styles.button} onPress={handleWinners}>
-                <Text>Let's see who won!</Text>
+                <Text>To the podium!</Text>
               </NewButton>
             ) : (
               !isRound &&

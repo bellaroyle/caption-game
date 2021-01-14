@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontFamily: 'OpenSans',
-    fontSize: 20,
-    color: '#2E294E',
+    fontSize: 18,
   },
 });

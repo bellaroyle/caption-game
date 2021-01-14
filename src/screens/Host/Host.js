@@ -37,7 +37,7 @@ export default function Host(props) {
         setUser({ username, isHost: true });
         setRoundLimit(numRounds);
         setRoomCode(roomCode);
-        replace('WaitingRoom');
+        replace('GameLobby');
       });
     }
   };

@@ -1,4 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const height = Dimensions.get('window').height;
 
 export default StyleSheet.create({
   screen: {
@@ -10,13 +12,6 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  box: {
-    width: 300,
-    height: '65%',
-    alignItems: 'center',
-    position: 'relative',
-    marginVertical: 20,
   },
   subBox: {
     position: 'absolute',
@@ -34,12 +29,48 @@ export default StyleSheet.create({
     marginVertical: 9,
     textTransform: 'uppercase',
   },
+  room: {
+    height: 100,
+    position: 'relative',
+    alignItems: 'center',
+    marginVertical: 15,
+  },
+  roomCode: {
+    fontSize: 30,
+    fontFamily: 'LilitaOne',
+    color: '#2E294E',
+  },
+  roomBox: {
+    backgroundColor: 'white',
+    borderRadius: 5,
+    padding: 15,
+    paddingTop: 28,
+    margin: 10,
+    width: 300,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#2E294E',
+    shadowColor: '#2E294E',
+    shadowOffset: { width: 1, height: 1 },
+    shadowRadius: 1,
+    shadowOpacity: 0.3,
+    elevation: 1,
+  },
+  players: {
+    height: height * 0.48,
+    alignItems: 'center',
+    marginVertical: 15,
+  },
   listContainer: {
+    position: 'relative',
+    alignItems: 'center',
     backgroundColor: 'white',
     width: 300,
     height: '100%',
     marginVertical: 10,
-    paddingTop: 20,
+    paddingTop: 21,
     padding: 10,
     borderRadius: 10,
     borderWidth: 2,
@@ -50,9 +81,9 @@ export default StyleSheet.create({
     shadowOpacity: 0.3,
     elevation: 1,
   },
-  waitingList: {
-    height: '65%',
-    width: '100%',
+  list: {
+    backgroundColor: 'white',
+    borderRadius: 5,
   },
   background: {
     position: 'absolute',
@@ -61,32 +92,8 @@ export default StyleSheet.create({
     top: 0,
     height: '100%',
   },
-  roomCode: {
-    fontSize: 30,
-    marginVertical: 10,
-    fontFamily: 'LilitaOne',
-    color: '#2E294E',
-  },
-  usernameContainer: {
-    minWidth: '80%',
-    alignItems: 'center',
-    borderBottomColor: '#2E294E',
-    borderBottomWidth: 1,
-    padding: '2%',
-  },
-  usernames: {
-    fontSize: 22,
-    marginVertical: 10,
-    fontFamily: 'LilitaOne',
-    color: '#2E294E',
-    textAlign: 'center',
-    margin: 60,
-  },
   button: {
+    marginTop: 15,
     marginBottom: 40,
-  },
-  playerCount: {
-    alignSelf: 'flex-end',
-    fontSize: 11,
   },
 });

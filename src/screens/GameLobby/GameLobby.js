@@ -9,11 +9,10 @@ import { startGame, setAmountOfUsers } from '../../utils/databaseFuncs';
 
 import NewButton from '../../components/NewButton';
 import MainHeader from '../../components/MainHeader';
-import RoomCodeCard from '../../components/RoomCodeCard';
-import styles from './WaitingRoomStyles';
+import styles from './GameLobbyStyles';
 import UserCard from '../../components/UserCard';
 
-export default function WaitingRoom(props) {
+export default function GameLobby(props) {
   const [users, setUsers] = useState([]);
 
   const {
@@ -53,25 +52,35 @@ export default function WaitingRoom(props) {
         style={styles.background}
       />
       <MainHeader text="Game Lobby" />
-      <SafeAreaView style={styles.screen}>
-        <Text style={styles.subhead}>Room Code</Text>
-        <RoomCodeCard>
-          <Text style={styles.roomCode}>{roomCode}</Text>
-        </RoomCodeCard>
-        <Text style={styles.subhead}>Players Joined</Text>
-        {users.length !== 0 ? (
-          <View style={styles.listContainer}>
-            <FlatList
-              data={users}
-              renderItem={({ item }) => <UserCard name={item.name} />}
-              keyExtractor={(item) => item.name}
-              style={styles.list}
-              contentContainerStyle={{ alignItems: 'center' }}
-            />
+      <SafeAreaView style={styles.safeView}>
+        <View>
+          <View style={styles.room}>
+            <View style={styles.subBox}>
+              <Text style={styles.subhead}>Room Code</Text>
+            </View>
+            <View style={styles.roomBox}>
+              <Text style={styles.roomCode}>{roomCode}</Text>
+            </View>
           </View>
-        ) : (
-          <Text>Is loading...</Text>
-        )}
+          <View style={styles.players}>
+            <View style={styles.subBox}>
+              <Text style={styles.subhead}>Players Joined</Text>
+            </View>
+            {users.length !== 0 ? (
+              <View style={styles.listContainer}>
+                <FlatList
+                  data={users}
+                  renderItem={({ item }) => <UserCard name={item.name} />}
+                  keyExtractor={(item) => item.name}
+                  style={styles.list}
+                  contentContainerStyle={{ alignItems: 'center' }}
+                />
+              </View>
+            ) : (
+              <Text>Is loading...</Text>
+            )}
+          </View>
+        </View>
         {users.length > 0 && user.isHost && users.length >= 3 && (
           <NewButton style={styles.button} onPress={handleStartButton}>
             <Text>Begin Round 1</Text>

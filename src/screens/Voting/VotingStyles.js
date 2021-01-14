@@ -16,11 +16,12 @@ export default StyleSheet.create({
   introContainer: {
     alignItems: 'center',
     marginVertical: 10,
+    width: '90%',
   },
   introText: {
     fontFamily: 'LilitaOne',
     color: 'white',
-    fontSize: 20,
+    fontSize: 19,
     marginBottom: 5,
   },
   answerList: {

@@ -42,7 +42,7 @@ export default function Join(props) {
             setRoundLimit(roundLimit);
             setUser({ username, isHost: false });
             setRoomCode(roomInput);
-            replace('WaitingRoom');
+            replace('GameLobby');
           });
         })
         .catch(({ title, message }) => {
