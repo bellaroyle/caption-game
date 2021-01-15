@@ -32,7 +32,6 @@ export default function Voting(props) {
     if (user.username === username) {
       Alert.alert('You cant pick your own answer', 'Please choose another', {
         text: 'Ok',
-        onPress: () => console.log('Ok Pressed'),
       });
     } else {
       addVotes(roomCode, username);

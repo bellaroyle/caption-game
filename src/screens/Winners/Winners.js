@@ -40,7 +40,6 @@ export default function Winners(props) {
   }, []);
 
   const renderListItem = (itemData) => {
-    // console.log(itemData.item);
     return <WinnersCard data={itemData.item} />;
   };
 
