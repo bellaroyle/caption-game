@@ -51,7 +51,6 @@ const getUsersInRoom = (roomCode) => {
 };
 
 const doesRoomExist = (roomCode) => {
-  console.log(roomCode, 'room code ');
   return rooms
     .doc(roomCode)
     .get()
@@ -61,7 +60,6 @@ const doesRoomExist = (roomCode) => {
 };
 
 const joinRoom = (roomCode, username) => {
-  console.log(roomCode, 'room code in join room');
   return doesRoomExist(roomCode).then((roomExists) => {
     return roomExists
       ? getUsersInRoom(roomCode).then((users) => {

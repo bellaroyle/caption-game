@@ -48,7 +48,6 @@ export default function Join(props) {
         .catch(({ title, message }) => {
           Alert.alert(title, message, {
             text: 'OK',
-            onPress: () => console.log('OK Pressed'),
           });
         });
     }
